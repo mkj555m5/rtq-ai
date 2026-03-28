@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTQ.AI - ذكاء اصطناعي متقدم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root{--bg:#060610;--bg2:#0c1220;--fg:#e8ecf4;--muted:#7a8ba8;--accent:#00e5a0;--accent-dim:rgba(0,229,160,0.15);--accent-glow:rgba(0,229,160,0.4);--card:rgba(255,255,255,0.04);--card-b:rgba(255,255,255,0.08);--danger:#ff4d6a;--warning:#ffb347;--info:#4da6ff;--r:16px;--rs:10px;--far:'Cairo',sans-serif;--fen:'Space Grotesk',sans-serif}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{font-family:var(--far);background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden}
+        a{color:inherit;text-decoration:none}
+        button{cursor:pointer;border:none;outline:none;font-family:inherit}
+        input,textarea{font-family:inherit;outline:none;border:none}
+        ::selection{background:var(--accent);color:var(--bg)}
+        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--accent-dim);border-radius:3px}
+        #particleCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+        .bg-glow{position:fixed;border-radius:50%;filter:blur(120px);opacity:.25;pointer-events:none;z-index:0}
+        .bg-glow-1{width:500px;height:500px;background:var(--accent);top:-150px;right:-100px;animation:fG 12s ease-in-out infinite}
+        .bg-glow-2{width:400px;height:400px;background:#0055dd;bottom:-100px;left:-100px;animation:fG 15s ease-in-out infinite reverse}
+        .bg-glow-3{width:300px;height:300px;background:#00e5a0;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.08;animation:pu 8s ease-in-out infinite}
+        @keyframes fG{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.15)}}
+        @keyframes pu{0%,100%{opacity:.08;transform:translate(-50%,-50%) scale(1)}50%{opacity:.15;transform:translate(-50%,-50%) scale(1.3)}}
+        .ps{display:none;position:relative;z-index:1;min-height:100vh;animation:fsi .5s ease}
+        .ps.active{display:flex}
+        @keyframes fsi{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,16,.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--card-b)}
+        .nav-logo{font-family:var(--fen);font-size:1.45rem;font-weight:700;color:var(--accent);letter-spacing:-.5px;display:flex;align-items:center;gap:10px}
+        .nav-logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#00c9ff);display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:1rem}
+        .nav-actions{display:flex;align-items:center;gap:10px}
+        .nav-btn{padding:8px 20px;border-radius:var(--rs);font-size:.88rem;font-weight:600;transition:all .25s}
+        .nav-btn-ghost{background:transparent;color:var(--muted)}.nav-btn-ghost:hover{color:var(--fg)}
+        .nav-btn-primary{background:var(--accent);color:var(--bg)}.nav-btn-primary:hover{box-shadow:0 0 20px var(--accent-glow);transform:translateY(-1px)}
+        .nav-user{display:flex;align-items:center;gap:10px;padding:6px 14px;border-radius:var(--rs);background:var(--card);border:1px solid var(--card-b);cursor:pointer;transition:all .25s}
+        .nav-user:hover{border-color:var(--accent-dim)}
+        .nav-user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#00c9ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--bg)}
+        .nav-user-name{font-size:.85rem;font-weight:500}
+        .nav-logout{background:none;color:var(--danger);font-size:.85rem;padding:6px 12px;border-radius:var(--rs);transition:all .25s}
+        .nav-logout:hover{background:rgba(255,77,106,.1)}
+        .mobile-menu-btn{display:none;background:none;color:var(--fg);font-size:1.3rem;padding:8px}
+        .landing{flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 60px;gap:36px}
+        .landing-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;border-radius:100px;background:var(--accent-dim);border:1px solid rgba(0,229,160,.2);font-size:.82rem;color:var(--accent);font-weight:500;animation:pb 3s ease-in-out infinite}
+        @keyframes pb{0%,100%{border-color:rgba(0,229,160,.2)}50%{border-color:rgba(0,229,160,.5)}}
+        .landing h1{font-size:clamp(2.4rem,7vw,4.5rem);font-weight:900;line-height:1.15;max-width:750px}
+        .landing h1 .gt{background:linear-gradient(135deg,var(--accent),#00c9ff,var(--accent));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sh 4s linear infinite}
+        @keyframes sh{0%{background-position:0% center}100%{background-position:200% center}}
+        .landing-desc{font-size:1.12rem;color:var(--muted);max-width:540px;line-height:1.85}
+        .landing-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+        .btn-lg{padding:16px 40px;border-radius:var(--r);font-size:1.02rem;font-weight:700;transition:all .3s}
+        .btn-accent{background:linear-gradient(135deg,var(--accent),#00c9ff);color:var(--bg)}
+        .btn-accent:hover{box-shadow:0 8px 40px var(--accent-glow);transform:translateY(-3px)}
+        .btn-outline{background:transparent;border:2px solid var(--card-b);color:var(--fg)}
+        .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px)}
+        .model-showcase{display:flex;align-items:center;gap:14px;padding:16px 28px;border-radius:var(--r);background:rgba(255,255,255,.03);border:1px solid var(--card-b);font-family:var(--fen);font-size:.92rem;color:var(--muted)}
+        .model-tag{padding:4px 12px;border-radius:6px;background:var(--accent-dim);color:var(--accent);font-size:.78rem;font-weight:600}
+        .speed-tag{padding:4px 10px;border-radius:6px;background:rgba(255,179,71,.12);color:var(--warning);font-size:.78rem;font-weight:600}
+        .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;max-width:900px;width:100%;padding:0 24px}
+        .feature-card{padding:26px;border-radius:var(--r);background:var(--card);border:1px solid var(--card-b);text-align:right;transition:all .35s}
+        .feature-card:hover{border-color:var(--accent-dim);background:rgba(0,229,160,.03);transform:translateY(-5px)}
+        .feature-icon{width:46px;height:46px;border-radius:12px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.15rem;margin-bottom:14px}
+        .feature-card h3{font-size:.98rem;font-weight:700;margin-bottom:7px}
+        .feature-card p{font-size:.83rem;color:var(--muted);line-height:1.75}
+        .tg-float{position:fixed;bottom:24px;left:24px;z-index:90;width:52px;height:52px;border-radius:50%;background:#0088cc;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;box-shadow:0 4px 20px rgba(0,136,204,.4);transition:all .3s}
+        .tg-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(0,136,204,.5)}
+        .auth-page{flex-direction:column;align-items:center;justify-content:center;padding:100px 24px 60px}
+        .auth-card{width:100%;max-width:440px;padding:36px;border-radius:var(--r);background:rgba(12,18,32,.92);border:1px solid var(--card-b);backdrop-filter:blur(24px)}
+        .auth-card h2{font-size:1.5rem;font-weight:800;margin-bottom:6px}
+        .auth-card .asub{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+        .auth-tabs{display:flex;gap:4px;padding:4px;border-radius:var(--rs);background:rgba(255,255,255,.04);margin-bottom:24px}
+        .auth-tab{flex:1;padding:10px;border-radius:8px;font-size:.88rem;font-weight:600;background:transparent;color:var(--muted);transition:all .25s}
+        .auth-tab.active{background:var(--accent);color:var(--bg)}
+        .fg{margin-bottom:14px}
+        .fg label{display:block;font-size:.83rem;font-weight:600;margin-bottom:7px;color:var(--muted)}
+        .fiw{position:relative;display:flex;align-items:center}
+        .fiw>i{position:absolute;right:14px;color:var(--muted);font-size:.88rem;transition:color .25s;pointer-events:none}
+        .fi{width:100%;padding:12px 40px;border-radius:var(--rs);background:rgba(255,255,255,.04);border:1px solid var(--card-b);color:var(--fg);font-size:.9rem;transition:all .25s}
+        .fi:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+        .fi:focus~i{color:var(--accent)}
+        .fi::placeholder{color:rgba(122,139,168,.45)}
+        .tp{position:absolute;left:12px;background:none;color:var(--muted);font-size:.88rem;transition:color .25s}
+        .tp:hover{color:var(--fg)}
+        .fe{font-size:.76rem;color:var(--danger);margin-top:4px;display:none}.fe.show{display:block}
+        .bf{width:100%;padding:13px;border-radius:var(--rs);background:linear-gradient(135deg,var(--accent),#00c9ff);color:var(--bg);font-size:.98rem;font-weight:700;transition:all .3s;margin-top:6px}
+        .bf:hover{box-shadow:0 6px 30px var(--accent-glow);transform:translateY(-2px)}
+        .bf:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+        .bl{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.88rem;margin-bottom:20px;transition:color .25s;background:none}
+        .bl:hover{color:var(--accent)}
+        .verify-page{flex-direction:column;align-items:center;justify-content:center;padding:100px 24px 60px}
+        .verify-card{width:100%;max-width:440px;padding:36px;border-radius:var(--r);background:rgba(12,18,32,.92);border:1px solid var(--card-b);backdrop-filter:blur(24px);text-align:center}
+        .verify-icon{width:68px;height:68px;border-radius:50%;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.7rem;color:var(--accent)}
+        .verify-card h2{font-size:1.35rem;font-weight:800;margin-bottom:8px}
+        .verify-card .vsub{color:var(--muted);font-size:.88rem;margin-bottom:22px;line-height:1.75}
+        .verify-card .vsub strong{color:var(--accent);direction:ltr;display:inline-block}
+        .code-inputs{display:flex;gap:10px;justify-content:center;direction:ltr;margin-bottom:20px}
+        .code-input{width:50px;height:56px;text-align:center;border-radius:var(--rs);background:rgba(255,255,255,.04);border:2px solid var(--card-b);color:var(--fg);font-size:1.3rem;font-weight:700;font-family:var(--fen);transition:all .25s}
+        .code-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+        .code-input.err-shake{border-color:var(--danger);animation:shake .4s ease}
+        @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+        .resend-timer{font-size:.83rem;color:var(--muted);margin-top:14px}
+        .resend-timer button{background:none;color:var(--accent);font-weight:600;font-size:.83rem}
+        .resend-timer button:disabled{color:var(--muted);cursor:not-allowed}
+        .chat-page{flex-direction:row;padding-top:64px;height:100vh}
+        .chat-sidebar{width:280px;background:rgba(8,12,22,.96);border-left:1px solid var(--card-b);display:flex;flex-direction:column;transition:transform .3s;flex-shrink:0}
+        .sidebar-header{padding:14px;border-bottom:1px solid var(--card-b)}
+        .new-chat-btn{width:100%;padding:11px;border-radius:var(--rs);background:var(--accent-dim);border:1px dashed rgba(0,229,160,.3);color:var(--accent);font-size:.88rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .25s}
+        .new-chat-btn:hover{background:rgba(0,229,160,.2);border-color:var(--accent)}
+        .chat-list{flex:1;overflow-y:auto;padding:10px}
+        .chat-list-item{padding:11px 13px;border-radius:var(--rs);font-size:.83rem;color:var(--muted);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;margin-bottom:3px}
+        .chat-list-item:hover{background:var(--card);color:var(--fg)}
+        .chat-list-item.active{background:var(--accent-dim);color:var(--accent)}
+        .chat-list-item i{font-size:.78rem;flex-shrink:0}
+        .chat-list-item .ct{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .chat-list-item .dc{background:none;color:var(--muted);font-size:.72rem;opacity:0;transition:all .2s;padding:4px}
+        .chat-list-item:hover .dc{opacity:1}
+        .chat-list-item .dc:hover{color:var(--danger)}
+        .sidebar-footer{padding:12px;border-top:1px solid var(--card-b)}
+        .storage-info{font-size:.7rem;color:var(--muted);text-align:center;margin-bottom:8px;opacity:.7}
+        .storage-actions{display:flex;gap:6px}
+        .storage-btn{flex:1;padding:8px;border-radius:8px;background:var(--card);border:1px solid var(--card-b);color:var(--muted);font-size:.75rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .25s}
+        .storage-btn:hover{border-color:var(--accent-dim);color:var(--accent)}
+        .chat-main{flex:1;display:flex;flex-direction:column;min-width:0}
+        .chat-messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px}
+        .welcome-msg{text-align:center;padding:50px 20px}
+        .welcome-msg .wi{width:76px;height:76px;border-radius:22px;background:linear-gradient(135deg,var(--accent),#00c9ff);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.9rem;color:var(--bg)}
+        .welcome-msg h2{font-size:1.45rem;font-weight:800;margin-bottom:8px}
+        .welcome-msg p{color:var(--muted);font-size:.92rem;max-width:420px;margin:0 auto;line-height:1.75}
+        .welcome-model{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 16px;border-radius:100px;background:var(--card);border:1px solid var(--card-b);font-family:var(--fen);font-size:.78rem;color:var(--muted)}
+        .welcome-model i{color:var(--accent);font-size:.7rem}
+        .suggestions{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;max-width:600px;margin:22px auto 0}
+        .suggestion-btn{padding:13px;border-radius:var(--rs);background:var(--card);border:1px solid var(--card-b);color:var(--fg);font-size:.83rem;text-align:right;transition:all .25s;line-height:1.55}
+        .suggestion-btn:hover{border-color:var(--accent-dim);background:rgba(0,229,160,.03);transform:translateY(-2px)}
+        .message{display:flex;gap:12px;max-width:85%;animation:mi .35s ease}
+        @keyframes mi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .message.user{align-self:flex-start;flex-direction:row-reverse}
+        .message.ai{align-self:flex-end}
+        .msg-avatar{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.82rem;flex-shrink:0}
+        .message.user .msg-avatar{background:linear-gradient(135deg,var(--accent),#00c9ff);color:var(--bg);font-weight:700}
+        .message.ai .msg-avatar{background:rgba(255,255,255,.08);color:var(--accent)}
+        .msg-content{padding:13px 17px;border-radius:16px;font-size:.93rem;line-height:1.85;white-space:pre-wrap;word-wrap:break-word}
+        .message.user .msg-content{background:linear-gradient(135deg,rgba(0,229,160,.15),rgba(0,201,255,.1));border:1px solid rgba(0,229,160,.2);border-bottom-right-radius:4px}
+        .message.ai .msg-content{background:var(--card);border:1px solid var(--card-b);border-bottom-left-radius:4px}
+        .msg-content code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-family:var(--fen);font-size:.84em}
+        .msg-content pre{background:rgba(0,0,0,.35);padding:14px;border-radius:8px;overflow-x:auto;margin:8px 0;font-family:var(--fen);font-size:.84em;direction:ltr;text-align:left}
+        .msg-content pre code{background:none;padding:0}
+        .msg-content strong{color:var(--accent)}
+        .typing-indicator{display:flex;gap:5px;padding:14px 17px;align-items:center}
+        .typing-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:tb 1.4s infinite}
+        .typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+        @keyframes tb{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-8px);opacity:1}}
+        .msg-time{font-size:.7rem;color:var(--muted);margin-top:4px;opacity:.6}
+        .message.user .msg-time{text-align:left}.message.ai .msg-time{text-align:right}
+        .chat-input-area{padding:14px 24px 22px;border-top:1px solid var(--card-b);background:rgba(6,6,16,.5)}
+        .chat-input-wrap{display:flex;align-items:flex-end;gap:10px;background:rgba(255,255,255,.04);border:1px solid var(--card-b);border-radius:var(--r);padding:6px 6px 6px 14px;transition:border-color .25s}
+        .chat-input-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)}
+        .chat-input{flex:1;background:transparent;color:var(--fg);font-size:.93rem;padding:10px 0;resize:none;min-height:24px;max-height:150px;line-height:1.5}
+        .chat-input::placeholder{color:rgba(122,139,168,.45)}
+        .send-btn{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#00c9ff);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:all .25s;flex-shrink:0}
+        .send-btn:hover{box-shadow:0 4px 20px var(--accent-glow)}
+        .send-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+        .chat-input-hint{font-size:.72rem;color:var(--muted);text-align:center;margin-top:7px;opacity:.5}
+        .sidebar-overlay{display:none;position:fixed;inset:0;top:64px;background:rgba(0,0,0,.5);z-index:49}
+        .sidebar-overlay.show{display:block}
+
+        /* Admin Panel */
+        .admin-page{flex-direction:row;padding-top:64px;height:100vh}
+        .admin-sidebar{width:240px;background:rgba(8,12,22,.96);border-left:1px solid var(--card-b);display:flex;flex-direction:column;flex-shrink:0}
+        .admin-sidebar-header{padding:18px 16px;border-bottom:1px solid var(--card-b);text-align:center}
+        .admin-sidebar-header h3{font-size:.95rem;font-weight:700;color:var(--danger);display:flex;align-items:center;justify-content:center;gap:8px}
+        .admin-nav{flex:1;padding:10px}
+        .admin-nav-item{padding:11px 14px;border-radius:var(--rs);font-size:.85rem;color:var(--muted);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;margin-bottom:3px}
+        .admin-nav-item:hover{background:var(--card);color:var(--fg)}
+        .admin-nav-item.active{background:var(--accent-dim);color:var(--accent)}
+        .admin-nav-item i{width:18px;text-align:center;font-size:.85rem}
+        .admin-main{flex:1;overflow-y:auto;padding:28px}
+        .admin-title{font-size:1.3rem;font-weight:800;margin-bottom:24px}
+        .admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:28px}
+        .admin-stat{padding:20px;border-radius:var(--r);background:var(--card);border:1px solid var(--card-b)}
+        .admin-stat .stat-val{font-family:var(--fen);font-size:1.8rem;font-weight:700;color:var(--accent)}
+        .admin-stat .stat-label{font-size:.8rem;color:var(--muted);margin-top:4px}
+        .admin-stat.danger .stat-val{color:var(--danger)}
+        .admin-table{width:100%;border-collapse:collapse;font-size:.85rem}
+        .admin-table th{text-align:right;padding:12px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--card-b);font-size:.78rem}
+        .admin-table td{padding:12px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle}
+        .admin-table tr:hover td{background:rgba(255,255,255,.02)}
+        .admin-table .email-cell{direction:ltr;text-align:right;font-family:var(--fen);font-size:.8rem;color:var(--muted)}
+        .admin-btn{padding:6px 14px;border-radius:6px;font-size:.78rem;font-weight:600;transition:all .2s}
+        .admin-btn-view{background:var(--accent-dim);color:var(--accent)}
+        .admin-btn-view:hover{background:rgba(0,229,160,.25)}
+        .admin-btn-del{background:rgba(255,77,106,.1);color:var(--danger)}
+        .admin-btn-del:hover{background:rgba(255,77,106,.2)}
+        .admin-section{display:none}.admin-section.active{display:block}
+        .admin-danger-zone{border:2px solid rgba(255,77,106,.2);border-radius:var(--r);padding:24px;margin-top:20px}
+        .admin-danger-zone h3{color:var(--danger);font-size:1rem;margin-bottom:16px}
+        .admin-danger-btn{padding:10px 24px;border-radius:var(--rs);background:rgba(255,77,106,.12);color:var(--danger);font-size:.88rem;font-weight:700;transition:all .25s;margin-bottom:10px;display:block;width:100%}
+        .admin-danger-btn:hover{background:rgba(255,77,106,.25)}
+        .admin-settings-group{margin-bottom:24px}
+        .admin-settings-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:8px;color:var(--muted)}
+        .admin-textarea{width:100%;padding:12px;border-radius:var(--rs);background:rgba(255,255,255,.04);border:1px solid var(--card-b);color:var(--fg);font-size:.88rem;resize:vertical;min-height:120px;line-height:1.6;direction:rtl}
+        .admin-textarea:focus{border-color:var(--accent)}
+        .admin-input{width:100%;padding:10px 14px;border-radius:var(--rs);background:rgba(255,255,255,.04);border:1px solid var(--card-b);color:var(--fg);font-size:.88rem}
+        .admin-input:focus{border-color:var(--accent)}
+        .admin-user-chats{margin-top:16px;padding:16px;border-radius:var(--r);background:var(--card);border:1px solid var(--card-b)}
+        .admin-user-chats h4{font-size:.9rem;margin-bottom:12px;color:var(--accent)}
+        .admin-chat-item{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.03);margin-bottom:6px;font-size:.82rem;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+
+        /* Toast & Spinner */
+        .toast-container{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:10px;align-items:center}
+        .toast{padding:13px 22px;border-radius:var(--rs);font-size:.88rem;font-weight:500;display:flex;align-items:center;gap:10px;animation:ti .35s ease,to .35s ease 3.5s forwards;backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,.3);white-space:nowrap;max-width:90vw}
+        .toast-success{background:rgba(0,229,160,.15);border:1px solid rgba(0,229,160,.3);color:var(--accent)}
+        .toast-error{background:rgba(255,77,106,.15);border:1px solid rgba(255,77,106,.3);color:var(--danger)}
+        .toast-info{background:rgba(0,153,255,.15);border:1px solid rgba(0,153,255,.3);color:var(--info)}
+        @keyframes ti{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes to{from{opacity:1}to{opacity:0;transform:translateY(-10px)}}
+        .spinner{width:18px;height:18px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:sp .6s linear infinite;display:inline-block}
+        @keyframes sp{to{transform:rotate(360deg)}}
+        .code-fallback{margin-top:14px;padding:14px;border-radius:var(--rs);background:rgba(0,153,255,.08);border:1px solid rgba(0,153,255,.2);text-align:center}
+        .code-fallback p{font-size:.82rem;color:var(--info);margin-bottom:10px}
+        .code-fallback .code-big{font-family:var(--fen);font-size:2rem;font-weight:900;color:var(--accent);letter-spacing:10px;direction:ltr;display:inline-block;cursor:pointer;padding:8px 16px;border-radius:8px;background:rgba(0,229,160,.1);transition:all .2s}
+        .code-fallback .code-big:hover{background:rgba(0,229,160,.2)}
+
+        @media(max-width:768px){
+            .navbar{padding:12px 16px}.mobile-menu-btn{display:block}
+            .chat-sidebar,.admin-sidebar{position:fixed;top:64px;bottom:0;right:0;z-index:50;transform:translateX(100%)}
+            .chat-sidebar.open,.admin-sidebar.open{transform:translateX(0)}
+            .message{max-width:95%}.landing h1{font-size:2rem}
+            .auth-card,.verify-card{padding:26px 18px}.code-input{width:42px;height:50px;font-size:1.15rem}
+            .suggestions{grid-template-columns:1fr}.nav-user-name{display:none}
+            .model-showcase{flex-direction:column;font-size:.8rem}
+            .admin-stats{grid-template-columns:repeat(2,1fr)}
+            .admin-table{font-size:.78rem}.admin-table th,.admin-table td{padding:8px}
+        }
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas" aria-hidden="true"></canvas>
+    <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-3" aria-hidden="true"></div>
+    <a href="https://t.me/RTQ_67" target="_blank" class="tg-float" title="تواصل مع المطور"><i class="fa-brands fa-telegram"></i></a>
+
+    <nav class="navbar" id="navbar"><div class="nav-logo"><div class="nav-logo-icon"><i class="fa-solid fa-bolt"></i></div>RTQ.AI</div><div class="nav-actions" id="navActions"></div></nav>
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- الهبوط -->
+    <section class="ps landing active" id="pageLanding">
+        <div class="landing-badge"><i class="fa-solid fa-circle" style="font-size:.6rem"></i>مدعوم بمعالج Groq LPU فائق السرعة</div>
+        <h1>المستقبل في<br><span class="gt">محادثة ذكية</span></h1>
+        <p class="landing-desc">تجربة ذكاء اصطناعي بلا حدود. أجوبة فورية بموازات عالية، محادثات طبيعية، وقوة معالجة استثنائية تدعم اللغة العربية بشكل كامل.</p>
+        <div class="landing-actions"><button class="btn-lg btn-accent" onclick="navigateTo('auth')">ابدأ مجاناً</button><button class="btn-lg btn-outline" onclick="document.getElementById('featuresGrid').scrollIntoView({behavior:'smooth'})">تعرف على المزيد</button></div>
+        <div class="model-showcase"><span class="model-tag">MODEL</span><span>llama-3.3-70b-versatile</span><span class="speed-tag"><i class="fa-solid fa-bolt"></i> 500+ token/s</span></div>
+        <div class="features" id="featuresGrid">
+            <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-rocket"></i></div><h3>سرعة خارقة</h3><p>معالج Groq LPU يولّد أكثر من 500 توكن في الثانية. ردود فورية بدون انتظار.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-brain"></i></div><h3>ذكاء عميق</h3><p>نموذج Llama 3.3 بـ 70 مليار معامل يفهم السياق المعقد ويقدم إجابات دقيقة.</p></div>
+            <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-floppy-disk"></i></div><h3>حفظ تلقائي</h3><p>كل محادثاتك محفوظة تلقائياً مع إمكانية التصدير والاستيراد في أي وقت.</p></div>
+        </div>
+    </section>
+
+    <!-- التسجيل / الدخول -->
+    <section class="ps auth-page" id="pageAuth">
+        <button class="bl" onclick="navigateTo('landing')"><i class="fa-solid fa-arrow-right"></i> الرجوع</button>
+        <div class="auth-card">
+            <div class="auth-tabs"><button class="auth-tab active" data-tab="register" onclick="switchAuthTab('register')">تسجيل حساب</button><button class="auth-tab" data-tab="login" onclick="switchAuthTab('login')">تسجيل الدخول</button></div>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <h2>إنشاء حساب جديد</h2>
+                <p class="asub">أدخل بياناتك لبدء استخدام RTQ.AI</p>
+                <div class="fg"><label for="regName">الاسم الكامل</label><div class="fiw"><input type="text" id="regName" class="fi" placeholder="مثال: أحمد محمد" required><i class="fa-solid fa-user"></i></div><div class="fe" id="regNameError"></div></div>
+                <div class="fg"><label for="regUsername">اسم المستخدم</label><div class="fiw"><input type="text" id="regUsername" class="fi" placeholder="مثال: ahmed_01" dir="ltr" style="text-align:right" required><i class="fa-solid fa-at"></i></div><div class="fe" id="regUsernameError"></div></div>
+                <div class="fg"><label for="regEmail">البريد الإلكتروني</label><div class="fiw"><input type="email" id="regEmail" class="fi" placeholder="example@email.com" dir="ltr" style="text-align:right" required><i class="fa-solid fa-envelope"></i></div><div class="fe" id="regEmailError"></div></div>
+                <div class="fg"><label for="regPass">كلمة المرور</label><div class="fiw"><input type="password" id="regPass" class="fi" placeholder="8 أحرف على الأقل" required minlength="8"><i class="fa-solid fa-lock"></i><button type="button" class="tp" onclick="togglePassword('regPass',this)"><i class="fa-solid fa-eye"></i></button></div><div class="fe" id="regPassError"></div></div>
+                <button type="submit" class="bf" id="regSubmitBtn">إنشاء الحساب</button>
+            </form>
+            <form id="loginForm" style="display:none" onsubmit="handleLogin(event)">
+                <h2>تسجيل الدخول</h2>
+                <p class="asub">أدخل اسم المستخدم أو البريد الإلكتروني</p>
+                <div class="fg"><label for="loginId">اسم المستخدم أو البريد</label><div class="fiw"><input type="text" id="loginId" class="fi" placeholder="اسم المستخدم أو البريد" required><i class="fa-solid fa-right-to-bracket"></i></div><div class="fe" id="loginIdError"></div></div>
+                <div class="fg"><label for="loginPass">كلمة المرور</label><div class="fiw"><input type="password" id="loginPass" class="fi" placeholder="أدخل كلمة المرور" required><i class="fa-solid fa-lock"></i><button type="button" class="tp" onclick="togglePassword('loginPass',this)"><i class="fa-solid fa-eye"></i></button></div><div class="fe" id="loginPassError"></div></div>
+                <button type="submit" class="bf" id="loginSubmitBtn">تسجيل الدخول</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- التحقق -->
+    <section class="ps verify-page" id="pageVerify">
+        <div class="verify-card">
+            <div class="verify-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <h2>تحقق من بريدك الإلكتروني</h2>
+            <p class="vsub">أرسلنا رمز تحقق مكون من 6 أرقام إلى<br><strong id="verifyEmailDisplay"></strong></p>
+            <div class="code-inputs" id="codeInputs">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" aria-label="1">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" aria-label="2">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" aria-label="3">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" aria-label="4">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" aria-label="5">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" aria-label="6">
+            </div>
+            <button class="bf" id="verifyBtn" onclick="handleVerifyCode()">تحقق من الكود</button>
+            <div class="resend-timer" id="resendArea"><span id="timerText">إعادة الإرسال بعد </span><button id="resendBtn" disabled onclick="resendCode()">إعادة إرسال</button></div>
+            <div class="code-fallback" id="codeFallback" style="display:none">
+                <p>لم نتمكن من إرسال الكود لبريدك. انسخه يدوياً:</p>
+                <div class="code-big" id="fallbackCode" onclick="copyFallbackCode()" title="اضغط للنسخ"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- المحادثة -->
+    <section class="ps chat-page" id="pageChat">
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        <aside class="chat-sidebar" id="chatSidebar">
+            <div class="sidebar-header"><button class="new-chat-btn" onclick="createNewChat()"><i class="fa-solid fa-plus"></i> محادثة جديدة</button></div>
+            <div class="chat-list" id="chatList"></div>
+            <div class="sidebar-footer">
+                <div class="storage-info" id="storageInfo"></div>
+                <div class="storage-actions">
+                    <button class="storage-btn" onclick="exportChats()"><i class="fa-solid fa-download"></i> تصدير</button>
+                    <button class="storage-btn" onclick="document.getElementById('importFile').click()"><i class="fa-solid fa-upload"></i> استيراد</button>
+                    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importChats(event)">
+                </div>
+            </div>
+        </aside>
+        <div class="chat-main">
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-area">
+                <div class="chat-input-wrap"><textarea class="chat-input" id="chatInput" placeholder="اكتب رسالتك هنا..." rows="1" onkeydown="handleInputKey(event)" oninput="autoResize(this)"></textarea><button class="send-btn" id="sendBtn" onclick="sendMessage()" aria-label="إرسال"><i class="fa-solid fa-paper-plane"></i></button></div>
+                <p class="chat-input-hint">RTQ.AI — Llama 3.3 70B عبر Groq — المحادثات محفوظة تلقائياً</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- لوحة الأدمن -->
+    <section class="ps admin-page" id="pageAdmin">
+        <div class="sidebar-overlay" id="adminOverlay" onclick="toggleAdminSidebar()" style="display:none"></div>
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="admin-sidebar-header"><h3><i class="fa-solid fa-shield-halved"></i> لوحة التحكم</h3></div>
+            <div class="admin-nav">
+                <div class="admin-nav-item active" onclick="showAdminSection('dashboard',this)"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</div>
+                <div class="admin-nav-item" onclick="showAdminSection('users',this)"><i class="fa-solid fa-users"></i> المستخدمون</div>
+                <div class="admin-nav-item" onclick="showAdminSection('settings',this)"><i class="fa-solid fa-gear"></i> الإعدادات</div>
+                <div class="admin-nav-item" onclick="showAdminSection('danger',this)"><i class="fa-solid fa-triangle-exclamation"></i> منطقة الخطر</div>
+            </div>
+            <div style="padding:12px;border-top:1px solid var(--card-b)">
+                <button class="storage-btn" style="width:100%;color:var(--muted)" onclick="navigateTo('chat')"><i class="fa-solid fa-arrow-right"></i> العودة للمحادثة</button>
+            </div>
+        </aside>
+        <div class="admin-main" id="adminMain"></div>
+    </section>
+
+    <button class="mobile-menu-btn" id="mobileAdminBtn" style="display:none;position:fixed;top:72px;right:12px;z-index:101;background:var(--card);border:1px solid var(--card-b);border-radius:8px;padding:8px 12px;color:var(--fg);font-size:1.1rem" onclick="toggleAdminSidebar()"><i class="fa-solid fa-bars"></i></button>
+
+    <script>
+    /* ===== الإعدادات ===== */
+    var GROQ_API_KEY = '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';
+    var GROQ_MODEL = 'llama-3.3-70b-versatile';
+    var MAX_TOKENS = 4096;
+    var TEMPERATURE = 0.75;
+
+    /* الإعدادات القابلة للتغيير من الأدمن */
+    function getSettings() {
+        return JSON.parse(localStorage.getItem('rtq_settings') || 'null') || {
+            systemPrompt: 'أنت مساعد ذكي اسمك RTQ.AI، تعمل بنموذج Llama 3.3 70B Versatile عبر معالج Groq LPU. تجيب باللغة العربية بشكل أساسي ما لم يطلب المستخدم لغة أخرى. إجاباتك دقيقة ومنظمة. استخدم النقاط والأرقام. عند كتابة كود استخدم كتل الكود مع تحديد اللغة.',
+            temperature: 0.75,
+            maxTokens: 4096
+        };
+    }
+    function saveSettings(s) { localStorage.setItem('rtq_settings', JSON.stringify(s)); }
+
+    var pendingUser = null, currentVerifyCode = '', resendInterval = null;
+    var chats = [], currentChatId = null, isAiResponding = false;
+
+    /* ===== الجسيمات ===== */
+    (function(){var c=document.getElementById('particleCanvas'),x=c.getContext('2d'),p=[],mx=-999,my=-999;
+    function rs(){c.width=innerWidth;c.height=innerHeight}rs();
+    addEventListener('resize',function(){rs();cr()});
+    document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+    document.addEventListener('mouseleave',function(){mx=-999;my=-999});
+    function cr(){p=[];var n=Math.min(70,Math.floor(innerWidth*innerHeight/18000));for(var i=0;i<n;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,s:Math.random()*2+.5,o:Math.random()*.45+.1})}
+    cr();function an(){x.clearRect(0,0,c.width,c.height);for(var i=0;i<p.length;i++){var q=p[i];q.x+=q.vx;q.y+=q.vy;if(q.x<0||q.x>c.width)q.vx*=-1;if(q.y<0||q.y>c.height)q.vy*=-1;x.beginPath();x.arc(q.x,q.y,q.s,0,Math.PI*2);x.fillStyle='rgba(0,229,160,'+q.o+')';x.fill();for(var j=i+1;j<p.length;j++){var dx=q.x-p[j].x,dy=q.y-p[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<110){x.beginPath();x.moveTo(q.x,q.y);x.lineTo(p[j].x,p[j].y);x.strokeStyle='rgba(0,229,160,'+(0.07*(1-d/110))+')';x.lineWidth=.5;x.stroke()}}var dmx=q.x-mx,dmy=q.y-my,dm=Math.sqrt(dmx*dmx+dmy*dmy);if(dm<140){x.beginPath();x.moveTo(q.x,q.y);x.lineTo(mx,my);x.strokeStyle='rgba(0,229,160,'+(0.14*(1-dm/140))+')';x.lineWidth=.7;x.stroke()}}requestAnimationFrame(an)}an()})();
+
+    /* ===== وظائف عامة ===== */
+    function navigateTo(pg){document.querySelectorAll('.ps').forEach(function(s){s.classList.remove('active')});var t=document.getElementById('page'+pg.charAt(0).toUpperCase()+pg.slice(1));if(t)t.classList.add('active');updateNavbar(pg);window.scrollTo(0,0);document.getElementById('mobileAdminBtn').style.display=pg==='admin'?'block':'none';document.getElementById('adminOverlay').style.display='none';document.getElementById('adminSidebar').classList.remove('open')}
+    function updateNavbar(pg){var n=document.getElementById('navActions');var u=getCurrentUser();
+    if(pg==='chat'){n.innerHTML='<button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="القائمة"><i class="fa-solid fa-bars"></i></button><div class="nav-user" onclick="toggleSidebar()"><div class="nav-user-avatar">'+(u?u.name.charAt(0):'?')+'</div><span class="nav-user-name">'+(u?'@'+u.username:'')+'</span></div><button class="nav-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>'}
+    else if(pg==='admin'){n.innerHTML='<button class="mobile-menu-btn" onclick="toggleAdminSidebar()" aria-label="القائمة"><i class="fa-solid fa-bars"></i></button><div class="nav-user"><div class="nav-user-avatar" style="background:linear-gradient(135deg,var(--danger),#ff8800)"><i class="fa-solid fa-shield-halved" style="font-size:.75rem"></i></div><span class="nav-user-name">Admin</span></div><button class="nav-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>'}
+    else if(pg==='landing'){n.innerHTML='<button class="nav-btn nav-btn-ghost" onclick="navigateTo(\'auth\')">تسجيل الدخول</button><button class="nav-btn nav-btn-primary" onclick="navigateTo(\'auth\')">ابدأ مجاناً</button>'}
+    else{n.innerHTML='<button class="bl" onclick="navigateTo(\'landing\')" style="margin:0"><i class="fa-solid fa-arrow-right"></i></button>'}}
+
+    function showToast(m,t){t=t||'info';var c=document.getElementById('toastContainer'),e=document.createElement('div');e.className='toast toast-'+t;var i={success:'fa-check-circle',error:'fa-exclamation-circle',info:'fa-info-circle'};e.innerHTML='<i class="fa-solid '+(i[t]||i.info)+'"></i> '+m;c.appendChild(e);setTimeout(function(){e.remove()},4000)}
+    function togglePassword(id,btn){var inp=document.getElementById(id),ic=btn.querySelector('i');if(inp.type==='password'){inp.type='text';ic.className='fa-solid fa-eye-slash'}else{inp.type='password';ic.className='fa-solid fa-eye'}}
+    function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+    function validateUsername(u){return /^[a-zA-Z0-9_]{3,20}$/.test(u)}
+    function showError(id,m){var e=document.getElementById(id);if(e){e.textContent=m;e.classList.add('show')}}
+    function clearError(id){var e=document.getElementById(id);if(e){e.textContent='';e.classList.remove('show')}}
+    function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+    function getTime(){return new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'})}
+    function getCurrentUser(){return JSON.parse(localStorage.getItem('rtq_current_user')||'null')}
+    function switchAuthTab(tab){document.querySelectorAll('.auth-tab').forEach(function(t){t.classList.remove('active')});document.querySelector('.auth-tab[data-tab="'+tab+'"]').classList.add('active');document.getElementById('registerForm').style.display=tab==='register'?'block':'none';document.getElementById('loginForm').style.display=tab==='login'?'block':'none';document.querySelectorAll('.fe').forEach(function(e){e.classList.remove('show');e.textContent=''})}
+    function toggleSidebar(){document.getElementById('chatSidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('show')}
+    function closeSidebar(){document.getElementById('chatSidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('show')}
+    function toggleAdminSidebar(){document.getElementById('adminSidebar').classList.toggle('open');document.getElementById('adminOverlay').style.display=document.getElementById('adminSidebar').classList.contains('open')?'block':'none'}
+    function handleInputKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}}
+    function autoResize(ta){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,150)+'px'}
+    function sendSuggestion(t){document.getElementById('chatInput').value=t;sendMessage()}
+    function fmtMsg(t){var f=esc(t);f=f.replace(/```(\w*)\n?([\s\S]*?)```/g,'<pre><code>$2</code></pre>');f=f.replace(/`([^`]+)`/g,'<code>$1</code>');f=f.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');f=f.replace(/\n/g,'<br>');return f}
+    function msgHTML(role,content,time){var u=getCurrentUser();var av=role==='user'?'<div class="msg-avatar">'+(u?u.name.charAt(0):'?')+'</div>':'<div class="msg-avatar"><i class="fa-solid fa-bolt"></i></div>';var th=time?'<div class="msg-time">'+time+'</div>':'';return'<div class="message '+role+'">'+av+'<div><div class="msg-content">'+fmtMsg(content)+'</div>'+th+'</div></div>'}
+    function scrollBottom(){var c=document.getElementById('chatMessages');setTimeout(function(){c.scrollTop=c.scrollHeight},50)}
+    function copyFallbackCode(){var code=document.getElementById('fallbackCode').textContent;navigator.clipboard.writeText(code).then(function(){showToast('تم نسخ الكود!','success')})}
+
+    /* ===== إرسال كود التحقق لبريد المستخدم ===== */
+    function sendCodeEmail(email,name,code){
+        return fetch('https://formsubmit.co/ajax/'+email,{
+            method:'POST',
+            headers:{'Content-Type':'application/json','Accept':'application/json'},
+            body:JSON.stringify({
+                _subject:'كود التحقق RTQ.AI: '+code,
+                _template:'box',
+                _captcha:'false',
+                'مرحباً':name,
+                'كود التحقق':code,
+                'ملاحظة':'إذا لم تطلب هذا الكود تجاهل الرسالة'
+            })
+        }).then(function(r){return r.json()})
+    }
+
+    /* ===== التسجيل ===== */
+    async function handleRegister(e){
+        e.preventDefault();clearError('regNameError');clearError('regUsernameError');clearError('regEmailError');clearError('regPassError');
+        var name=document.getElementById('regName').value.trim();
+        var username=document.getElementById('regUsername').value.trim().toLowerCase();
+        var email=document.getElementById('regEmail').value.trim().toLowerCase();
+        var pass=document.getElementById('regPass').value;
+        var ok=true;
+        if(name.length<3){showError('regNameError','الاسم يجب أن يكون 3 أحرف على الأقل');ok=false}
+        if(!validateUsername(username)){showError('regUsernameError','اسم المستخدم: أحرف إنجليزية وأرقام وشرطة سفلية فقط (3-20)');ok=false}
+        if(!validateEmail(email)){showError('regEmailError','البريد الإلكتروني غير صالح');ok=false}
+        if(pass.length<8){showError('regPassError','كلمة المرور 8 أحرف على الأقل');ok=false}
+        var users=JSON.parse(localStorage.getItem('rtq_users')||'[]');
+        if(users.find(function(u){return u.username===username})){showError('regUsernameError','اسم المستخدم مستخدم بالفعل');ok=false}
+        if(users.find(function(u){return u.email===email})){showError('regEmailError','البريد مسجل مسبقاً');ok=false}
+        if(!ok)return;
+
+        pendingUser={name:name,username:username,email:email,password:pass,createdAt:new Date().toISOString()};
+        currentVerifyCode=String(Math.floor(100000+Math.random()*900000));
+        var btn=document.getElementById('regSubmitBtn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> جاري الإرسال...';
+
+        try{
+            var res=await sendCodeEmail(email,name,currentVerifyCode);
+            if(res.success){
+                document.getElementById('codeFallback').style.display='none';
+                showToast('تم إرسال كود التحقق!','success');
+            }else{
+                document.getElementById('codeFallback').style.display='block';
+                document.getElementById('fallbackCode').textContent=currentVerifyCode;
+                showToast('لم نتمكن من الإرسال — الكود يظهر بالأسفل','info');
+            }
+        }catch(err){
+            document.getElementById('codeFallback').style.display='block';
+            document.getElementById('fallbackCode').textContent=currentVerifyCode;
+            showToast('خطأ في الإرسال — الكود يظهر بالأسفل','info');
+        }
+        document.getElementById('verifyEmailDisplay').textContent=email;
+        navigateTo('verify');startResendTimer();
+        setTimeout(function(){document.querySelector('.code-input').focus()},300);
+        btn.disabled=false;btn.textContent='إنشاء الحساب';
+    }
+
+    /* ===== الدخول (باسم المستخدم أو البريد) ===== */
+    function handleLogin(e){
+        e.preventDefault();clearError('loginIdError');clearError('loginPassError');
+        var loginId=document.getElementById('loginId').value.trim().toLowerCase();
+        var pass=document.getElementById('loginPass').value;
+        var ok=true;
+        if(!loginId){showError('loginIdError','أدخل اسم المستخدم أو البريد');ok=false}
+        var users=JSON.parse(localStorage.getItem('rtq_users')||'[]');
+        var user=users.find(function(u){return u.email===loginId||u.username===loginId});
+        if(!user){showError('loginIdError','لا يوجد حساب بهذا الاسم أو البريد');ok=false}
+        else if(user.password!==pass){showError('loginPassError','كلمة المرور غير صحيحة');ok=false}
+        if(!ok)return;
+        localStorage.setItem('rtq_current_user',JSON.stringify(user));
+        showToast('مرحباً @'+user.username,'success');initChatPage();navigateTo('chat');
+    }
+
+    /* ===== حقول الكود ===== */
+    (function(){var inputs=document.querySelectorAll('.code-input');inputs.forEach(function(inp,idx){inp.addEventListener('input',function(e){e.target.value=e.target.value.replace(/[^0-9]/g,'');if(e.target.value&&idx<inputs.length-1)inputs[idx+1].focus()});inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!e.target.value&&idx>0)inputs[idx-1].focus();if(e.key==='Enter')handleVerifyCode()});inp.addEventListener('paste',function(e){e.preventDefault();var p=(e.clipboardData.getData('text')||'').replace(/[^0-9]/g,'').slice(0,6);p.split('').forEach(function(ch,i){if(inputs[i])inputs[i].value=ch});if(p.length>=6)inputs[5].focus()})})})();
+
+    function handleVerifyCode(){
+        var inputs=document.querySelectorAll('.code-input');var entered=Array.from(inputs).map(function(i){return i.value}).join('');
+        if(entered.length!==6){showToast('أدخل الكود كاملاً','error');return}
+        if(entered!==currentVerifyCode){showToast('الكود غير صحيح','error');inputs.forEach(function(i){i.classList.add('err-shake');setTimeout(function(){i.classList.remove('err-shake')},500)});return}
+        var users=JSON.parse(localStorage.getItem('rtq_users')||'[]');users.push(pendingUser);
+        localStorage.setItem('rtq_users',JSON.stringify(users));
+        localStorage.setItem('rtq_current_user',JSON.stringify(pendingUser));
+        if(resendInterval)clearInterval(resendInterval);
+        showToast('تم التحقق! مرحباً @'+pendingUser.username,'success');
+        pendingUser=null;currentVerifyCode='';inputs.forEach(function(i){i.value=''});
+        document.getElementById('codeFallback').style.display='none';
+        initChatPage();navigateTo('chat');
+    }
+
+    function startResendTimer(){var s=60,btn=document.getElementById('resendBtn'),txt=document.getElementById('timerText');btn.disabled=true;if(resendInterval)clearInterval(resendInterval);resendInterval=setInterval(function(){s--;txt.textContent='إعادة الإرسال بعد '+s+' ثانية ';if(s<=0){clearInterval(resendInterval);txt.textContent='';btn.disabled=false}},1000)}
+
+    async function resendCode(){
+        if(!pendingUser)return;currentVerifyCode=String(Math.floor(100000+Math.random()*900000));
+        try{await sendCodeEmail(pendingUser.email,pendingUser.name,currentVerifyCode);showToast('تم إرسال كود جديد!','success');startResendTimer();document.querySelectorAll('.code-input').forEach(function(i){i.value=''});document.querySelector('.code-input').focus();document.getElementById('codeFallback').style.display='none'}
+        catch(err){document.getElementById('codeFallback').style.display='block';document.getElementById('fallbackCode').textContent=currentVerifyCode;showToast('خطأ — الكود بالأسفل','info')}
+    }
+
+    function handleLogout(){localStorage.removeItem('rtq_current_user');chats=[];currentChatId=null;showToast('تم تسجيل الخروج','info');navigateTo('landing')}
+
+    /* ===== المحادثات ===== */
+    function initChatPage(){var u=getCurrentUser();if(!u)return;chats=JSON.parse(localStorage.getItem('rtq_chats_'+u.username)||'[]');if(!chats.length){createNewChat()}else{currentChatId=chats[0].id;renderChatList();loadChatMessages()}updateStorageInfo()}
+
+    function createNewChat(){var u=getCurrentUser();if(!u)return;chats.unshift({id:Date.now().toString(),title:'محادثة جديدة',messages:[],createdAt:new Date().toISOString()});currentChatId=chats[0].id;saveChats();renderChatList();showWelcome();closeSidebar()}
+
+    function saveChats(){var u=getCurrentUser();if(!u)return;localStorage.setItem('rtq_chats_'+u.username,JSON.stringify(chats));updateStorageInfo()}
+
+    function updateStorageInfo(){var u=getCurrentUser();if(!u)return;var d=localStorage.getItem('rtq_chats_'+u.username)||'';var kb=(new Blob([d]).size/1024).toFixed(1);var el=document.getElementById('storageInfo');if(el)el.textContent=chats.length+' محادثة — '+kb+' KB'}
+
+    function renderChatList(){var list=document.getElementById('chatList');if(!chats.length){list.innerHTML='<p style="text-align:center;color:var(--muted);font-size:.83rem;padding:20px">لا توجد محادثات</p>';return}var h='';for(var i=0;i<chats.length;i++){var c=chats[i];h+='<div class="chat-list-item'+(c.id===currentChatId?' active':'')+'" onclick="switchChat(\''+c.id+'\')"><i class="fa-regular fa-comment"></i><span class="ct">'+esc(c.title)+'</span><button class="dc" onclick="event.stopPropagation();deleteChat(\''+c.id+'\')" aria-label="حذف"><i class="fa-solid fa-trash"></i></button></div>'}list.innerHTML=h}
+
+    function switchChat(id){currentChatId=id;renderChatList();loadChatMessages();closeSidebar()}
+    function deleteChat(id){chats=chats.filter(function(c){return c.id!==id});saveChats();if(currentChatId===id){chats.length?switchChat(chats[0].id):createNewChat()}else renderChatList();showToast('تم الحذف','info')}
+    function getCurChat(){for(var i=0;i<chats.length;i++){if(chats[i].id===currentChatId)return chats[i]}return null}
+
+    function showWelcome(){document.getElementById('chatMessages').innerHTML='<div class="welcome-msg" id="welcomeMsg"><div class="wi"><i class="fa-solid fa-bolt"></i></div><h2>مرحباً @'+(getCurrentUser()?getCurrentUser().username:'')+'</h2><p>أنا مساعدك الذكي. اسألني أي سؤال.</p><div class="welcome-model"><i class="fa-solid fa-microchip"></i> llama-3.3-70b-versatile</div><div class="suggestions"><button class="suggestion-btn" onclick="sendSuggestion(\'اشرح لي مميزات نموذج Llama 3.3 70B\')">ما مميزات Llama 3.3؟</button><button class="suggestion-btn" onclick="sendSuggestion(\'اكتب كود Python لتطبيق Flask بسيط\')">كود Python Flask</button><button class="suggestion-btn" onclick="sendSuggestion(\'خطة تعلم 6 أشهر لمهندس برمجيات\')">خطة تعلم 6 أشهر</button><button class="suggestion-btn" onclick="sendSuggestion(\'ما هو معالج Groq LPU؟\')">ما هو Groq LPU؟</button></div></div>'}
+
+    function loadChatMessages(){var chat=getCurChat();var c=document.getElementById('chatMessages');if(!chat||!chat.messages.length){showWelcome();return}var h='';for(var i=0;i<chat.messages.length;i++){h+=msgHTML(chat.messages[i].role,chat.messages[i].content,chat.messages[i].time)}c.innerHTML=h;scrollBottom()}
+
+    /* ===== إرسال رسالة — الإصلاح: تحويل 'ai' إلى 'assistant' ===== */
+    async function sendMessage(){
+        var input=document.getElementById('chatInput');var text=input.value.trim();
+        if(!text||isAiResponding)return;var chat=getCurChat();if(!chat)return;
+        var w=document.getElementById('welcomeMsg');if(w)w.remove();
+        var time=getTime();chat.messages.push({role:'user',content:text,time:time});
+        var uc=0;for(var i=0;i<chat.messages.length;i++){if(chat.messages[i].role==='user')uc++}
+        if(uc===1){chat.title=text.slice(0,50)+(text.length>50?'...':'');renderChatList()}
+        saveChats();
+        var container=document.getElementById('chatMessages');
+        container.insertAdjacentHTML('beforeend',msgHTML('user',text,time));
+        input.value='';input.style.height='auto';scrollBottom();
+        isAiResponding=true;document.getElementById('sendBtn').disabled=true;
+        var typing=document.createElement('div');typing.className='message ai';typing.id='typingIndicator';
+        typing.innerHTML='<div class="msg-avatar"><i class="fa-solid fa-bolt"></i></div><div class="msg-content"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+        container.appendChild(typing);scrollBottom();
+
+        try{
+            var settings=getSettings();
+            var apiMsgs=[{role:'system',content:settings.systemPrompt}];
+            /* الإصلاح الأساسي: تحويل 'ai' إلى 'assistant' لـ Groq */
+            for(var i=0;i<chat.messages.length;i++){
+                var r=chat.messages[i].role==='ai'?'assistant':chat.messages[i].role;
+                apiMsgs.push({role:r,content:chat.messages[i].content});
+            }
+            var response=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+                method:'POST',
+                headers:{'Authorization':'Bearer '+GROQ_API_KEY,'Content-Type':'application/json'},
+                body:JSON.stringify({model:GROQ_MODEL,messages:apiMsgs,temperature:settings.temperature,max_tokens:settings.maxTokens})
+            });
+            if(!response.ok){var ed=await response.json().catch(function(){return{}});throw new Error(ed.error&&ed.error.message?ed.error.message:'HTTP '+response.status)}
+            var data=await response.json();
+            var aiText=data.choices[0]&&data.choices[0].message?data.choices[0].message.content:'عذراً، لم أتمكن من المعالجة.';
+            var aiTime=getTime();chat.messages.push({role:'ai',content:aiText,time:aiTime});
+            saveChats();typing.remove();container.insertAdjacentHTML('beforeend',msgHTML('ai',aiText,aiTime));scrollBottom();
+        }catch(err){
+            console.error('Groq:',err);typing.remove();
+            var msg='حدث خطأ. ';if(err.message.indexOf('API key')!==-1||err.message.indexOf('401')!==-1)msg+='مفتاح Groq غير صالح.';else if(err.message.indexOf('rate')!==-1||err.message.indexOf('429')!==-1)msg+='تجاوز حد الطلبات. انتظر.';else msg+=err.message;
+            container.insertAdjacentHTML('beforeend',msgHTML('ai',msg,getTime()));scrollBottom();showToast('خطأ في الاتصال','error');
+        }finally{isAiResponding=false;document.getElementById('sendBtn').disabled=false;input.focus()}
+    }
+
+    /* ===== تصدير / استيراد ===== */
+    function exportChats(){if(!chats.length){showToast('لا توجد محادثات','info');return}var blob=new Blob([JSON.stringify({from:'RTQ.AI',chats:chats},null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rtq-chats-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href);showToast('تم التصدير','success')}
+
+    function importChats(event){
+        var file=event.target.files[0];if(!file)return;
+        var reader=new FileReader();
+        reader.onload=function(e){
+            try{
+                var data=JSON.parse(e.target.result);
+                /* ===== كشف ملف الأدمن السري ===== */
+                if(data._rtq_admin==='RTQ_SECRET_2025'){
+                    localStorage.setItem('rtq_admin','true');
+                    showToast('تم تفعيل لوحة التحكم!','success');
+                    renderAdminDashboard();navigateTo('admin');event.target.value='';return;
+                }
+                if(!data.chats||!Array.isArray(data.chats)){showToast('ملف غير صالح','error');return}
+                var exist={};for(var i=0;i<chats.length;i++)exist[chats[i].id]=true;
+                var added=0;for(var i=0;i<data.chats.length;i++){if(!exist[data.chats[i].id]){chats.unshift(data.chats[i]);added++}}
+                saveChats();currentChatId=chats[0].id;renderChatList();loadChatMessages();
+                showToast('تم استيراد '+added+' محادثة','success');
+            }catch(err){showToast('فشل قراءة الملف','error')}
+        };reader.readAsText(file);event.target.value='';
+    }
+
+    /* ===== لوحة الأدمن ===== */
+    function renderAdminDashboard(){showAdminSection('dashboard',document.querySelector('.admin-nav-item'))}
+
+    function showAdminSection(section,el){
+        document.querySelectorAll('.admin-nav-item').forEach(function(n){n.classList.remove('active')});
+        if(el)el.classList.add('active');
+        var main=document.getElementById('adminMain');var users=JSON.parse(localStorage.getItem('rtq_users')||'[]');
+        var totalChats=0,totalMsgs=0;
+        for(var i=0;i<users.length;i++){var uc=JSON.parse(localStorage.getItem('rtq_chats_'+users[i].username)||'[]');totalChats+=uc.length;for(var j=0;j<uc.length;j++)totalMsgs+=uc[j].messages.length}
+
+        if(section==='dashboard'){
+            main.innerHTML='<h2 class="admin-title">الإحصائيات</h2><div class="admin-stats"><div class="admin-stat"><div class="stat-val">'+users.length+'</div><div class="stat-label">مستخدم مسجل</div></div><div class="admin-stat"><div class="stat-val">'+totalChats+'</div><div class="stat-label">محادثة</div></div><div class="admin-stat"><div class="stat-val">'+totalMsgs+'</div><div class="stat-label">رسالة</div></div><div class="admin-stat"><div class="stat-val">'+(localStorage.getItem('rtq_admin')?'مفعّل':'معطّل')+'</div><div class="stat-label">وضع الأدمن</div></div></div>';
+        }else if(section==='users'){
+            var rows='';for(var i=0;i<users.length;i++){var u=users[i];var uc=JSON.parse(localStorage.getItem('rtq_chats_'+u.username)||'[]');rows+='<tr><td>'+(i+1)+'</td><td style="color:var(--accent);font-weight:600">@'+esc(u.username)+'</td><td>'+esc(u.name)+'</td><td class="email-cell">'+esc(u.email)+'</td><td>'+uc.length+'</td><td style="font-size:.78rem;color:var(--muted)">'+new Date(u.createdAt).toLocaleDateString('ar-SA')+'</td><td><button class="admin-btn admin-btn-view" onclick="viewUserChats(\''+u.username+'\')">عرض</button> <button class="admin-btn admin-btn-del" onclick="deleteUser(\''+u.username+'\')">حذف</button></td></tr>'}
+            main.innerHTML='<h2 class="admin-title">المستخدمون ('+users.length+')</h2>'+(users.length?'<div style="overflow-x:auto"><table class="admin-table"><thead><tr><th>#</th><th>المستخدم</th><th>الاسم</th><th>البريد</th><th>محادثات</th><th>تاريخ التسجيل</th><th>إجراءات</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p style="color:var(--muted);text-align:center;padding:40px">لا يوجد مستخدمون</p>')+'<div id="userChatsArea"></div>';
+        }else if(section==='settings'){
+            var s=getSettings();main.innerHTML='<h2 class="admin-title">إعدادات النظام</h2><div class="admin-settings-group"><label>System Prompt</label><textarea class="admin-textarea" id="adminPrompt">'+esc(s.systemPrompt)+'</textarea></div><div class="admin-settings-group"><label>Temperature ('+s.temperature+')</label><input type="range" min="0" max="1" step="0.05" value="'+s.temperature+'" class="admin-input" style="padding:4px" id="adminTemp" oninput="this.previousElementSibling.textContent=\'Temperature (\'+this.value+\')\'"></div><div class="admin-settings-group"><label>Max Tokens</label><input type="number" class="admin-input" id="adminTokens" value="'+s.maxTokens+'" min="256" max="8192"></div><button class="bf" style="max-width:200px" onclick="saveAdminSettings()">حفظ الإعدادات</button>';
+        }else if(section==='danger'){
+            main.innerHTML='<h2 class="admin-title">منطقة الخطر</h2><div class="admin-danger-zone"><h3><i class="fa-solid fa-triangle-exclamation"></i> إجراءات لا يمكن التراجع عنها</h3><button class="admin-danger-btn" onclick="adminClearAllChats()"><i class="fa-solid fa-comments"></i> حذف كل المحادثات</button><button class="admin-danger-btn" onclick="adminClearAllUsers()"><i class="fa-solid fa-users-slash"></i> حذف كل المستخدمين</button><button class="admin-danger-btn" onclick="adminResetEverything()" style="background:rgba(255,77,106,.25)"><i class="fa-solid fa-bomb"></i> إعادة تعيين كل شيء</button><button class="admin-danger-btn" onclick="deactivateAdmin()" style="background:var(--card);color:var(--muted);border:1px solid var(--card-b)"><i class="fa-solid fa-power-off"></i> تعطيل وضع الأدمن</button></div>';
+        }
+    }
+
+    function viewUserChats(username){
+        var uc=JSON.parse(localStorage.getItem('rtq_chats_'+username)||'[]');
+        var area=document.getElementById('userChatsArea');
+        if(!uc.length){area.innerHTML='<div class="admin-user-chats" style="margin-top:20px"><h4>@'+username+' — لا توجد محادثات</h4></div>';return}
+        var h='<div class="admin-user-chats" style="margin-top:20px"><h4>@'+username+' — '+uc.length+' محادثة</h4>';
+        for(var i=0;i<uc.length;i++){var c=uc[i];h+='<div class="admin-chat-item"><span>'+esc(c.title)+' ('+c.messages.length+' رسالة)</span><button class="admin-btn admin-btn-del" onclick="adminDeleteChat(\''+username+'\',\''+c.id+'\')">حذف</button></div>'}
+        h+='</div>';area.innerHTML=h;
+    }
+
+    function deleteUser(username){
+        if(!confirm('حذف المستخدم @'+username+' وكل محادثاته؟'))return;
+        var users=JSON.parse(localStorage.getItem('rtq_users')||'[]');
+        users=users.filter(function(u){return u.username!==username});
+        localStorage.setItem('rtq_users',JSON.stringify(users));
+        localStorage.removeItem('rtq_chats_'+username);
+        if(localStorage.getItem('rtq_current_user')){var cur=getCurrentUser();if(cur&&cur.username===username)localStorage.removeItem('rtq_current_user')}
+        showToast('تم حذف المستخدم','success');showAdminSection('users',document.querySelectorAll('.admin-nav-item')[1]);
+    }
+
+    function adminDeleteChat(username,chatId){
+        var uc=JSON.parse(localStorage.getItem('rtq_chats_'+username)||'[]');
+        uc=uc.filter(function(c){return c.id!==chatId});
+        localStorage.setItem('rtq_chats_'+username,JSON.stringify(uc));
+        showToast('تم حذف المحادثة','success');viewUserChats(username);
+    }
+
+    function saveAdminSettings(){
+        var s={systemPrompt:document.getElementById('adminPrompt').value,temperature:parseFloat(document.getElementById('adminTemp').value),maxTokens:parseInt(document.getElementById('adminTokens').value)};
+        saveSettings(s);showToast('تم حفظ الإعدادات','success');
+    }
+
+    function adminClearAllChats(){if(!confirm('حذف كل المحادثات لكل المستخدمين؟'))return;var users=JSON.parse(localStorage.getItem('rtq_users')||'[]');users.forEach(function(u){localStorage.removeItem('rtq_chats_'+u.username)});showToast('تم حذف كل المحادثات','success')}
+    function adminClearAllUsers(){if(!confirm('حذف كل المستخدمين؟'))return;var users=JSON.parse(localStorage.getItem('rtq_users')||'[]');users.forEach(function(u){localStorage.removeItem('rtq_chats_'+u.username)});localStorage.removeItem('rtq_users');localStorage.removeItem('rtq_current_user');showToast('تم حذف كل المستخدمين','success');showAdminSection('dashboard',document.querySelector('.admin-nav-item'))}
+    function adminResetEverything(){if(!confirm('إعادة تعيين كل شيء؟ لا يمكن التراجع!'))return;localStorage.clear();showToast('تم إعادة التعيين','success');navigateTo('landing')}
+    function deactivateAdmin(){localStorage.removeItem('rtq_admin');showToast('تم تعطيل وضع الأدمن','info');navigateTo('landing')}
+
+    /* ===== فحص الجلسة ===== */
+    (function(){var u=getCurrentUser();if(u){initChatPage();navigateTo('chat')}else if(localStorage.getItem('rtq_admin')==='true'){navigateTo('admin')}else navigateTo('landing')})();
+    </script>
+</body>
+</html>
