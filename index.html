@@ -3,198 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RTQ.AI - ذكاء اصطناعي متقدم</title>
-    <meta name="theme-color" content="#050a08">
-    <link rel="icon" href="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>RTQ.ai - الذكاء الاصطناعي</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="bgfx"><div class="bl"></div><div class="bl"></div><div class="bl"></div></div>
-    <div class="bggrid"></div>
-    <div class="bgptc" id="bgptc"></div>
 
-    <div class="page on" id="authpage">
-        <div class="acard">
-            <div class="alogo">
-                <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="RTQ.AI" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div style="display:none;width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--ac),var(--ac2));margin:0 auto 12px;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:var(--bg);border:2px solid rgba(0,232,143,.1)">RTQ</div>
-                <div class="abd"><i class="fas fa-bolt"></i> GROQ + OPENAI</div>
-                <h1>RTQ<span>.AI</span></h1>
-                <p class="asub">ذكاء اصطناعي متقدم تحت أمرك</p>
+    <div class="container">
+        <header>
+            <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="RTQ.ai Logo">
+            <h1>RTQ.ai</h1>
+        </header>
+
+        <!-- واجهة تسجيل الدخول -->
+        <div id="loginScreen" class="screen active">
+            <div class="form-container">
+                <h2>تسجيل الدخول</h2>
+                <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+                <input type="password" id="loginPassword" placeholder="كلمة المرور">
+                <button class="primary-btn" onclick="login()">دخول</button>
+                <div class="link" onclick="switchScreen('registerScreen')">ليس لديك حساب؟ إنشاء حساب جديد</div>
             </div>
-            <div class="fmsg er" id="aerr"><i class="fas fa-exclamation-triangle"></i><span id="aerrt"></span></div>
-            <div class="fmsg ok" id="asuc"><i class="fas fa-check-circle"></i><span id="asuct"></span></div>
+        </div>
 
-            <form class="aform on" id="lform" autocomplete="off" novalidate>
-                <div class="fg"><label>اسم المستخدم</label><div class="iw"><input type="text" id="luser" placeholder="أدخل اسم المستخدم" required><i class="fas fa-user fi"></i></div></div>
-                <div class="fg"><label>كلمة المرور</label><div class="iw"><input type="password" id="lpass" placeholder="أدخل كلمة المرور" required><i class="fas fa-lock fi"></i><button type="button" class="tp" onclick="tglP('lpass',this)"><i class="fas fa-eye"></i></button></div></div>
-                <button type="submit" class="btn bp"><span class="bt">تسجيل الدخول</span><span class="bsp"></span></button>
-                <div class="ff" style="display:flex;justify-content:space-between"><a onclick="swA('fp')">نسيت كلمة المرور؟</a><a onclick="swA('reg')">إنشاء حساب</a></div>
-            </form>
+        <!-- واجهة إنشاء الحساب -->
+        <div id="registerScreen" class="screen">
+            <form class="form-container" id="registerForm" onsubmit="register(event)">
+                <h2>إنشاء حساب</h2>
+                <input type="text" id="regName" placeholder="الاسم الكامل" required>
+                <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
+                
+                <!-- الحقول الجديدة -->
+                <input type="tel" id="regPhone" placeholder="رقم الهاتف (اختياري)">
+                <select id="regCountry" required>
+                    <option value="" disabled selected>اختر بلدك</option>
+                    <option value="مصر">مصر</option>
+                    <option value="السعودية">السعودية</option>
+                    <option value="الإمارات">الإمارات</option>
+                    <option value="المغرب">المغرب</option>
+                    <option value="الجزائر">الجزائر</option>
+                    <option value="أخرى">دولة أخرى</option>
+                </select>
 
-            <form class="aform" id="rform" autocomplete="off" novalidate>
-                <div class="frow">
-                    <div class="fg"><label>اسم المستخدم <span style="color:var(--er)">*</span></label><div class="iw"><input type="text" id="ruser" placeholder="أحرف إنجليزية وأرقام" required><i class="fas fa-at fi"></i></div><div class="fe" id="eru"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                    <div class="fg"><label>الاسم الكامل <span style="color:var(--er)">*</span></label><div class="iw"><input type="text" id="rname" placeholder="اسمك بالعربية" required><i class="fas fa-id-card fi"></i></div><div class="fe" id="ern"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                </div>
-                <div class="fg"><label>البريد الإلكتروني <span style="color:var(--er)">*</span></label><div class="iw"><input type="email" id="remail" placeholder="example@email.com" required dir="ltr" style="text-align:right"><i class="fas fa-envelope fi"></i></div><div class="fe" id="ere"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <div class="frow">
-                    <div class="fg"><label>رقم الهاتف</label><div class="iw"><input type="text" id="rphone" placeholder="اختياري" dir="ltr" style="text-align:right"><i class="fas fa-phone fi"></i></div></div>
-                    <div class="fg"><label>البلد</label><div class="iw"><select id="rcountry"><option value="">اختر بلدك</option><option value="SA">السعودية</option><option value="AE">الإمارات</option><option value="EG">مصر</option><option value="JO">الأردن</option><option value="IQ">العراق</option><option value="KW">الكويت</option><option value="QA">قطر</option><option value="BH">البحرين</option><option value="OM">عُمان</option><option value="LB">لبنان</option><option value="SY">سوريا</option><option value="PS">فلسطين</option><option value="LY">ليبيا</option><option value="TN">تونس</option><option value="DZ">الجزائر</option><option value="MA">المغرب</option><option value="SD">السودان</option><option value="YE">اليمن</option><option value="US">أمريكا</option><option value="GB">بريطانيا</option><option value="OTHER">أخرى</option></select><i class="fas fa-globe fi"></i></div></div>
-                </div>
-                <div class="frow">
-                    <div class="fg"><label>كلمة المرور <span style="color:var(--er)">*</span></label><div class="iw"><input type="password" id="rpass" placeholder="6 أحرف على الأقل" required><i class="fas fa-lock fi"></i><button type="button" class="tp" onclick="tglP('rpass',this)"><i class="fas fa-eye"></i></button></div><div class="fe" id="erp"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                    <div class="fg"><label>تأكيد كلمة المرور <span style="color:var(--er)">*</span></label><div class="iw"><input type="password" id="rconf" placeholder="أعد الكتابة" required><i class="fas fa-lock fi"></i><button type="button" class="tp" onclick="tglP('rconf',this)"><i class="fas fa-eye"></i></button></div><div class="fe" id="erc"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                </div>
-                <button type="submit" class="btn bp" id="rsubmit"><span class="bt">إنشاء الحساب</span><span class="bsp"></span></button>
-                <div class="ff"><a onclick="swA('login')">لديك حساب؟ تسجيل الدخول</a></div>
-            </form>
-
-            <form class="aform" id="vform" autocomplete="off" novalidate>
-                <div class="codebox"><div class="cbicon"><i class="fas fa-envelope-open-text"></i></div><p>تم إرسال رمز التحقق</p><p class="csub">تحقق من صندوق الوارد والبريد المزعج</p><p class="ceml" id="vemail"></p></div>
-                <div class="fg"><label>أدخل الرمز المكون من 6 أرقام</label><div class="cinp" id="cinps"><input type="text" maxlength="1" inputmode="numeric" data-i="0"><input type="text" maxlength="1" inputmode="numeric" data-i="1"><input type="text" maxlength="1" inputmode="numeric" data-i="2"><input type="text" maxlength="1" inputmode="numeric" data-i="3"><input type="text" maxlength="1" inputmode="numeric" data-i="4"><input type="text" maxlength="1" inputmode="numeric" data-i="5"></div></div>
-                <div class="rrow"><button type="button" id="rsbtn" onclick="resendCd()" disabled><i class="fas fa-redo"></i> إعادة الإرسال (<span id="rstmr">60</span>ث)</button></div>
-                <button type="submit" class="btn bp"><span class="bt">تحقق من الكود</span><span class="bsp"></span></button>
-                <div class="ff"><a onclick="swA('reg')">العودة لتعديل البيانات</a></div>
-            </form>
-
-            <form class="aform" id="fpform" autocomplete="off" novalidate>
-                <div class="codebox"><div class="cbicon" style="background:var(--erbg);border-color:var(--erbr);color:var(--er)"><i class="fas fa-key"></i></div><p>استعادة كلمة المرور</p><p class="csub">أدخل بريدك الإلكتروني المسجل</p></div>
-                <div class="fg"><label>البريد الإلكتروني</label><div class="iw"><input type="email" id="fpemail" placeholder="بريدك المسجل في الحساب" required dir="ltr" style="text-align:right"><i class="fas fa-envelope fi"></i></div><div class="fe" id="erfp"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <button type="submit" class="btn bp"><span class="bt">إرسال رمز التحقق</span><span class="bsp"></span></button>
-                <div class="ff"><a onclick="swA('login')">العودة لتسجيل الدخول</a></div>
-            </form>
-
-            <form class="aform" id="fpvform" autocomplete="off" novalidate>
-                <div class="codebox"><div class="cbicon"><i class="fas fa-shield-alt"></i></div><p>أدخل رمز التحقق</p><p class="csub">تم الإرسال إلى <span id="fpveml" style="color:var(--ac)"></span></p></div>
-                <div class="fg"><label>الرمز المكون من 6 أرقام</label><div class="cinp" id="fpcinps"><input type="text" maxlength="1" inputmode="numeric" data-i="0"><input type="text" maxlength="1" inputmode="numeric" data-i="1"><input type="text" maxlength="1" inputmode="numeric" data-i="2"><input type="text" maxlength="1" inputmode="numeric" data-i="3"><input type="text" maxlength="1" inputmode="numeric" data-i="4"><input type="text" maxlength="1" inputmode="numeric" data-i="5"></div></div>
-                <button type="submit" class="btn bp"><span class="bt">تحقق من الرمز</span><span class="bsp"></span></button>
-                <div class="ff"><a onclick="swA('fp')">العودة</a></div>
-            </form>
-
-            <form class="aform" id="fpnform" autocomplete="off" novalidate>
-                <div class="codebox"><div class="cbicon" style="background:rgba(0,184,212,.08);border-color:rgba(0,184,212,.12);color:var(--inf)"><i class="fas fa-lock-open"></i></div><p>تعيين كلمة مرور جديدة</p></div>
-                <div class="fg"><label>كلمة المرور الجديدة</label><div class="iw"><input type="password" id="fpnpass" placeholder="6 أحرف على الأقل" required><i class="fas fa-lock fi"></i><button type="button" class="tp" onclick="tglP('fpnpass',this)"><i class="fas fa-eye"></i></button></div><div class="fe" id="erfpn"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <div class="fg"><label>تأكيد كلمة المرور الجديدة</label><div class="iw"><input type="password" id="fpnconf" placeholder="أعد كتابة كلمة المرور" required><i class="fas fa-lock fi"></i><button type="button" class="tp" onclick="tglP('fpnconf',this)"><i class="fas fa-eye"></i></button></div><div class="fe" id="erfpc"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <button type="submit" class="btn bp"><span class="bt">حفظ كلمة المرور الجديدة</span><span class="bsp"></span></button>
-                <div class="ff"><a onclick="swA('login')">العودة لتسجيل الدخول</a></div>
+                <input type="password" id="regPassword" placeholder="كلمة المرور" required>
+                <button type="submit" class="primary-btn">تسجيل وإنشاء</button>
+                <div class="link" onclick="switchScreen('loginScreen')">لديك حساب بالفعل؟ تسجيل الدخول</div>
             </form>
         </div>
-    </div>
 
-    <div class="mntov" id="mntov">
-        <div class="mnticon"><i class="fas fa-tools"></i></div>
-        <h2>الموقع تحت الصيانة</h2>
-        <p id="mntmsg">نعمل على تحسين الخدمة — عد لاحقاً</p>
-    </div>
-
-    <div id="apppage">
-        <aside class="sb" id="sb">
-            <div class="sbh">
-                <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="RTQ.AI" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div style="display:none;width:32px;height:32px;border-radius:7px;background:linear-gradient(135deg,var(--ac),var(--ac2));align-items:center;justify-content:center;font-weight:900;color:var(--bg);font-size:8px;border:1.5px solid rgba(0,232,143,.1)">RTQ</div>
-                <h2>RTQ<span>.AI</span></h2>
+        <!-- واجهة التحقق من الإيميل -->
+        <div id="verifyScreen" class="screen">
+            <div class="form-container">
+                <h2>التحقق من البريد</h2>
+                <p style="text-align: center; color: var(--text-muted); font-size: 13px;">تم إرسال كود التحقق إلى بريدك الإلكتروني.</p>
+                <input type="text" id="verifyCode" placeholder="أدخل الكود (للتجربة اكتب 1234)">
+                <button class="primary-btn" onclick="verifyEmail()">تحقق الآن</button>
             </div>
-            <div class="sba"><button class="btn bs bsm" onclick="newConv()"><i class="fas fa-plus"></i> محادثة جديدة</button></div>
-            <div class="cl" id="clist"><div class="ecv" id="ecv"><i class="fas fa-comments"></i><p>لا توجد محادثات</p></div></div>
-            <div class="sbf">
-                <div class="uav" id="uav">م</div>
-                <div class="uinf"><div class="unm" id="udn">المستخدم</div><div class="uem" id="ude">u@e.com</div></div>
-                <div class="fact">
-                    <button class="bi" onclick="openSet()" title="الإعدادات"><i class="fas fa-cog"></i></button>
-                    <button class="bi" id="devbtn" onclick="openDev()" title="لوحة المطور" style="display:none;color:var(--inf)"><i class="fas fa-code"></i></button>
-                    <button class="bi" onclick="logout()" title="خروج"><i class="fas fa-sign-out-alt"></i></button>
-                </div>
-            </div>
-        </aside>
-        <div class="sbov" id="sbov" onclick="clsSB()"></div>
-        <main class="ca">
-            <div class="ch">
-                <button class="mbtn" onclick="tglSB()"><i class="fas fa-bars"></i></button>
-                <div class="ctw"><div class="ctit" id="ctit">محادثة جديدة</div><div class="cmb" id="cmbdg"></div></div>
-                <div class="cact">
-                    <select class="msel" id="msel" onchange="chModel(this.value)"></select>
-                    <button class="bi" onclick="exportConv()" title="تصدير"><i class="fas fa-download"></i></button>
-                    <button class="bi" onclick="clrChat()" title="مسح"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-            <div class="msgs" id="msgs"></div>
-            <div class="ia">
-                <div class="iw2">
-                    <textarea id="cinput" rows="1" placeholder="اكتب رسالتك هنا..."></textarea>
-                    <button class="sbtn" id="sbtn" onclick="sendMsg()"><i class="fas fa-paper-plane"></i></button>
-                </div>
-                <div class="ihnt">RTQ.AI — Enter للإرسال | Shift+Enter لسطر جديد</div>
-            </div>
-        </main>
-    </div>
-
-    <!-- نافذة الإعدادات -->
-    <div class="mo" id="setmo">
-        <div class="md">
-            <div class="mdh"><h3><i class="fas fa-cog" style="color:var(--ac);margin-left:6px"></i>الإعدادات</h3><button class="cbtn" onclick="clMo('setmo')"><i class="fas fa-times"></i></button></div>
-            <div class="mdb">
-                <div class="ss"><h4><i class="fas fa-sliders-h" style="margin-left:4px"></i>النموذج</h4>
-                    <div class="sr"><div><label>درجة الحرارة</label><div class="ds">0 دقيق | 1 إبداعي | 2 عشوائي</div></div><input type="number" id="stmp" min="0" max="2" step="0.1" value="0.7" dir="ltr"></div>
-                    <div class="sr"><div><label>الحد الأقصى للرموز</label><div class="ds">256 - 32768</div></div><input type="number" id="smtk" min="256" max="32768" step="256" value="4096" dir="ltr"></div>
-                </div>
-            </div>
-            <div class="mdf"><button class="btn bp" onclick="saveSet()" style="width:auto;padding:9px 24px"><i class="fas fa-save"></i> حفظ</button></div>
         </div>
-    </div>
 
-    <!-- نافذة لوحة المطور -->
-    <div class="mo" id="devmo">
-        <div class="md xl">
-            <div class="mdh"><h3><span class="dvbdg"><i class="fas fa-code"></i> لوحة المطور</span></h3><button class="cbtn" onclick="clMo('devmo')"><i class="fas fa-times"></i></button></div>
-            <div class="dvtabs">
-                <button class="dvtb on" onclick="swDT(0,this)">نظرة عامة</button>
-                <button class="dvtb" onclick="swDT(1,this)">المستخدمين</button>
-                <button class="dvtb" onclick="swDT(2,this)">النماذج</button>
-                <button class="dvtb" onclick="swDT(3,this)">النظام</button>
-            </div>
-            <div class="dvtc on" id="dtc0">
-                <div class="astats"><div class="ast"><div class="sn" id="dsu">0</div><div class="sl">مستخدم</div></div><div class="ast"><div class="sn" id="dsm">0</div><div class="sl">نموذج مفعّل</div></div><div class="ast"><div class="sn" id="dsc">0</div><div class="sl">محادثة</div></div></div>
-                <div class="ss"><h4><i class="fas fa-broadcast-tower" style="margin-left:4px"></i>رسالة بث</h4>
-                    <div class="sr" style="flex-direction:column;align-items:stretch;gap:6px">
-                        <input type="text" id="dbroad" placeholder="رسالة تظهر لجميع المستخدمين" style="width:100%;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rsm);padding:9px 12px;color:var(--tx);font-size:12px;outline:none">
-                        <button class="btn bs bsm" onclick="saveBroad()" style="width:fit-content"><i class="fas fa-paper-plane"></i> بث</button>
-                    </div>
+        <!-- واجهة المحادثة والذكاء الاصطناعي -->
+        <div id="chatScreen" class="screen" style="padding: 0;">
+            <div class="chat-container">
+                <div class="model-selector">
+                    <span style="color: var(--accent-green); font-weight: bold;">النموذج النشط: Llama 3.3 Versatile (Groq)</span>
                 </div>
-            </div>
-            <div class="dvtc" id="dtc1">
-                <div style="overflow-x:auto"><table class="utbl"><thead><tr><th>المستخدم</th><th>الاسم</th><th>البريد</th><th>الهاتف</th><th>البلد</th><th>IP</th><th>التسجيل</th><th>إجراء</th></tr></thead><tbody id="utbody"></tbody></table></div>
-            </div>
-            <div class="dvtc" id="dtc2">
-                <div class="ss"><h4><i class="fas fa-robot" style="margin-left:4px"></i>النماذج</h4><div id="dmlist"></div></div>
-            </div>
-            <div class="dvtc" id="dtc3">
-                <div class="ss"><h4><i class="fas fa-tools" style="margin-left:4px"></i>وضع الصيانة</h4>
-                    <div class="sr"><div><label>تفعيل وضع الصيانة</label><div class="ds">يمنع دخول المستخدمين (المطور مستثنى)</div></div><label class="tsw"><input type="checkbox" id="dmnt"><span class="sl"></span></label></div>
-                    <div class="sr" style="flex-direction:column;align-items:stretch;gap:5px"><label>رسالة الصيانة</label><input type="text" id="dmntmsg" placeholder="الموقع تحت الصيانة..." style="width:100%;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rsm);padding:8px 10px;color:var(--tx);font-size:11px;outline:none"></div>
+                <div class="messages" id="chatMessages">
+                    <div class="message bot">مرحباً بك في RTQ.ai. أنا هنا لمساعدتك والإجابة على استفساراتك. كيف يمكنني خدمتك اليوم؟</div>
                 </div>
-                <div class="ss"><h4><i class="fas fa-key" style="margin-left:4px"></i>مفاتيح API</h4>
-                    <div class="fg" style="margin-bottom:10px"><label style="font-size:11px;color:var(--wn)"><span class="ptag gq">GROQ</span> مفتاح Groq</label><div class="iw"><input type="password" id="dgk" placeholder="gsk_..." dir="ltr" style="text-align:left;width:100%;padding:9px 38px 9px 10px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rsm);color:var(--tx);font-family:var(--fc);font-size:10.5px;outline:none"><i class="fas fa-key fi"></i></div></div>
-                    <div class="fg"><label style="font-size:11px;color:var(--inf)"><span class="ptag oa">OPENAI</span> مفتاح OpenAI</label><div class="iw"><input type="password" id="dok" placeholder="sk-proj-..." dir="ltr" style="text-align:left;width:100%;padding:9px 38px 9px 10px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rsm);color:var(--tx);font-family:var(--fc);font-size:10.5px;outline:none"><i class="fas fa-key fi"></i></div></div>
-                </div>
-                <div class="ss"><h4><i class="fas fa-terminal" style="margin-left:4px"></i>رسالة النظام</h4>
-                    <div class="sr" style="flex-direction:column;align-items:stretch"><textarea id="dsysp" rows="3" placeholder="أنت مساعد ذكي اسمك RTQ.AI..."></textarea></div>
-                </div>
-                <div class="ss"><h4><i class="fas fa-lock" style="margin-left:4px"></i>كلمة مرور المطور</h4>
-                    <div class="iw"><input type="text" id="dnpw" placeholder="اتركه فارغاً لعدم التغيير" dir="ltr" style="text-align:left;width:100%;padding:9px 12px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rsm);color:var(--tx);font-size:11.5px;outline:none"></div>
-                </div>
-                <div class="mdf" style="gap:7px;margin-top:20px">
-                    <button class="btn bp" onclick="saveDevSys()" style="width:auto;padding:9px 24px"><i class="fas fa-save"></i> حفظ الكل</button>
-                    <button class="btn bdr bsm" onclick="rstSite()"><i class="fas fa-bomb"></i> إعادة ضبط الموقع</button>
+                <div class="loading" id="loadingIndicator">الذكاء الاصطناعي يفكر...</div>
+                <div class="input-area">
+                    <input type="text" id="userInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
+                    <button class="primary-btn" onclick="sendMessage()">إرسال</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="tcon" id="tcon"></div>
 
     <script src="app.js"></script>
 </body>
