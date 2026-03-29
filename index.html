@@ -4,7 +4,235 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RTQ.ai - الذكاء الاصطناعي</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* الألوان المستوحاة من الشعار المرفق */
+        :root {
+            --bg-dark: #0a0e17;
+            --bg-panel: #131b2b;
+            --accent-green: #22C55E;
+            --accent-blue: #0EA5E9;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            height: 90vh;
+            background: var(--bg-panel);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        header {
+            padding: 15px 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        header img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        h1 {
+            color: var(--text-light);
+            font-size: 22px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* إدارة الشاشات */
+        .screen {
+            display: none;
+            flex: 1;
+            padding: 30px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* النماذج (تسجيل الدخول / إنشاء حساب) */
+        .form-container {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(0,0,0,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--accent-green);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03);
+            color: white;
+            outline: none;
+            transition: border 0.3s;
+            font-size: 15px;
+            appearance: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-green);
+            background: rgba(255,255,255,0.06);
+        }
+
+        select option {
+            background-color: var(--bg-panel);
+            color: white;
+        }
+
+        button.primary-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, var(--accent-green), var(--accent-blue));
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.3s;
+            margin-top: 5px;
+        }
+
+        button.primary-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .link {
+            text-align: center;
+            color: var(--accent-blue);
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 5px;
+            transition: color 0.3s;
+        }
+
+        .link:hover {
+            color: var(--accent-green);
+        }
+
+        /* واجهة الدردشة */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .model-selector {
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            background: rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 15px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .message.user {
+            align-self: flex-start;
+            background: rgba(255,255,255,0.08);
+            border-bottom-right-radius: 0;
+            color: #fff;
+        }
+
+        .message.bot {
+            align-self: flex-end;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(14, 165, 233, 0.15));
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-bottom-left-radius: 0;
+            color: #fff;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 20px;
+            gap: 15px;
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .input-area input {
+            flex: 1;
+        }
+
+        .input-area button {
+            width: auto;
+            padding: 0 30px;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--accent-green);
+            padding: 10px;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -32,7 +260,6 @@
                 <input type="text" id="regName" placeholder="الاسم الكامل" required>
                 <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
                 
-                <!-- الحقول الجديدة -->
                 <input type="tel" id="regPhone" placeholder="رقم الهاتف (اختياري)">
                 <select id="regCountry" required>
                     <option value="" disabled selected>اختر بلدك</option>
@@ -71,13 +298,4 @@
                 </div>
                 <div class="loading" id="loadingIndicator">الذكاء الاصطناعي يفكر...</div>
                 <div class="input-area">
-                    <input type="text" id="userInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
-                    <button class="primary-btn" onclick="sendMessage()">إرسال</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
-</body>
-</html>
+                    <input type="text" id="userInput" placeholder="ا
