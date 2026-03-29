@@ -3,435 +3,814 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RTQ.AI - ذكاء اصطناعي متقدم</title>
-    <meta name="description" content="تجربة ذكاء اصطناعي بلا حدود — أجوبة فورية بموازات عالية">
-    <meta property="og:title" content="RTQ.AI - ذكاء اصطناعي متقدم">
-    <meta property="og:description" content="تجربة ذكاء اصطناعي بلا حدود">
-    <meta property="og:type" content="website">
-    <!-- غيّر هذا الرابط برابط الصورة الحقيقي من imgbb -->
-    <meta property="og:image" content="https://ibb.co/KxzW0f3j">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>rtq.ai - ذكاء اصطناعي متقدم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root{--bg:#060610;--bg2:#0c1220;--fg:#e8ecf4;--mu:#7a8ba8;--ac:#00e5a0;--acd:rgba(0,229,160,.15);--acg:rgba(0,229,160,.4);--cd:rgba(255,255,255,.04);--cb:rgba(255,255,255,.08);--dn:#ff4d6a;--wn:#ffb347;--inf:#4da6ff;--r:16px;--rs:10px;--fa:'Cairo',sans-serif;--fe:'Space Grotesk',sans-serif}
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:var(--fa);background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden}a{color:inherit;text-decoration:none}button{cursor:pointer;border:none;outline:none;font-family:inherit}input,textarea,select{font-family:inherit;outline:none;border:none}::selection{background:var(--ac);color:var(--bg)}::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--acd);border-radius:3px}
-        #pc{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}.gw{position:fixed;border-radius:50%;filter:blur(120px);opacity:.25;pointer-events:none;z-index:0}
-        .gw1{width:500px;height:500px;background:var(--ac);top:-150px;right:-100px;animation:fg 12s ease-in-out infinite}
-        .gw2{width:400px;height:400px;background:#0055dd;bottom:-100px;left:-100px;animation:fg 15s ease-in-out infinite reverse}
-        .gw3{width:300px;height:300px;background:#00e5a0;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.08;animation:pu 8s ease-in-out infinite}
-        @keyframes fg{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.15)}}
-        @keyframes pu{0%,100%{opacity:.08;transform:translate(-50%,-50%) scale(1)}50%{opacity:.15;transform:translate(-50%,-50%) scale(1.3)}}
-        .ps{display:none;position:relative;z-index:1;min-height:100vh;animation:fi .5s ease}.ps.act{display:flex}@keyframes fi{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-        .nb{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,16,.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--cb)}
-        .nl{font-family:var(--fe);font-size:1.3rem;font-weight:700;color:var(--ac);letter-spacing:-.5px;display:flex;align-items:center;gap:8px}
-        /* ===== LOGO في النافبار — غيّر الرابط هنا ===== */
-        .nli{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--ac),#00c9ff);display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:.9rem;
-            /* غيّر الصورة هنا */
-            background-image:url('https://ibb.co/KxzW0f3j');
-            background-size:cover;background-position:center;
-        }
-        .na{display:flex;align-items:center;gap:8px}.nbtn{padding:7px 16px;border-radius:var(--rs);font-size:.82rem;font-weight:600;transition:all .25s}
-        .nbtn-g{background:transparent;color:var(--mu)}.nbtn-g:hover{color:var(--fg)}.nbtn-p{background:var(--ac);color:var(--bg)}.nbtn-p:hover{box-shadow:0 0 16px var(--acg);transform:translateY(-1px)}
-        .nu{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:var(--rs);background:var(--cd);border:1px solid var(--cb);cursor:pointer;transition:all .25s}.nu:hover{border-color:var(--acd)}.nua{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--ac),#00c9ff);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;color:var(--bg)}.nun{font-size:.8rem;font-weight:500}.nlo{background:none;color:var(--dn);font-size:.8rem;padding:5px 10px;border-radius:var(--rs);transition:all .25s}.nlo:hover{background:rgba(255,77,106,.1)}
-        .mmb{display:none;background:none;color:var(--fg);font-size:1.2rem;padding:6px}
-        .ld{flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:110px 20px 50px;gap:30px}
-        .lb{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:100px;background:var(--acd);border:1px solid rgba(0,229,160,.2);font-size:.78rem;color:var(--ac);font-weight:500;animation:pb 3s ease-in-out infinite}@keyframes pb{0%,100%{border-color:rgba(0,229,160,.2)}50%{border-color:rgba(0,229,160,.5)}}
-        .ld h1{font-size:clamp(2rem,6vw,4rem);font-weight:900;line-height:1.15;max-width:700px}
-        .ld h1 .gt{background:linear-gradient(135deg,var(--ac),#00c9ff,var(--ac));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:sh 4s linear infinite}@keyframes sh{0%{background-position:0% center}100%{background-position:200% center}}
-        .ldd{font-size:1.05rem;color:var(--mu);max-width:500px;line-height:1.8}
-        .la{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-        .blg{padding:14px 36px;border-radius:var(--r);font-size:.95rem;font-weight:700;transition:all .3s}
-        .bla{background:linear-gradient(135deg,var(--ac),#00c9ff);color:var(--bg)}.bla:hover{box-shadow:0 8px 36px var(--acg);transform:translateY(-3px)}
-        .blo{background:transparent;border:2px solid var(--cb);color:var(--fg)}.blo:hover{border-color:var(--ac);color:var(--ac);transform:translateY(-3px)}
-        .ms{display:flex;align-items:center;gap:12px;padding:14px 24px;border-radius:var(--r);background:rgba(255,255,255,.03);border:1px solid var(--cb);font-family:var(--fe);font-size:.85rem;color:var(--mu);flex-wrap:wrap;justify-content:center}
-        .mt{padding:4px 10px;border-radius:6px;background:var(--acd);color:var(--ac);font-size:.72rem;font-weight:600}
-        .st{padding:4px 10px;border-radius:6px;background:rgba(255,179,71,.12);color:var(--wn);font-size:.72rem;font-weight:600}
-        .fts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;max-width:900px;width:100%;padding:0 20px}
-        .fc{padding:22px;border-radius:var(--r);background:var(--cd);border:1px solid var(--cb);text-align:right;transition:all .35s}.fc:hover{border-color:var(--acd);background:rgba(0,229,160,.03);transform:translateY(-4px)}
-        .fi{width:42px;height:42px;border-radius:11px;background:var(--acd);display:flex;align-items:center;justify-content:center;color:var(--ac);font-size:1.1rem;margin-bottom:12px}
-        .fc h3{font-size:.92rem;font-weight:700;margin-bottom:6px}.fc p{font-size:.8rem;color:var(--mu);line-height:1.7}
-        .tgf{position:fixed;bottom:20px;left:20px;z-index:90;width:48px;height:48px;border-radius:50%;background:#0088cc;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.3rem;box-shadow:0 4px 20px rgba(0,136,204,.4);transition:all .3s}.tgf:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(0,136,204,.5)}
+        :root{--bg:#080c0a;--surface:#0f1613;--card:#151e19;--card-hover:#1a2820;--accent:#00e88f;--accent-dim:#00a864;--accent-glow:rgba(0,232,143,0.12);--text:#dce8e0;--text-sec:#8fa898;--muted:#4a6355;--border:#1c2e23;--error:#ff4d5a;--user-bubble:#0d2a1c;--ai-bubble:#141c18;--radius:12px;--radius-sm:8px;--radius-lg:18px;--shadow:0 4px 24px rgba(0,0,0,0.4);--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.7}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--muted);border-radius:3px}
+        .bg-effects{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+        .bg-effects .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.12;animation:blobFloat 25s ease-in-out infinite alternate}
+        .bg-effects .blob:nth-child(1){width:500px;height:500px;background:var(--accent);top:-150px;right:-100px}
+        .bg-effects .blob:nth-child(2){width:400px;height:400px;background:#00b8d4;bottom:-100px;left:-80px;animation-delay:-8s}
+        .bg-effects .blob:nth-child(3){width:300px;height:300px;background:#00e88f;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:-16s}
+        @keyframes blobFloat{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-40px) scale(1.1)}66%{transform:translate(-20px,30px) scale(0.9)}100%{transform:translate(10px,-10px) scale(1.05)}}
+        .bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,232,143,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,143,0.025) 1px,transparent 1px);background-size:60px 60px}
+        #auth-page{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+        .auth-card{background:rgba(15,22,19,0.88);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px 36px;width:100%;max-width:440px;box-shadow:var(--shadow);animation:cardEnter 0.6s ease-out}
+        @keyframes cardEnter{from{opacity:0;transform:translateY(30px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .auth-logo{text-align:center;margin-bottom:28px}
+        .auth-logo .fallback-logo{width:68px;height:68px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent-dim));display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:var(--bg);margin-bottom:12px;box-shadow:0 0 30px rgba(0,232,143,0.2)}
+        .auth-logo h1{font-size:28px;font-weight:800;letter-spacing:-0.5px}.auth-logo h1 span{color:var(--accent)}.auth-logo p{color:var(--text-sec);font-size:14px;margin-top:4px}
+        .auth-form{display:none}.auth-form.active{display:block;animation:fadeSlide 0.35s ease-out}
+        @keyframes fadeSlide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+        .form-group{margin-bottom:16px}.form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-sec);margin-bottom:6px}
+        .input-wrap{position:relative;display:flex;align-items:center}
+        .input-wrap i.field-icon{position:absolute;right:14px;color:var(--muted);font-size:14px;pointer-events:none;transition:var(--transition)}
+        .input-wrap input{width:100%;padding:12px 42px 12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;transition:var(--transition);outline:none}
+        .input-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}.input-wrap input:focus~i.field-icon{color:var(--accent)}.input-wrap input::placeholder{color:var(--muted)}
+        .input-wrap .toggle-pass{position:absolute;left:12px;color:var(--muted);cursor:pointer;pointer-events:all;font-size:14px;transition:var(--transition);background:none;border:none}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border:none;border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:var(--transition);outline:none}
+        .btn:focus-visible{box-shadow:0 0 0 3px var(--accent-glow)}
+        .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:var(--bg);width:100%}
+        .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(0,232,143,0.25)}.btn-primary:active{transform:translateY(0)}.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+        .btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}.btn-secondary:hover{background:var(--card);border-color:var(--muted)}
+        .btn-ghost{background:transparent;color:var(--accent);padding:8px 16px}.btn-ghost:hover{background:var(--accent-glow)}
+        .btn-sm{padding:8px 16px;font-size:13px}.btn-icon{width:36px;height:36px;padding:0;border-radius:var(--radius-sm);background:var(--surface);color:var(--text-sec);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition)}
+        .btn-icon:hover{background:var(--card);color:var(--accent);border-color:var(--muted)}
+        .btn-danger{background:rgba(255,77,90,0.1);color:var(--error);border:1px solid rgba(255,77,90,0.2)}.btn-danger:hover{background:rgba(255,77,90,0.2)}
+        .form-footer{text-align:center;margin-top:20px;font-size:13px;color:var(--text-sec)}.form-footer a{color:var(--accent);text-decoration:none;font-weight:600;cursor:pointer}.form-footer a:hover{text-decoration:underline}
+        .form-error{background:rgba(255,77,90,0.1);border:1px solid rgba(255,77,90,0.2);color:var(--error);padding:10px 14px;border-radius:var(--radius-sm);font-size:13px;margin-bottom:16px;display:none}
+        .form-error.show{display:flex;align-items:center;gap:8px;animation:shake 0.4s ease}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+        .code-display{background:var(--surface);border:2px dashed var(--border);border-radius:var(--radius);padding:20px;text-align:center;margin-bottom:20px}
+        .code-display p{color:var(--text-sec);font-size:13px;margin-bottom:10px}
+        .code-display .code-value{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;letter-spacing:12px;color:var(--accent);direction:ltr}
+        .code-inputs{display:flex;gap:8px;justify-content:center;direction:ltr;margin-bottom:20px}
+        .code-inputs input{width:48px;height:56px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-sm);color:var(--text);outline:none;transition:var(--transition)}
+        .code-inputs input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        #app-page{display:none;position:relative;z-index:1;height:100vh;overflow:hidden}
+        #app-page.active{display:flex;animation:fadeSlide 0.4s ease-out}
+        .sidebar{width:300px;min-width:300px;background:rgba(15,22,19,0.92);backdrop-filter:blur(16px);border-left:1px solid var(--border);display:flex;flex-direction:column;transition:var(--transition)}
+        .sidebar-header{padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+        .sidebar-header .logo-sm{width:36px;height:36px;border-radius:10px;flex-shrink:0;overflow:hidden}
+        .sidebar-header .logo-sm .logo-fallback{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-dim));display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--bg);font-size:12px}
+        .sidebar-header h2{font-size:16px;font-weight:700;flex:1}.sidebar-header h2 span{color:var(--accent)}
+        .sidebar-actions{padding:12px 16px;display:flex;gap:8px}.sidebar-actions .btn{flex:1}
+        .conv-list{flex:1;overflow-y:auto;padding:8px}
+        .conv-item{padding:12px 14px;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:10px;margin-bottom:4px}
+        .conv-item:hover{background:var(--card)}.conv-item.active{background:var(--card-hover);border:1px solid var(--border)}
+        .conv-item .conv-icon{width:32px;height:32px;border-radius:8px;background:var(--accent-glow);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+        .conv-item .conv-info{flex:1;min-width:0}.conv-item .conv-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .conv-item .conv-date{font-size:11px;color:var(--muted)}
+        .conv-item .conv-delete{opacity:0;color:var(--muted);cursor:pointer;padding:4px;transition:var(--transition);font-size:12px;background:none;border:none}
+        .conv-item:hover .conv-delete{opacity:1}.conv-item .conv-delete:hover{color:var(--error)}
+        .sidebar-footer{padding:14px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
+        .sidebar-footer .user-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dim));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--bg);font-size:13px;flex-shrink:0}
+        .sidebar-footer .user-info{flex:1;min-width:0}.sidebar-footer .user-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .sidebar-footer .user-email{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .chat-area{flex:1;display:flex;flex-direction:column;background:var(--bg);position:relative}
+        .chat-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:rgba(15,22,19,0.6);backdrop-filter:blur(10px)}
+        .chat-header .menu-btn{display:none;color:var(--text-sec);font-size:18px;cursor:pointer;padding:4px;background:none;border:none}
+        .chat-header .chat-title{font-size:15px;font-weight:600;flex:1}
+        .chat-header .chat-actions{display:flex;gap:6px;align-items:center}
+        .model-select{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:12px;outline:none;cursor:pointer;max-width:180px;transition:var(--transition)}
+        .model-select:focus{border-color:var(--accent)}.model-select option{background:var(--card);color:var(--text)}
+        .messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+        .welcome-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px}
+        .welcome-screen .welcome-logo{width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,var(--accent),var(--accent-dim));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--bg);margin-bottom:20px;box-shadow:0 0 40px rgba(0,232,143,0.2)}
+        .welcome-screen h2{font-size:24px;font-weight:700;margin-bottom:8px}.welcome-screen h2 span{color:var(--accent)}
+        .welcome-screen p{color:var(--text-sec);font-size:14px;max-width:400px;margin-bottom:30px}
+        .welcome-suggestions{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:600px;width:100%}
+        .suggestion-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:var(--transition);text-align:right}
+        .suggestion-card:hover{background:var(--card-hover);border-color:var(--accent-dim);transform:translateY(-2px)}
+        .suggestion-card .sugg-icon{color:var(--accent);font-size:18px;margin-bottom:8px}.suggestion-card .sugg-text{font-size:13px;color:var(--text-sec);line-height:1.6}
+        .message{display:flex;gap:10px;max-width:85%;animation:msgEnter 0.35s ease-out}
+        @keyframes msgEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        .message.user{align-self:flex-start;flex-direction:row-reverse}.message.ai{align-self:flex-end}
+        .message .msg-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+        .message.user .msg-avatar{background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:var(--bg)}
+        .message.ai .msg-avatar{background:var(--card);color:var(--accent);border:1px solid var(--border)}
+        .message .msg-content{padding:14px 18px;border-radius:var(--radius);font-size:14px;line-height:1.8}
+        .message.user .msg-content{background:var(--user-bubble);border:1px solid rgba(0,232,143,0.15);border-top-right-radius:4px}
+        .message.ai .msg-content{background:var(--ai-bubble);border:1px solid var(--border);border-top-left-radius:4px}
+        .message .msg-time{font-size:10px;color:var(--muted);margin-top:6px}.message.user .msg-time{text-align:left}
+        .msg-content p{margin-bottom:8px}.msg-content p:last-child{margin-bottom:0}.msg-content strong{color:var(--accent);font-weight:700}.msg-content em{color:var(--text-sec)}
+        .msg-content h1,.msg-content h2,.msg-content h3{color:var(--text);margin:14px 0 8px;font-weight:700}.msg-content h1{font-size:18px}.msg-content h2{font-size:16px}.msg-content h3{font-size:15px}
+        .msg-content ul,.msg-content ol{padding-right:20px;margin:8px 0}.msg-content li{margin-bottom:4px}
+        .msg-content code:not(.block-code){background:rgba(0,232,143,0.1);color:var(--accent);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:13px}
+        .msg-content pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0;margin:10px 0;overflow:hidden;direction:ltr;text-align:left}
+        .msg-content pre .code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--surface);border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+        .msg-content pre .code-header .copy-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;font-family:'Cairo',sans-serif;padding:2px 8px;border-radius:4px;transition:var(--transition)}
+        .msg-content pre .code-header .copy-btn:hover{color:var(--accent);background:var(--accent-glow)}
+        .msg-content pre code.block-code{display:block;padding:14px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;color:var(--text)}
+        .typing-indicator{display:none;align-self:flex-end;padding:14px 20px;background:var(--ai-bubble);border:1px solid var(--border);border-radius:var(--radius);border-top-left-radius:4px}
+        .typing-indicator.show{display:flex;gap:5px;align-items:center}
+        .typing-indicator .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:typingBounce 1.4s ease-in-out infinite}
+        .typing-indicator .dot:nth-child(2){animation-delay:0.2s}.typing-indicator .dot:nth-child(3){animation-delay:0.4s}
+        @keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-8px);opacity:1}}
+        .input-area{padding:16px 20px;border-top:1px solid var(--border);background:rgba(15,22,19,0.6);backdrop-filter:blur(10px)}
+        .input-wrapper{display:flex;align-items:flex-end;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;transition:var(--transition)}
+        .input-wrapper:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        .input-wrapper textarea{flex:1;background:none;border:none;color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;resize:none;outline:none;max-height:120px;line-height:1.6;padding:4px 0}
+        .input-wrapper textarea::placeholder{color:var(--muted)}
+        .input-wrapper .send-btn{width:40px;height:40px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:var(--bg);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:var(--transition)}
+        .input-wrapper .send-btn:hover{transform:scale(1.05);box-shadow:0 4px 16px rgba(0,232,143,0.3)}.input-wrapper .send-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
+        .input-hint{font-size:11px;color:var(--muted);margin-top:6px;text-align:center}
+        .chat-ad-space{padding:8px 20px;text-align:center;border-top:1px solid var(--border);background:rgba(15,22,19,0.4);min-height:70px;display:flex;align-items:center;justify-content:center}
+        .modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+        .modal-overlay.show{display:flex;animation:fadeIn 0.25s ease}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        .modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;width:100%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow);animation:modalEnter 0.3s ease-out}
+        @keyframes modalEnter{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .modal.modal-lg{max-width:700px}
+        .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+        .modal-header h3{font-size:18px;font-weight:700}
+        .modal-header .close-btn{width:32px;height:32px;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--text-sec);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .modal-header .close-btn:hover{color:var(--error);border-color:var(--error)}
+        .modal-body{margin-bottom:20px}.modal-footer{display:flex;gap:10px;justify-content:flex-start}
+        .ad-modal .modal{max-width:420px;text-align:center}
+        .ad-modal .ad-content{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:30px 20px;margin-bottom:16px}
+        .ad-modal .ad-content .ad-badge{display:inline-block;background:var(--accent-glow);color:var(--accent);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:12px}
+        .ad-modal .ad-content p{color:var(--text-sec);font-size:14px;line-height:1.8}
+        .toast-container{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+        .toast{padding:12px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;min-width:280px;display:flex;align-items:center;gap:10px;animation:toastIn 0.35s ease-out;box-shadow:var(--shadow);pointer-events:all}
+        .toast.success{background:rgba(0,232,143,0.15);border:1px solid rgba(0,232,143,0.3);color:var(--accent)}
+        .toast.error{background:rgba(255,77,90,0.15);border:1px solid rgba(255,77,90,0.3);color:var(--error)}
+        .toast.info{background:rgba(0,184,212,0.15);border:1px solid rgba(0,184,212,0.3);color:#00b8d4}
+        @keyframes toastIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(-20px)}}
+        .settings-section{margin-bottom:20px}.settings-section h4{font-size:14px;font-weight:700;color:var(--text-sec);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+        .setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+        .setting-row label{font-size:13px;color:var(--text)}.setting-row .desc{font-size:11px;color:var(--muted)}
+        .setting-row input[type="text"],.setting-row input[type="number"],.setting-row input[type="password"]{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;width:220px;outline:none;transition:var(--transition)}
+        .setting-row input:focus{border-color:var(--accent)}
+        .toggle-switch{position:relative;width:44px;height:24px;cursor:pointer}.toggle-switch input{display:none}
+        .toggle-switch .slider{position:absolute;inset:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:var(--transition)}
+        .toggle-switch .slider::before{content:'';position:absolute;width:18px;height:18px;background:var(--muted);border-radius:50%;top:2px;right:2px;transition:var(--transition)}
+        .toggle-switch input:checked+.slider{background:var(--accent-glow);border-color:var(--accent-dim)}
+        .toggle-switch input:checked+.slider::before{transform:translateX(-20px);background:var(--accent)}
+        .auth-ad{margin-top:20px;padding:14px;background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius-sm);text-align:center;min-height:260px;display:flex;align-items:center;justify-content:center}
+        .sidebar-overlay{display:none;position:fixed;inset:0;z-index:49;background:rgba(0,0,0,0.5)}.sidebar-overlay.show{display:block}
+        .empty-conv{text-align:center;padding:40px 20px;color:var(--muted)}.empty-conv i{font-size:32px;margin-bottom:10px;display:block}.empty-conv p{font-size:13px}
+        .ads-hidden .chat-ad-space,.ads-hidden .auth-ad{display:none !important}
 
-        /* التسجيل */
-        .ap{flex-direction:column;align-items:center;justify-content:center;padding:90px 20px 50px}
-        .ac{width:100%;max-width:420px;padding:30px 24px;border-radius:var(--r);background:rgba(12,18,32,.92);border:1px solid var(--cb);backdrop-filter:blur(24px)}
-        .ac h2{font-size:1.4rem;font-weight:800;margin-bottom:5px}.ac .asub{color:var(--mu);font-size:.85rem;margin-bottom:20px}
-        .ats{display:flex;gap:4px;padding:4px;border-radius:var(--rs);background:rgba(255,255,255,.04);margin-bottom:20px}
-        .at{flex:1;padding:9px;border-radius:8px;font-size:.85rem;font-weight:600;background:transparent;color:var(--mu);transition:all .25s}.at.act{background:var(--ac);color:var(--bg)}
-        .fgr{margin-bottom:12px}.fgr label{display:block;font-size:.8rem;font-weight:600;margin-bottom:6px;color:var(--mu)}
-        .fiw{position:relative;display:flex;align-items:center}.fiw>i{position:absolute;right:12px;color:var(--mu);font-size:.85rem;transition:color .25s;pointer-events:none}
-        .fii{width:100%;padding:11px 38px;border-radius:var(--rs);background:rgba(255,255,255,.04);border:1px solid var(--cb);color:var(--fg);font-size:.88rem;transition:all .25s}
-        .fii:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--acd)}.fii:focus~i{color:var(--ac)}.fii::placeholder{color:rgba(122,139,168,.4)}
-        .tp{position:absolute;left:10px;background:none;color:var(--mu);font-size:.85rem;transition:color .25s}.tp:hover{color:var(--fg)}
-        .fe{font-size:.74rem;color:var(--dn);margin-top:3px;display:none}.fe.sh{display:block}
-        .bf{width:100%;padding:12px;border-radius:var(--rs);background:linear-gradient(135deg,var(--ac),#00c9ff);color:var(--bg);font-size:.95rem;font-weight:700;transition:all .3s;margin-top:5px}
-        .bf:hover{box-shadow:0 6px 28px var(--acg);transform:translateY(-2px)}.bf:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-        .bkl{display:inline-flex;align-items:center;gap:5px;color:var(--mu);font-size:.85rem;margin-bottom:16px;transition:color:var(--ac);background:none}.bkl:hover{color:var(--ac)}
+        /* لوحة الإدارة */
+        .admin-model-list{display:flex;flex-direction:column;gap:10px}
+        .admin-model-item{display:flex;align-items:center;gap:12px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);transition:var(--transition)}
+        .admin-model-item:hover{border-color:var(--muted)}
+        .admin-model-item.disabled-model{opacity:0.5}
+        .admin-model-item .model-radio{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0}
+        .admin-model-item .model-info{flex:1;min-width:0}
+        .admin-model-item .model-name{font-size:13px;font-weight:700;color:var(--text)}
+        .admin-model-item .model-id{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;direction:ltr;text-align:right;margin-top:2px}
+        .admin-model-item .model-desc{font-size:11px;color:var(--text-sec);margin-top:2px}
+        .admin-model-item .model-status{font-size:18px;flex-shrink:0;transition:var(--transition)}
+        .admin-model-item .model-status.on{color:var(--accent)}
+        .admin-model-item .model-status.off{color:var(--error)}
+        .admin-model-item .model-toggle{flex-shrink:0}
+        .admin-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,184,32,0.15);color:var(--warning);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;border:1px solid rgba(255,184,32,0.2)}
+        .admin-lock{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+        .admin-lock input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;outline:none;transition:var(--transition)}
+        .admin-lock input:focus{border-color:var(--warning);box-shadow:0 0 0 3px rgba(255,184,32,0.12)}
+        .admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+        .admin-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center}
+        .admin-stat .stat-num{font-size:22px;font-weight:800;color:var(--accent)}
+        .admin-stat .stat-label{font-size:11px;color:var(--muted);margin-top:4px}
 
-        /* التحقق */
-        .vp{flex-direction:column;align-items:center;justify-content:center;padding:90px 20px 50px}
-        .vc{width:100%;max-width:420px;padding:30px 24px;border-radius:var(--r);background:rgba(12,18,32,.92);border:1px solid var(--cb);backdrop-filter:blur(24px);text-align:center}
-        .vi{width:60px;height:60px;border-radius:50%;background:var(--acd);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.5rem;color:var(--ac)}
-        .vc h2{font-size:1.25rem;font-weight:800;margin-bottom:6px}.vc .vsb{color:var(--mu);font-size:.85rem;margin-bottom:18px;line-height:1.7}.vc .vsb strong{color:var(--ac);direction:ltr;display:inline-block}
-        .cis{display:flex;gap:8px;justify-content:center;direction:ltr;margin-bottom:18px}
-        .ci{width:46px;height:52px;text-align:center;border-radius:var(--rs);background:rgba(255,255,255,.04);border:2px solid var(--cb);color:var(--fg);font-size:1.2rem;font-weight:700;font-family:var(--fe);transition:all .25s}
-        .ci:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--acd)}.ci.esh{border-color:var(--dn);animation:shk .4s ease}@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-        .rt{font-size:.82rem;color:var(--mu);margin-top:12px}.rt button{background:none;color:var(--ac);font-weight:600;font-size:.82rem}.rt button:disabled{color:var(--mu);cursor:not-allowed}
-        .cfb{margin-top:12px;padding:12px;border-radius:var(--rs);background:rgba(0,153,255,.08);border:1px solid rgba(0,153,255,.2);text-align:center}
-        .cfb p{font-size:.8rem;color:var(--inf);margin-bottom:8px}
-        .cbig{font-family:var(--fe);font-size:1.8rem;font-weight:900;color:var(--ac);letter-spacing:8px;direction:ltr;display:inline-block;cursor:pointer;padding:6px 14px;border-radius:8px;background:rgba(0,229,160,.1);transition:all .2s}.cbig:hover{background:rgba(0,229,160,.2)}
-
-        /* المحادثة */
-        .cp{flex-direction:row;padding-top:56px;height:100vh}
-        .csb{width:260px;background:rgba(8,12,22,.96);border-left:1px solid var(--cb);display:flex;flex-direction:column;transition:transform .3s;flex-shrink:0}
-        .csbh{padding:12px;border-bottom:1px solid var(--cb)}
-        .ncb{width:100%;padding:10px;border-radius:var(--rs);background:var(--acd);border:1px dashed rgba(0,229,160,.3);color:var(--ac);font-size:.85rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .25s}.ncb:hover{background:rgba(0,229,160,.2);border-color:var(--ac)}
-        .cl{flex:1;overflow-y:auto;padding:8px}
-        .cli{padding:10px 11px;border-radius:var(--rs);font-size:.8rem;color:var(--mu);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;margin-bottom:2px}
-        .cli:hover{background:var(--cd);color:var(--fg)}.cli.act{background:var(--acd);color:var(--ac)}
-        .cli i{font-size:.72rem;flex-shrink:0}.cli .ctit{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .cli .dcl{background:none;color:var(--mu);font-size:.68rem;opacity:0;transition:all .2s;padding:3px}.cli:hover .dcl{opacity:1}.cli .dcl:hover{color:var(--dn)}
-        .csf{padding:10px;border-top:1px solid var(--cb)}.csi{font-size:.68rem;color:var(--mu);text-align:center;margin-bottom:6px;opacity:.7}
-        .csa{display:flex;gap:5px}.csbtn{flex:1;padding:7px;border-radius:7px;background:var(--cd);border:1px solid var(--cb);color:var(--mu);font-size:.72rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .25s}.csbtn:hover{border-color:var(--acd);color:var(--ac)}
-
-        .cm{flex:1;display:flex;flex-direction:column;min-width:0}
-        .cms{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
-        .wm{text-align:center;padding:40px 16px}
-        .wm .wi{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,var(--ac),#00c9ff);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.7rem;color:var(--bg)}
-        .wm h2{font-size:1.3rem;font-weight:800;margin-bottom:6px}.wm p{color:var(--mu);font-size:.88rem;max-width:380px;margin:0 auto;line-height:1.7}
-        .wmd{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:5px 14px;border-radius:100px;background:var(--cd);border:1px solid var(--cb);font-family:var(--fe);font-size:.74rem;color:var(--mu)}.wmd i{color:var(--ac);font-size:.65rem}
-        .sugs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;max-width:560px;margin:18px auto 0}
-        .sugb{padding:11px;border-radius:var(--rs);background:var(--cd);border:1px solid var(--cb);color:var(--fg);font-size:.8rem;text-align:right;transition:all .25s;line-height:1.5}.sugb:hover{border-color:var(--acd);background:rgba(0,229,160,.03);transform:translateY(-2px)}
-        .msg{display:flex;gap:10px;max-width:88%;animation:mi .35s ease}@keyframes mi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        .msg.u{align-self:flex-start;flex-direction:row-reverse}.msg.a{align-self:flex-end}
-        .mav{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.78rem;flex-shrink:0}
-        .msg.u .mav{background:linear-gradient(135deg,var(--ac),#00c9ff);color:var(--bg);font-weight:700}
-        .msg.a .mav{background:rgba(255,255,255,.08);color:var(--ac)}
-        .mc{padding:11px 15px;border-radius:14px;font-size:.88rem;line-height:1.8;white-space:pre-wrap;word-wrap:break-word}
-        .msg.u .mc{background:linear-gradient(135deg,rgba(0,229,160,.15),rgba(0,201,255,.1));border:1px solid rgba(0,229,160,.2);border-bottom-right-radius:4px}
-        .msg.a .mc{background:var(--cd);border:1px solid var(--cb);border-bottom-left-radius:4px}
-        .mc code{background:rgba(255,255,255,.08);padding:2px 5px;border-radius:4px;font-family:var(--fe);font-size:.82em}
-        .mc pre{position:relative;background:rgba(0,0,0,.4);padding:14px;border-radius:8px;overflow-x:auto;margin:8px 0;font-family:var(--fe);font-size:.82em;direction:ltr;text-align:left}
-        .mc pre code{background:none;padding:0}
-        .ccb{position:absolute;top:8px;left:8px;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,.1);color:var(--mu);font-size:.7rem;font-family:var(--fa);cursor:pointer;transition:all .2s;border:1px solid rgba(255,255,255,.08)}
-        .ccb:hover{background:var(--acd);color:var(--ac);border-color:rgba(0,229,160,.3)}
-        .mc strong{color:var(--ac)}
-        .tii{display:flex;gap:4px;padding:14px 15px;align-items:center}
-        .td{width:6px;height:6px;border-radius:50%;background:var(--ac);animation:tb 1.4s infinite}.td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}@keyframes tb{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-8px);opacity:1}}
-        .mtm{font-size:.68rem;color:var(--mu);margin-top:3px;opacity:.6}.msg.u .mtm{text-align:left}.msg.a .mtm{text-align:right}
-        .cia{padding:12px 20px 20px;border-top:1px solid var(--cb);background:rgba(6,6,16,.5)}
-        .ciw{display:flex;align-items:flex-end;gap:8px;background:rgba(255,255,255,.04);border:1px solid var(--cb);border-radius:var(--r);padding:5px 5px 5px 12px;transition:border-color .25s}
-        .ciw:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px var(--acd)}
-        .cin{flex:1;background:transparent;color:var(--fg);font-size:.9rem;padding:9px 0;resize:none;min-height:22px;max-height:130px;line-height:1.5}.cin::placeholder{color:rgba(122,139,168,.4)}
-        .sdb{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--ac),#00c9ff);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .25s;flex-shrink:0}
-        .sdb:hover{box-shadow:0 4px 18px var(--acg)}.sdb:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
-        .cih{font-size:.68rem;color:var(--mu);text-align:center;margin-top:6px;opacity:.4}
-        .sov{display:none;position:fixed;inset:0;top:56px;background:rgba(0,0,0,.5);z-index:49}.sov.sh{display:block}
-
-        /* الأدمن */
-        .admp{flex-direction:row;padding-top:56px;height:100vh}
-        .adsb{width:220px;background:rgba(8,12,22,.96);border-left:1px solid var(--cb);display:flex;flex-direction:column;flex-shrink:0}
-        .adsbh{padding:16px 14px;border-bottom:1px solid var(--cb);text-align:center}
-        .adsbh h3{font-size:.9rem;font-weight:700;color:var(--dn);display:flex;align-items:center;justify-content:center;gap:8px}
-        .adnv{flex:1;padding:8px}
-        .adni{padding:10px 12px;border-radius:var(--rs);font-size:.82rem;color:var(--mu);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:9px;margin-bottom:2px}
-        .adni:hover{background:var(--cd);color:var(--fg)}.adni.act{background:var(--acd);color:var(--ac)}
-        .adni i{width:16px;text-align:center;font-size:.82rem}
-        .adm{flex:1;overflow-y:auto;padding:24px}
-        .admt{font-size:1.2rem;font-weight:800;margin-bottom:20px}
-        .adms{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
-        .admst{padding:18px;border-radius:var(--r);background:var(--cd);border:1px solid var(--cb)}
-        .admst .sv{font-family:var(--fe);font-size:1.6rem;font-weight:700;color:var(--ac)}
-        .admst .sl{font-size:.76rem;color:var(--mu);margin-top:3px}
-        .admtb{width:100%;border-collapse:collapse;font-size:.82rem}
-        .admtb th{text-align:right;padding:10px;color:var(--mu);font-weight:600;border-bottom:1px solid var(--cb);font-size:.74rem}
-        .admtb td{padding:10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle}
-        .admtb tr:hover td{background:rgba(255,255,255,.02)}
-        .admtb .ec{direction:ltr;text-align:right;font-family:var(--fe);font-size:.76rem;color:var(--mu)}
-        .adbtn{padding:5px 12px;border-radius:6px;font-size:.74rem;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:4px}
-        .adbtn-v{background:var(--acd);color:var(--ac)}.adbtn-v:hover{background:rgba(0,229,160,.25)}
-        .adbtn-d{background:rgba(255,77,106,.1);color:var(--dn)}.adbtn-d:hover{background:rgba(255,77,106,.2)}
-        .adsec{display:none}.adsec.act{display:block}
-        .adzg{margin-bottom:20px}.adzg label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--mu)}
-        .adta{width:100%;padding:10px;border-radius:var(--rs);background:rgba(255,255,255,.04);border:1px solid var(--cb);color:var(--fg);font-size:.85rem;resize:vertical;min-height:100px;line-height:1.6;direction:rtl}.adta:focus{border-color:var(--ac)}
-        .adinp{width:100%;padding:9px 12px;border-radius:var(--rs);background:rgba(255,255,255,.04);border:1px solid var(--cb);color:var(--fg);font-size:.85rem}.adinp:focus{border-color:var(--ac)}
-        .aduc{margin-top:14px;padding:14px;border-radius:var(--r);background:var(--cd);border:1px solid var(--cb)}
-        .aduc h4{font-size:.85rem;margin-bottom:10px;color:var(--ac)}
-        .adci{padding:7px 10px;border-radius:7px;background:rgba(255,255,255,.03);margin-bottom:5px;font-size:.78rem;color:var(--mu);display:flex;justify-content:space-between;align-items:center}
-        .adzone{border:2px solid rgba(255,77,106,.2);border-radius:var(--r);padding:20px;margin-top:16px}
-        .adzone h3{color:var(--dn);font-size:.95rem;margin-bottom:14px}
-        .addbtn{padding:9px 20px;border-radius:var(--rs);background:rgba(255,77,106,.12);color:var(--dn);font-size:.85rem;font-weight:700;transition:all .25s;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
-        .addbtn:hover{background:rgba(255,77,106,.25)}
-        .addbtn.sec{background:var(--cd);color:var(--mu);border:1px solid var(--cb)}.addbtn.sec:hover{border-color:var(--acd);color:var(--fg)}
-
-        /* Toast */
-        .tc{position:fixed;top:72px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
-        .tst{padding:12px 20px;border-radius:var(--rs);font-size:.85rem;font-weight:500;display:flex;align-items:center;gap:8px;animation:ti .35s ease,to .35s ease 3.5s forwards;backdrop-filter:blur(20px);box-shadow:0 8px 30px rgba(0,0,0,.3);white-space:nowrap;max-width:90vw;pointer-events:auto}
-        .tst-s{background:rgba(0,229,160,.15);border:1px solid rgba(0,229,160,.3);color:var(--ac)}
-        .tst-e{background:rgba(255,77,106,.15);border:1px solid rgba(255,77,106,.3);color:var(--dn)}
-        .tst-i{background:rgba(0,153,255,.15);border:1px solid rgba(0,153,255,.3);color:var(--inf)}
-        @keyframes ti{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes to{from{opacity:1}to{opacity:0;transform:translateY(-10px)}}
-        .spn{width:16px;height:16px;border:2px solid transparent;border-top-color:currentColor;border-radius:50%;animation:sp .6s linear infinite;display:inline-block}@keyframes sp{to{transform:rotate(360deg)}}
         @media(max-width:768px){
-            .nb{padding:10px 14px}.mmb{display:block}
-            .csb,.adsb{position:fixed;top:56px;bottom:0;right:0;z-index:50;transform:translateX(100%);width:280px}
-            .csb.op,.adsb.op{transform:translateX(0)}
-            .msg{max-width:95%}.ld h1{font-size:1.8rem}
-            .ac,.vc{padding:24px 18px}.ci{width:40px;height:46px;font-size:1.05rem}
-            .sugs{grid-template-columns:1fr}.nun{display:none}
-            .ms{flex-direction:column;font-size:.78rem;gap:8px;padding:10px 16px}
-            .fts{grid-template-columns:1fr 1fr;padding:0 16px}
-            .adms{grid-template-columns:repeat(2,1rem)}
-            .admtb{font-size:.74rem}.admtb th,.admtb td{padding:7px}
-            .admtb .hm{display:none}
+            .sidebar{position:fixed;top:0;right:0;bottom:0;z-index:50;transform:translateX(100%);box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}
+            .chat-header .menu-btn{display:block}.message{max-width:92%}.welcome-suggestions{grid-template-columns:1fr}
+            .auth-card{padding:28px 22px}.setting-row{flex-direction:column;align-items:flex-start;gap:6px}
+            .setting-row input[type="text"],.setting-row input[type="number"],.setting-row input[type="password"]{width:100%}
+            .admin-stats{grid-template-columns:repeat(2,1fr)}.model-select{max-width:120px}
         }
-        @media(max-width:400px){.fts{grid-template-columns:1fr}.adms{grid-template-columns:1fr}}
-        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}}
     </style>
 </head>
 <body>
-    <canvas id="pc" aria-hidden="true"></canvas>
-    <div class="gw gw1" aria-hidden="true"></div>
-    <div class="gw gw2" aria-hidden="true"></div>
-    <div class="gw gw3" aria-hidden="true"></div>
-    <a href="https://t.me/RTQ_67" target="_blank" class="tgf" title="تواصل مع المطور"><i class="fa-brands fa-telegram"></i></a>
+    <div class="bg-effects"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+    <div class="bg-grid"></div>
 
-    <nav class="nb" id="nb">
-        <div class="nl">
-            <!-- ===== LOGO هنا — غيّر الصورة هنا ===== -->
-            <div class="nli"></div>
-            RTQ.AI
-        </div>
-        <div class="na" id="na"></div>
-    </nav>
-    <div class="tc" id="tc" aria-live="polite"></div>
+    <div id="auth-page">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <div class="fallback-logo">rtq</div>
+                <h1>rtq<span>.ai</span></h1>
+                <p>ذكاء اصطناعي متقدم تحت أمرك</p>
+            </div>
+            <div class="form-error" id="auth-error"><i class="fas fa-exclamation-circle"></i><span id="auth-error-text"></span></div>
 
-    <!-- الهبوط -->
-    <section class="ps ld act" id="pageLanding">
-        <div class="lb"><i class="fa-solid fa-circle" style="font-size:.55rem"></i> مدعوم بمعالج Groq LPU فائق السرعة</div>
-        <h1>المستقبل في<br><span class="gt">محادثة ذكية</span></h1>
-        <p class="ldd">تجربة ذكاء اصطناعي بلا حدود. أجوبة فورية بموازات عالية ومحادثات طبيعية تدعم العربية بشكل كامل.</p>
-        <div class="la"><button class="blg bla" onclick="navTo('auth')">ابدأ مجاناً</button><button class="blg blo" onclick="document.getElementById('fts').scrollIntoView({behavior:'smooth'})">المزيد</button></div>
-        <div class="ms"><span class="mt">MODEL</span><span>llama-3.3-70b-versatile</span><span class="st"><i class="fa-solid fa-bolt"></i> 500+ token/s</span></div>
-        <div class="fts" id="fts">
-            <div class="fc"><div class="fi"><i class="fa-solid fa-rocket"></i></div><h3>سرعة خارقة</h3><p>معالج Groq LPU يولّد أكثر من 500 توكن في الثانية.</p></div>
-            <div class="fc"><div class="fi"><i class="fa-solid fa-brain"></i></div><h3>ذكاء عميق</h3><p>نموذج Llama 3.3 بـ 70 مليار معامل يفهم السياق المعقد.</p></div>
-            <div class="fc"><div class="fi"><i class="fa-solid fa-floppy-disk"></i></div><h3>حفظ تلقائي</h3><p>كل محادثاتك محفوظة مع إمكانية التصدير والاستيراد.</p></div>
-        </div>
-    </section>
-
-    <!-- التسجيل -->
-    <section class="ps ap" id="pageAuth">
-        <button class="bkl" onclick="navTo('landing')"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
-        <div class="ac">
-            <div class="ats"><button class="at act" data-tab="register" onclick="swTab('register')">تسجيل</button><button class="at" data-tab="login" onclick="swTab('login')">دخول</button></div>
-            <form id="rf" onsubmit="hReg(event)">
-                <h2>حساب جديد</h2><p class="asub">أدخل بياناتك لبدء RTQ.AI</p>
-                <div class="fgr"><label>الاسم</label><div class="fiw"><input type="text" id="rN" class="fii" placeholder="أحمد محمد" required><i class="fa-solid fa-user"></i></div><div class="fe" id="rNE"></div></div>
-                <div class="fgr"><label>اسم المستخدم</label><div class="fiw"><input type="text" id="rU" class="fii" placeholder="ahmed_01" dir="ltr" style="text-align:right" required><i class="fa-solid fa-at"></i></div><div class="fe" id="rUE"></div></div>
-                <div class="fgr"><label>البريد</label><div class="fiw"><input type="email" id="rE" class="fii" placeholder="email@example.com" dir="ltr" style="text-align:right" required><i class="fa-solid fa-envelope"></i></div><div class="fe" id="rEE"></div></div>
-                <div class="fgr"><label>كلمة المرور</label><div class="fiw"><input type="password" id="rP" class="fii" placeholder="8 أحرف" required minlength="8"><i class="fa-solid fa-lock"></i><button type="button" class="tp" onclick="tgP('rP',this)"><i class="fa-solid fa-eye"></i></button></div><div class="fe" id="rPE"></div></div>
-                <button type="submit" class="bf" id="rSB">إنشاء الحساب</button>
+            <form class="auth-form active" id="login-form" autocomplete="off">
+                <div class="form-group"><label for="login-username">اسم المستخدم</label><div class="input-wrap"><input type="text" id="login-username" placeholder="أدخل اسم المستخدم" required><i class="fas fa-user field-icon"></i></div></div>
+                <div class="form-group"><label for="login-password">كلمة المرور</label><div class="input-wrap"><input type="password" id="login-password" placeholder="أدخل كلمة المرور" required><i class="fas fa-lock field-icon"></i><button type="button" class="toggle-pass" onclick="togglePassword('login-password',this)" aria-label="إظهار"><i class="fas fa-eye"></i></button></div></div>
+                <button type="submit" class="btn btn-primary"><span>تسجيل الدخول</span></button>
+                <div class="form-footer">ليس لديك حساب؟ <a onclick="switchAuth('register')">إنشاء حساب جديد</a></div>
             </form>
-            <form id="lf" style="display:none" onsubmit="hLog(event)">
-                <h2>تسجيل الدخول</h2><p class="asub">اسم المستخدم أو البريد</p>
-                <div class="fgr"><label>المعرف</label><div class="fiw"><input type="text" id="lI" class="fii" placeholder="اسم المستخدم أو البريد" required><i class="fa-solid fa-right-to-bracket"></i></div><div class="fe" id="lIE"></div></div>
-                <div class="fgr"><label>كلمة المرور</label><div class="fiw"><input type="password" id="lP" class="fii" placeholder="أدخل كلمة المرور" required><i class="fa-solid fa-lock"></i><button type="button" class="tp" onclick="tgP('lP',this)"><i class="fa-solid fa-eye"></i></button></div><div class="fe" id="lPE"></div></div>
-                <button type="submit" class="bf">تسجيل الدخول</button>
+
+            <form class="auth-form" id="register-form" autocomplete="off">
+                <div class="form-group"><label for="reg-username">اسم المستخدم</label><div class="input-wrap"><input type="text" id="reg-username" placeholder="اختر اسم مستخدم فريد" required minlength="3"><i class="fas fa-at field-icon"></i></div></div>
+                <div class="form-group"><label for="reg-name">الاسم الكامل</label><div class="input-wrap"><input type="text" id="reg-name" placeholder="أدخل اسمك الكامل" required><i class="fas fa-id-card field-icon"></i></div></div>
+                <div class="form-group"><label for="reg-email">البريد الإلكتروني</label><div class="input-wrap"><input type="email" id="reg-email" placeholder="example@email.com" required dir="ltr" style="text-align:right"><i class="fas fa-envelope field-icon"></i></div></div>
+                <div class="form-group"><label for="reg-birthday">تاريخ الميلاد</label><div class="input-wrap"><input type="date" id="reg-birthday" required><i class="fas fa-calendar field-icon"></i></div></div>
+                <div class="form-group"><label for="reg-password">كلمة المرور</label><div class="input-wrap"><input type="password" id="reg-password" placeholder="6 أحرف على الأقل" required minlength="6"><i class="fas fa-lock field-icon"></i><button type="button" class="toggle-pass" onclick="togglePassword('reg-password',this)" aria-label="إظهار"><i class="fas fa-eye"></i></button></div></div>
+                <div class="form-group"><label for="reg-confirm">تأكيد كلمة المرور</label><div class="input-wrap"><input type="password" id="reg-confirm" placeholder="أعد كتابة كلمة المرور" required><i class="fas fa-lock field-icon"></i><button type="button" class="toggle-pass" onclick="togglePassword('reg-confirm',this)" aria-label="إظهار"><i class="fas fa-eye"></i></button></div></div>
+                <button type="submit" class="btn btn-primary"><span>إنشاء الحساب</span></button>
+                <div class="form-footer">لديك حساب؟ <a onclick="switchAuth('login')">تسجيل الدخول</a></div>
+                <div class="auth-ad" id="auth-ad-zone">
+                    <script>(function(xtr){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=xtr||{};s.src="\/\/simplisticpride.com\/bJXCVas.dWGRlb0-YBWHcZ\/aeVm\/9fupZbUhluksP_TPYt5nMvDKkR1DO\/DEEYt\/NBjVkEwNOuTaUL4YNAQt";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l)})({})</script>
+                </div>
+            </form>
+
+            <form class="auth-form" id="verify-form" autocomplete="off">
+                <div class="code-display"><p>تم إرسال رمز التحقق إلى بريدك الإلكتروني</p><div class="code-value" id="verify-code-display">------</div></div>
+                <div class="form-group"><label>أدخل رمز التحقق المكون من 6 أرقام</label>
+                    <div class="code-inputs" id="code-inputs">
+                        <input type="text" maxlength="1" inputmode="numeric" data-idx="0"><input type="text" maxlength="1" inputmode="numeric" data-idx="1"><input type="text" maxlength="1" inputmode="numeric" data-idx="2"><input type="text" maxlength="1" inputmode="numeric" data-idx="3"><input type="text" maxlength="1" inputmode="numeric" data-idx="4"><input type="text" maxlength="1" inputmode="numeric" data-idx="5">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary"><span>تحقق من الكود</span></button>
+                <div class="form-footer"><a onclick="switchAuth('register')">العودة لتعديل البيانات</a></div>
             </form>
         </div>
-    </section>
+    </div>
 
-    <!-- التحقق -->
-    <section class="ps vp" id="pageVerify">
-        <div class="vc">
-            <div class="vi"><i class="fa-solid fa-envelope-open-text"></i></div>
-            <h2>تحقق من بريدك</h2>
-            <p class="vsb">أرسلنا رمز من 6 أرقام إلى<br><strong id="vED"></strong></p>
-            <div class="cis"><input type="text" class="ci" maxlength="1" inputmode="numeric"><input type="text" class="ci" maxlength="1" inputmode="numeric"><input type="text" class="ci" maxlength="1" inputmode="numeric"><input type="text" class="ci" maxlength="1" inputmode="numeric"><input type="text" class="ci" maxlength="1" inputmode="numeric"></div>
-            <button class="bf" onclick="hVC()">تحقق</button>
-            <div class="rt"><span id="tTxt">إعادة الإرسال بعد </span><button id="rBtn" disabled onclick="resend()">إعادة إرسال</button></div>
-            <div class="cfb" id="cFb" style="display:none"><p>لم نتمكن من الإرسال — انسخ الكود:</p><div class="cbig" id="fCode" onclick="cpFC()"></div></div>
-        </div>
-    </section>
-
-    <!-- المحادثة -->
-    <section class="ps cp" id="pageChat">
-        <div class="sov" id="sov" onclick="togSB()"></div>
-        <aside class="csb" id="csb">
-            <div class="csbh"><button class="ncb" onclick="newCht()"><i class="fa-solid fa-plus"></i> جديدة</button></div>
-            <div class="cl" id="cList"></div>
-            <div class="csf"><div class="csi" id="sInfo"></div><div class="csa"><button class="csbtn" onclick="expCht()"><i class="fa-solid fa-download"></i> تصدير</button><button class="csbtn" onclick="document.getElementById('iFile').click()"><i class="fa-solid fa-upload"></i> استيراد</button><input type="file" id="iFile" accept=".json" style="display:none" onchange="impCht(event)"></div></div></div>
+    <div id="app-page">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><div class="logo-sm" id="sidebar-logo"><div class="logo-fallback">rtq</div></div><h2>rtq<span>.ai</span></h2></div>
+            <div class="sidebar-actions"><button class="btn btn-secondary btn-sm" onclick="newConversation()"><i class="fas fa-plus"></i> محادثة جديدة</button></div>
+            <div class="conv-list" id="conv-list"><div class="empty-conv" id="empty-conv"><i class="fas fa-comments"></i><p>لا توجد محادثات بعد</p></div></div>
+            <div class="sidebar-footer">
+                <div class="user-avatar" id="user-avatar">م</div>
+                <div class="user-info"><div class="user-name" id="user-display-name">المستخدم</div><div class="user-email" id="user-display-email">user@email.com</div></div>
+                <button class="btn-icon" onclick="openSettings()" title="الإعدادات" aria-label="الإعدادات"><i class="fas fa-cog"></i></button>
+                <button class="btn-icon" onclick="openAdminLogin()" title="لوحة الإدارة" aria-label="الإدارة" style="color:var(--warning)"><i class="fas fa-shield-alt"></i></button>
+                <button class="btn-icon" onclick="logout()" title="تسجيل الخروج" aria-label="خروج"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
         </aside>
-        <div class="cm">
-            <div class="cms" id="cMsgs"></div>
-            <div class="cia"><div class="ciw"><textarea class="cin" id="cIn" placeholder="اكتب رسالتك..." rows="1" onkeydown="hIK(event)" oninput="aRS(this)"></textarea><button class="sdb" id="sBtn" onclick="sendMsg()" aria-label="إرسال"><i class="fa-solid fa-paper-plane"></i></button></div><p class="cih">RTQ.AI — Llama 3.3 70B عبر Groq</p></div>
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+        <main class="chat-area">
+            <div class="chat-header">
+                <button class="menu-btn" onclick="toggleSidebar()" aria-label="القائمة"><i class="fas fa-bars"></i></button>
+                <div class="chat-title" id="chat-title">محادثة جديدة</div>
+                <div class="chat-actions">
+                    <select class="model-select" id="model-selector" onchange="changeModel(this.value)" aria-label="اختيار النموذج"></select>
+                    <button class="btn-icon" onclick="exportConversation()" title="تصدير" aria-label="تصدير"><i class="fas fa-download"></i></button>
+                    <button class="btn-icon" onclick="clearChat()" title="مسح" aria-label="مسح"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+            <div class="messages" id="messages"></div>
+            <div class="chat-ad-space" id="chat-ad-space">
+                <script>(function(xs){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=xs||{};s.src="\/\/simplisticpride.com\/bXXMV.s_dMGslu0rYjW\/cQ\/leRmv9\/uxZyU\/lCk\/PWTxYZ5\/MeDmkN2kMjTVMhtZNDjsk\/wDOpTSYexLNew_";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l)})({})</script>
+            </div>
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <textarea id="chat-input" rows="1" placeholder="اكتب رسالتك هنا..." aria-label="رسالتك"></textarea>
+                    <button class="send-btn" id="send-btn" onclick="handleSend()" aria-label="إرسال"><i class="fas fa-paper-plane"></i></button>
+                </div>
+                <div class="input-hint">rtq.ai — اختر النموذج من القائمة أعلاه</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- نافذة الإعدادات -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal" role="dialog" aria-label="الإعدادات">
+            <div class="modal-header"><h3><i class="fas fa-cog" style="color:var(--accent);margin-left:8px"></i>الإعدادات</h3><button class="close-btn" onclick="closeModal('settings-modal')" aria-label="إغلاق"><i class="fas fa-times"></i></button></div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h4><i class="fas fa-sliders-h" style="margin-left:6px"></i>إعدادات النموذج</h4>
+                    <div class="setting-row"><div><label>درجة الحرارة</label><div class="desc">كلما زادت، زادت الإبداعية</div></div><input type="number" id="temp-input" min="0" max="2" step="0.1" value="0.7" dir="ltr"></div>
+                    <div class="setting-row"><div><label>الحد الأقصى للرموز</label><div class="desc">أقصى طول للرد</div></div><input type="number" id="max-tokens-input" min="256" max="32768" step="256" value="4096" dir="ltr"></div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-ad" style="margin-left:6px"></i>الإعلانات</h4>
+                    <div class="setting-row"><div><label>تفعيل الإعلانات</label></div><label class="toggle-switch"><input type="checkbox" id="ads-enabled-toggle" checked><span class="slider"></span></label></div>
+                    <div class="setting-row"><div><label>Popunder كل (ساعة)</label></div><input type="number" id="ads-interval-input" min="1" max="168" value="24" dir="ltr"></div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-file-code" style="margin-left:6px"></i>استيراد وتصدير</h4>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap">
+                        <button class="btn btn-secondary btn-sm" onclick="exportAllData()"><i class="fas fa-download"></i> تصدير الكل</button>
+                        <button class="btn btn-secondary btn-sm" onclick="exportConfig()"><i class="fas fa-key"></i> تصدير الإعدادات السرية</button>
+                        <label class="btn btn-secondary btn-sm" style="cursor:pointer"><i class="fas fa-upload"></i> استيراد JSON<input type="file" accept=".json" id="import-file" style="display:none" onchange="importData(event)"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary" onclick="saveSettings()" style="width:auto;padding:10px 28px"><i class="fas fa-save"></i> حفظ</button></div>
         </div>
-    </section>
+    </div>
 
-    <!-- الأدمن -->
-    <section class="ps admp" id="pageAdmin">
-        <div class="sov" id="aOv" onclick="togAS()" style="display:none"></div>
-        <aside class="adsb" id="aSb">
-            <div class="adsbh"><h3><i class="fa-solid fa-shield-halved"></i> لوحة التحكم</h3></div>
-            <div class="adnv"><div class="adni act" onclick="aSec('dash',this)"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</div><div class="adni" onclick="aSec('users',this)"><i class="fa-solid fa-users"></i> المستخدمون</div><div class="adni" onclick="aSec('sets',this)"><i class="fa-solid fa-gear"></i> الإعدادات</div><div class="adni" onclick="aSec('dng',this)"><i class="fa-solid fa-triangle-exclamation"></i> منطقة الخطر</div></div>
-            <div style="padding:10px;border-top:1px solid var(--cb)"><button class="csbtn" style="width:100%;color:var(--mu)" onclick="navTo('chat')"><i class="fa-solid fa-arrow-right"></i> رجوع</button></div>
-        </aside>
-        <div class="adm" id="aMain"></div>
-    </section>
+    <!-- نافذة تسجيل دخول الإدارة -->
+    <div class="modal-overlay" id="admin-login-modal">
+        <div class="modal" role="dialog" aria-label="تسجيل الإدارة">
+            <div class="modal-header"><h3><span class="admin-badge"><i class="fas fa-shield-alt"></i> لوحة الإدارة</span></h3><button class="close-btn" onclick="closeModal('admin-login-modal')" aria-label="إغلاق"><i class="fas fa-times"></i></button></div>
+            <div class="modal-body">
+                <p style="font-size:13px;color:var(--text-sec);margin-bottom:16px">أدخل كلمة مرور الإدارة للوصول إلى لوحة التحكم</p>
+                <div class="admin-lock">
+                    <input type="password" id="admin-pass-input" placeholder="كلمة مرور الإدارة" onkeydown="if(event.key==='Enter')verifyAdmin()">
+                    <button class="btn btn-secondary btn-sm" onclick="verifyAdmin()"><i class="fas fa-unlock"></i></button>
+                </div>
+                <p style="font-size:11px;color:var(--muted)">كلمة المرور الافتراضية: <code>admin</code></p>
+            </div>
+        </div>
+    </div>
 
-    <button class="mmb" id="mAB" style="display:none;position:fixed;top:64px;right:10px;z-index:101;background:var(--cd);border:1px solid var(--cb);border-radius:8px;padding:6px 10px;color:var(--fg);font-size:1rem" onclick="togAS()"><i class="fa-solid fa-bars"></i></button>
+    <!-- نافذة لوحة الإدارة -->
+    <div class="modal-overlay" id="admin-modal">
+        <div class="modal modal-lg" role="dialog" aria-label="لوحة الإدارة">
+            <div class="modal-header"><h3><span class="admin-badge"><i class="fas fa-shield-alt"></i> لوحة الإدارة</span></h3><button class="close-btn" onclick="closeModal('admin-modal')" aria-label="إغلاق"><i class="fas fa-times"></i></button></div>
+            <div class="modal-body">
+                <!-- إحصائيات -->
+                <div class="admin-stats">
+                    <div class="admin-stat"><div class="stat-num" id="stat-users">0</div><div class="stat-label">مستخدم مسجل</div></div>
+                    <div class="admin-stat"><div class="stat-num" id="stat-models">0</div><div class="stat-label">نموذج مفعّل</div></div>
+                    <div class="admin-stat"><div class="stat-num" id="stat-convs">0</div><div class="stat-label">محادثة حالية</div></div>
+                </div>
+
+                <!-- تغيير مفتاح API -->
+                <div class="settings-section">
+                    <h4><i class="fas fa-key" style="margin-left:6px"></i>مفتاح Groq API</h4>
+                    <div class="input-wrap" style="margin-bottom:8px">
+                        <input type="password" id="admin-api-input" placeholder="gsk_..." dir="ltr" style="text-align:left;width:100%;padding:12px 42px 12px 42px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;outline:none">
+                        <i class="fas fa-key field-icon"></i>
+                        <button type="button" class="toggle-pass" onclick="togglePassword('admin-api-input',this)" style="left:auto;right:auto;position:relative;margin-right:8px" aria-label="إظهار"><i class="fas fa-eye"></i></button>
+                    </div>
+                    <p style="font-size:11px;color:var(--muted)"><i class="fas fa-info-circle" style="margin-left:4px"></i>غيّر المفتاح هنا وسيحدث لجميع المستخدمين فوراً</p>
+                </div>
+
+                <!-- كلمة مرور الإدارة -->
+                <div class="settings-section">
+                    <h4><i class="fas fa-lock" style="margin-left:6px"></i>كلمة مرور الإدارة</h4>
+                    <div class="input-wrap">
+                        <input type="text" id="admin-new-pass" placeholder="كلمة مرور جديدة" dir="ltr" style="text-align:left;width:100%;padding:12px 42px 12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:'Cairo',sans-serif;font-size:13px;outline:none">
+                        <i class="fas fa-lock field-icon"></i>
+                    </div>
+                </div>
+
+                <!-- إدارة النماذج -->
+                <div class="settings-section">
+                    <h4><i class="fas fa-robot" style="margin-left:6px"></i>إدارة النماذج <span style="font-size:11px;color:var(--muted);font-weight:400">(علامة صح = متاح للمستخدمين | علامة خطأ = معطّل)</span></h4>
+                    <div style="font-size:11px;color:var(--text-sec);margin-bottom:12px">
+                        <i class="fas fa-dot-circle" style="color:var(--accent);margin-left:4px"></i> الدائرة = النموذج الافتراضي عند إنشاء محادثة جديدة
+                    </div>
+                    <div class="admin-model-list" id="admin-model-list"></div>
+                </div>
+            </div>
+            <div class="modal-footer" style="gap:10px">
+                <button class="btn btn-primary" onclick="saveAdminSettings()" style="width:auto;padding:10px 28px"><i class="fas fa-save"></i> حفظ وتطبيق</button>
+                <button class="btn btn-danger btn-sm" onclick="resetModelsToDefault()"><i class="fas fa-undo"></i> إعادة تعيين النماذج</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الترحيب -->
+    <div class="modal-overlay ad-modal" id="reg-ad-modal">
+        <div class="modal" role="dialog" aria-label="ترحيب">
+            <div class="ad-content">
+                <div class="ad-badge">مرحباً بك</div>
+                <p style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:8px">أهلاً بك في rtq.ai</p>
+                <p>استمتع بتجربة الذكاء الاصطناعي المتقدم. اختر النموذج المناسب من القائمة أعلاه.</p>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="closeModal('reg-ad-modal');enterApp();" style="width:100%">متابعة إلى التطبيق</button>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
 
     <script>
-    var GAK='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',GM='llama-3.3-70b-versatile';
-    function gSt(){return JSON.parse(localStorage.getItem('rtq_st')||'null')||{sp:'أنت مساعد ذكي اسمك RTQ.AI، تعمل بنموذج Llama 3.3 70B Versatile عبر معالج Groq LPU. تجيب بالعربية بشكل أساسي. إجاباتك دقيقة ومنظمة. استخدم النقاط والأرقام. عند كتابة كود استخدم كتل الكود مع تحديد اللغة.',temp:.75,mt:4096}}
-    function sSt(s){localStorage.setItem('rtq_st',JSON.stringify(s))}
-    var pU=null,vCode='',rInt=null,chts=[],cCID=null,aiRun=false;
+    /* ==========================================
+       جميع نماذج Groq المتاحة
+       ========================================== */
+    var ALL_GROQ_MODELS = [
+        { id: "llama-3.3-70b-versatile", name: "Llama 3.3 70B Versatile", desc: "الأقوى والأكثر توازناً — دقيق وسريع", enabled: true, isDefault: true },
+        { id: "llama-3.1-8b-instant", name: "Llama 3.1 8B Instant", desc: "الأسرع — للاستجابات القصيرة والسريعة", enabled: true, isDefault: false },
+        { id: "llama3-70b-8192", name: "Llama 3 70B (8192)", desc: "قوي وموثوق — حد 8192 رمز", enabled: true, isDefault: false },
+        { id: "llama3-8b-8192", name: "Llama 3 8B (8192)", desc: "خفيف وسريع — حد 8192 رمز", enabled: true, isDefault: false },
+        { id: "mixtral-8x7b-32768", name: "Mixtral 8x7B (32768)", desc: "سياق طويل جداً — 32768 رمز", enabled: true, isDefault: false },
+        { id: "gemma2-9b-it", name: "Gemma 2 9B IT", desc: "من Google — متوازن ودقيق", enabled: true, isDefault: false },
+        { id: "deepseek-r1-distill-llama-70b", name: "DeepSeek R1 70B", desc: "تفكير عميق — ممتاز في الرياضيات والبرمجة", enabled: true, isDefault: false },
+        { id: "qwen-qwq-32b", name: "Qwen QwQ 32B", desc: "من Alibaba — تفكير منطقي متقدم", enabled: true, isDefault: false },
+        { id: "meta-llama/llama-4-scout-17b-16e-instruct", name: "Llama 4 Scout", desc: "الأحدث من Meta — مبدع وسريع", enabled: true, isDefault: false },
+        { id: "meta-llama/llama-4-maverick-17b-128e-instruct", name: "Llama 4 Maverick", desc: "الأحدث من Meta — سياق ضخم 128K", enabled: true, isDefault: false }
+    ];
 
-    /* جسيمات */
-    (function(){var c=document.getElementById('pc'),x=c.getContext('2d'),p=[],mx=-999,my=-999;function rs(){c.width=innerWidth;c.height=innerHeight}rs();addEventListener('resize',function(){rs();cr()});document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});document.addEventListener('mouseleave',function(){mx=-999;my=-999});function cr(){p=[];var n=Math.min(60,Math.floor(innerWidth*innerHeight/20000));for(var i=0;i<n;i++)p.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,s:Math.random()*1.8+.4,o:Math.random()*.4+.1})}cr();function an(){x.clearRect(0,0,c.width,c.height);for(var i=0;i<p.length;i++){var q=p[i];q.x+=q.vx;q.y+=q.vy;if(q.x<0||q.x>c.width)q.vx*=-1;if(q.y<0||q.y>c.height)q.vy*=-1;x.beginPath();x.arc(q.x,q.y,q.s,0,Math.PI*2);x.fillStyle='rgba(0,229,160,'+q.o+')';x.fill();for(var j=i+1;j<p.length;j++){var dx=q.x-p[j].x,dy=q.y-p[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<100){x.beginPath();x.moveTo(q.x,q.y);x.lineTo(p[j].x,p[j].y);x.strokeStyle='rgba(0,229,160,'+(0.06*(1-d/100))+')';x.lineWidth=.5;x.stroke()}}var dmx=q.x-mx,dmy=q.y-my,dm=Math.sqrt(dmx*dmx+dmy*dmy);if(dm<130){x.beginPath();x.moveTo(q.x,q.y);x.lineTo(mx,my);x.strokeStyle='rgba(0,229,160,'+(0.12*(1-dm/130))+')';x.lineWidth=.6;x.stroke()}}requestAnimationFrame(an)}an()})();
+    /* ==========================================
+       التكوين السري
+       ========================================== */
+    var DEFAULT_CONFIG = {
+        _secret: true,
+        _version: "2.0.0",
+        siteName: "rtq.ai",
+        apiKey: "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",
+        apiUrl: "https://api.groq.com/openai/v1/chat/completions",
+        temperature: 0.7,
+        maxTokens: 4096,
+        systemPrompt: "أنت مساعد ذكي اسمك rtq.ai. تجيب باللغة العربية بشكل أساسي. تكون إجاباتك دقيقة ومنظمة ومفصلة. تستخدم تنسيق Markdown عند الحاجة.",
+        models: JSON.parse(JSON.stringify(ALL_GROQ_MODELS)),
+        adminPassword: "admin",
+        ads: { enabled: true, popupIntervalHours: 24, showOnRegister: true, showInChat: true },
+        popunderUrl: "https://flusteredexam.com/b.3oVC0FPA3/pGvbbsmiVlJGZfD/0/2dOdT/A/5MNjTzQ_1jLITHY/5ZM/DTko1CNYD/kq",
+        limits: { maxConversations: 100, maxMessagesPerConv: 500 },
+        features: { exportImport: true, markdown: true, codeHighlight: true },
+        theme: { accent: "#00e88f", bg: "#080c0a" }
+    };
 
-    /* وظائف */
-    function navTo(pg){document.querySelectorAll('.ps').forEach(function(s){s.classList.remove('act')});var t=document.getElementById('page'+pg.charAt(0).toUpperCase()+pg.slice(1));if(t)t.classList.add('act');uNB(pg);window.scrollTo(0,0);document.getElementById('mAB').style.display=pg==='admin'?'block':'none';document.getElementById('aOv').style.display='none';document.getElementById('aSb').classList.remove('op')}
-    function uNB(pg){var n=document.getElementById('na');var u=gcU();
-    if(pg==='chat')n.innerHTML='<button class="mmb" onclick="togSB()"><i class="fa-solid fa-bars"></i></button><div class="nu" onclick="togSB()"><div class="nua">'+(u?u.name.charAt(0):'?')+'</div><span class="nun">@'+(u?u.username:'')+'</span></div><button class="nlo" onclick="hLO()"><i class="fa-solid fa-right-from-bracket"></i></button>';
-    else if(pg==='admin')n.innerHTML='<button class="mmb" onclick="togAS()"><i class="fa-solid fa-bars"></i></button><div class="nu"><div class="nua" style="background:linear-gradient(135deg,var(--dn),#ff8800)"><i class="fa-solid fa-shield-halved" style="font-size:.7rem"></i></div><span class="nun">Admin</span></div><button class="nlo" onclick="hLO()"><i class="fa-solid fa-right-from-bracket"></i></button>';
-    else if(pg==='landing')n.innerHTML='<button class="nbtn nbtn-g" onclick="navTo(\'auth\')">دخول</button><button class="nbtn nbtn-p" onclick="navTo(\'auth\')">ابدأ</button>';
-    else n.innerHTML='<button class="bkl" onclick="navTo(\'landing\')" style="margin:0"><i class="fa-solid fa-arrow-right"></i></button>'}
-    function toast(m,t){t=t||'info';var c=document.getElementById('tc'),e=document.createElement('div');e.className='tst tst-'+t[0];var i={s:'fa-check-circle',e:'fa-exclamation-circle',i:'fa-info-circle'};e.innerHTML='<i class="fa-solid '+(i[t[0]]||i.i)+'"></i> '+m;c.appendChild(e);setTimeout(function(){e.remove()},4000)}
-    function tgP(id,btn){var inp=document.getElementById(id),ic=btn.querySelector('i');if(inp.type==='password'){inp.type='text';ic.className='fa-solid fa-eye-slash'}else{inp.type='password';ic.className='fa-solid fa-eye'}}
-    function vE(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
-    function vU(u){return /^[a-zA-Z0-9_]{3,20}$/.test(u)}
-    function sE(id,m){var e=document.getElementById(id);if(e){e.textContent=m;e.classList.add('sh')}}
-    function cE(id){var e=document.getElementById(id);if(e){e.textContent='';e.classList.remove('sh')}}
-    function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
-    function gT(){return new Date().toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'})}
-    function gcU(){return JSON.parse(localStorage.getItem('rtq_cu')||'null')}
-    function swTab(t){document.querySelectorAll('.at').forEach(function(e){e.classList.remove('act')});document.querySelector('.at[data-tab="'+t+'"]').classList.add('act');document.getElementById('rf').style.display=t==='register'?'block':'none';document.getElementById('lf').style.display=t==='login'?'block':'none';document.querySelectorAll('.fe').forEach(function(e){e.classList.remove('sh');e.textContent=''})}
-    function togSB(){document.getElementById('csb').classList.toggle('op');document.getElementById('sov').classList.toggle('sh')}
-    function clSB(){document.getElementById('csb').classList.remove('op');document.getElementById('sov').classList.remove('sh')}
-    function togAS(){document.getElementById('aSb').classList.toggle('op');document.getElementById('aOv').style.display=document.getElementById('aSb').classList.contains('op')?'block':'none'}
-    function hIK(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}}
-    function aRS(ta){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,130)+'px'}
-    function sSug(t){document.getElementById('cIn').value=t;sendMsg()}
-    function cpFC(){var c=document.getElementById('fCode').textContent;navigator.clipboard.writeText(c).then(function(){toast('تم نسخ الكود!','success')})}
+    var config = {};
+    var currentUser = null;
+    var conversations = [];
+    var activeConvId = null;
+    var pendingRegData = null;
+    var pendingVerifyCode = "";
+    var isSending = false;
+    var selectedModel = "";
 
-    /* تنسيق الرسائل مع زر نسخ الكود */
-    function fmtM(t){var f=esc(t);var bid=0;
-    f=f.replace(/```(\w*)\n?([\s\S]*?)```/g,function(m,l,c){bid++;return '<pre id="cb_'+bid+'"><button class="ccb" onclick="cpB('+bid+')"><i class="fa-regular fa-copy"></i> نسخ</button><code>'+c+'</code></pre>'});
-    f=f.replace(/`([^`]+)`/g,'<code>$1</code>');
-    f=f.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
-    f=f.replace(/\n/g,'<br>');return f}
-    function cpB(id){var p=document.getElementById('cb_'+id);if(!p)return;var c=p.querySelector('code');if(!c)return;navigator.clipboard.writeText(c.textContent).then(function(){var b=p.querySelector('.ccb');b.innerHTML='<i class="fa-solid fa-check"></i> تم';b.style.color='var(--ac)';setTimeout(function(){b.innerHTML='<i class="fa-regular fa-copy"></i> نسخ';b.style.color=''},2000)})}
-    function mH(role,content,time){var u=gcU();var av=role==='user'?'<div class="mav">'+(u?u.name.charAt(0):'?')+'</div>':'<div class="mav"><i class="fa-solid fa-bolt"></i></div>';var th=time?'<div class="mtm">'+time+'</div>':'';return'<div class="msg '+(role==='user'?'u':'a')+'">'+av+'<div><div class="mc">'+fmtM(content)+'</div>'+th+'</div></div>'}
-    function scB(){var c=document.getElementById('cMsgs');setTimeout(function(){c.scrollTop=c.scrollHeight},50)}
+    /* أدوات */
+    function loadConfig() {
+        try {
+            var saved = localStorage.getItem('rtq_config');
+            if (saved) { var p = JSON.parse(saved); config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), p); }
+            else config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+        } catch(e) { config = JSON.parse(JSON.stringify(DEFAULT_CONFIG)); }
+        // التأكد من وجود كل النماذج حتى لو أضيف نماذج جديدة
+        if (!config.models) config.models = JSON.parse(JSON.stringify(ALL_GROQ_MODELS));
+        ALL_GROQ_MODELS.forEach(function(dm) {
+            var found = config.models.find(function(m) { return m.id === dm.id; });
+            if (!found) config.models.push(JSON.parse(JSON.stringify(dm)));
+        });
+        // اختيار النموذج الافتراضي
+        var def = config.models.find(function(m) { return m.isDefault && m.enabled; });
+        selectedModel = def ? def.id : (config.models.find(function(m) { return m.enabled; }) || {}).id || "llama-3.3-70b-versatile";
+    }
+    function deepMerge(t, s) { for (var k in s) { if (s[k] && typeof s[k] === 'object' && !Array.isArray(s[k])) t[k] = deepMerge(t[k] || {}, s[k]); else t[k] = s[k]; } return t; }
+    function saveConfig() { localStorage.setItem('rtq_config', JSON.stringify(config)); }
+    function loadUsers() { try { return JSON.parse(localStorage.getItem('rtq_users') || '[]'); } catch(e) { return []; } }
+    function saveUsers(u) { localStorage.setItem('rtq_users', JSON.stringify(u)); }
+    function loadConversations() { if (!currentUser) return; try { conversations = JSON.parse(localStorage.getItem('rtq_conv_' + currentUser.username) || '[]'); } catch(e) { conversations = []; } }
+    function saveConversations() { if (currentUser) localStorage.setItem('rtq_conv_' + currentUser.username, JSON.stringify(conversations)); }
 
-    function sCE(email,name,code){return fetch('https://formsubmit.co/ajax/'+email,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:'كود التحقق RTQ.AI: '+code,_template:'box',_captcha:'false','مرحباً':name,'كود التحقق':code,'ملاحظة':'إذا لم تطلب الكود تجاهل الرسالة'})}).then(function(r){return r.json()})}
+    function showToast(msg, type) {
+        type = type || 'info'; var c = document.getElementById('toast-container'); var t = document.createElement('div');
+        t.className = 'toast ' + type; var icons = { success:'fa-check-circle', error:'fa-exclamation-circle', info:'fa-info-circle' };
+        t.innerHTML = '<i class="fas ' + (icons[type]||icons.info) + '"></i><span>' + msg + '</span>';
+        c.appendChild(t); setTimeout(function() { t.style.animation='toastOut 0.3s ease forwards'; setTimeout(function(){t.remove()},300); }, 3000);
+    }
+    function openModal(id) { document.getElementById(id).classList.add('show'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+    function togglePassword(inputId, btn) {
+        var input = document.getElementById(inputId); var icon = btn.querySelector('i');
+        if (input.type === 'password') { input.type = 'text'; icon.classList.replace('fa-eye','fa-eye-slash'); }
+        else { input.type = 'password'; icon.classList.replace('fa-eye-slash','fa-eye'); }
+    }
+    function formatTime(ts) { return new Date(ts).toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'}); }
+    function formatDate(ts) { var d=new Date(ts),t=new Date(); if(d.toDateString()===t.toDateString()) return 'اليوم'; var y=new Date(t); y.setDate(y.getDate()-1); if(d.toDateString()===y.toDateString()) return 'أمس'; return d.toLocaleDateString('ar-SA',{month:'short',day:'numeric'}); }
+    function generateVerifyCode() { return String(Math.floor(100000+Math.random()*900000)); }
+    function escapeHtml(t) { var d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
 
-    async function hReg(e){
-        e.preventDefault();cE('rNE');cE('rUE');cE('rEE');cE('rPE');
-        var nm=document.getElementById('rN').value.trim(),un=document.getElementById('rU').value.trim().toLowerCase(),em=document.getElementById('rE').value.trim().toLowerCase(),ps=document.getElementById('rP').value,ok=true;
-        if(nm.length<3){sE('rNE','الاسم 3 أحرف على الأقل');ok=false}
-        if(!vU(un)){sE('rUE','أحرف إنجليزي وأرقام و_ فقط (3-20)');ok=false}
-        if(!vE(em)){sE('rEE','بريد غير صالح');ok=false}
-        if(ps.length<8){sE('rPE','كلمة المرور 8 أحرف');ok=false}
-        var us=JSON.parse(localStorage.getItem('rtq_us')||'[]');
-        if(us.find(function(u){return u.username===un}){sE('rUE','اسم المستخدم مستخدم');ok=false}
-        if(us.find(function(u){return u.email===em}){sE('rEE','البريد مسجل');ok=false}
-        if(!ok)return;
-        pU={name:nm,username:un,email:em,password:ps,createdAt:new Date().toISOString()};
-        vCode=String(Math.floor(100000+Math.random()*900000));
-        var btn=document.getElementById('rSB');btn.disabled=true;btn.innerHTML='<span class="spn"></span> جاري...';
-        try{var res=await sCE(em,nm,vCode);if(res.success){document.getElementById('cFb').style.display='none';toast('تم إرسال الكود!','success')}else{document.getElementById('cFb').style.display='block';document.getElementById('fCode').textContent=vCode;toast('لم نتمكن من الإرسال — الكود بالأسفل','info')}}
-        catch(err){document.getElementById('cFb').style.display='block';document.getElementById('fCode').textContent=vCode;toast('خطأ — الكود بالأسفل','info')}
-        document.getElementById('vED').textContent=em;navTo('verify');stRT();setTimeout(function(){document.querySelector('.ci').focus()},300);
-        btn.disabled=false;btn.textContent='إنشاء الحساب';
+    /* Popunder */
+    function triggerPopunder() {
+        if (!config.ads.enabled || !config.popunderUrl) return;
+        var last = localStorage.getItem('rtq_last_popunder');
+        var interval = (config.ads.popupIntervalHours||24)*3600000; var now = Date.now();
+        if (!last || (now-parseInt(last)) > interval) {
+            try { var pw = window.open(config.popunderUrl,'_blank','width=100,height=100,left=9999,top=9999'); if(pw){pw.blur();window.focus();} } catch(e) {}
+            localStorage.setItem('rtq_last_popunder', now.toString());
+        }
     }
 
-    function hLog(e){
-        e.preventDefault();cE('lIE');cE('lPE');
-        var lid=document.getElementById('lI').value.trim().toLowerCase(),ps=document.getElementById('lP').value,ok=true;
-        if(!lid){sE('lIE','أدخل المعرف');ok=false}
-        var us=JSON.parse(localStorage.getItem('rtq_us')||'[]');
-        var u=us.find(function(x){return x.email===lid||x.username===lid});
-        if(!u){sE('lIE','لا يوجد حساب');ok=false}
-        else if(u.password!==ps){sE('lPE','كلمة المرور خاطئة');ok=false}
-        if(!ok)return;
-        localStorage.setItem('rtq_cu',JSON.stringify(u));toast('مرحباً @'+u.username,'success');iCP();navTo('chat');
+    /* ==========================================
+       قائمة النماذج للمستخدم
+       ========================================== */
+    function renderModelSelector() {
+        var sel = document.getElementById('model-selector');
+        var enabled = config.models.filter(function(m) { return m.enabled; });
+        sel.innerHTML = enabled.map(function(m) {
+            return '<option value="' + m.id + '"' + (m.id === selectedModel ? ' selected' : '') + '>' + m.name + '</option>';
+        }).join('');
+        if (!enabled.find(function(m) { return m.id === selectedModel; })) {
+            selectedModel = (enabled[0] || {}).id || '';
+            sel.value = selectedModel;
+        }
+    }
+    function changeModel(id) { selectedModel = id; }
+
+    /* ==========================================
+       المصادقة
+       ========================================== */
+    function switchAuth(mode) {
+        document.querySelectorAll('.auth-form').forEach(function(f){f.classList.remove('active')});
+        document.getElementById('auth-error').classList.remove('show');
+        var forms={login:'login-form',register:'register-form',verify:'verify-form'};
+        if(forms[mode]) document.getElementById(forms[mode]).classList.add('active');
+    }
+    function showAuthError(msg) { var el=document.getElementById('auth-error'); document.getElementById('auth-error-text').textContent=msg; el.classList.add('show'); }
+
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var u=document.getElementById('login-username').value.trim(), p=document.getElementById('login-password').value;
+        var users=loadUsers(), user=users.find(function(x){return x.username===u&&x.password===p});
+        if(!user){showAuthError('اسم المستخدم أو كلمة المرور غير صحيحة');return;}
+        currentUser=user; localStorage.setItem('rtq_current_user',JSON.stringify(user));
+        loadConversations(); enterApp(); showToast('مرحباً بك يا '+user.name,'success');
+    });
+
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var u=document.getElementById('reg-username').value.trim(), n=document.getElementById('reg-name').value.trim(),
+            em=document.getElementById('reg-email').value.trim(), b=document.getElementById('reg-birthday').value,
+            p=document.getElementById('reg-password').value, c=document.getElementById('reg-confirm').value;
+        if(u.length<3){showAuthError('اسم المستخدم 3 أحرف على الأقل');return;}
+        if(!n||n.length<2){showAuthError('أدخل اسمك الكامل');return;}
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){showAuthError('بريد إلكتروني غير صالح');return;}
+        if(!b){showAuthError('أدخل تاريخ الميلاد');return;}
+        if(p.length<6){showAuthError('كلمة المرور 6 أحرف على الأقل');return;}
+        if(p!==c){showAuthError('كلمتا المرور غير متطابقتين');return;}
+        var users=loadUsers();
+        if(users.find(function(x){return x.username===u})){showAuthError('اسم المستخدم مستخدم بالفعل');return;}
+        if(users.find(function(x){return x.email===em})){showAuthError('البريد مسجل بالفعل');return;}
+        pendingRegData={username:u,name:n,email:em,birthday:b,password:p,createdAt:Date.now()};
+        pendingVerifyCode=generateVerifyCode();
+        document.getElementById('verify-code-display').textContent=pendingVerifyCode.slice(0,3)+'-'+pendingVerifyCode.slice(3);
+        switchAuth('verify');
+        document.querySelectorAll('#code-inputs input').forEach(function(i){i.value=''});
+        document.querySelector('#code-inputs input[data-idx="0"]').focus();
+    });
+
+    document.getElementById('verify-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var inputs=document.querySelectorAll('#code-inputs input');
+        var entered=Array.from(inputs).map(function(i){return i.value}).join('');
+        if(entered!==pendingVerifyCode){showAuthError('رمز التحقق غير صحيح');return;}
+        var users=loadUsers(); users.push(pendingRegData); saveUsers(users);
+        currentUser=pendingRegData; localStorage.setItem('rtq_current_user',JSON.stringify(currentUser));
+        pendingRegData=null; pendingVerifyCode=""; loadConversations();
+        if(config.ads.enabled&&config.ads.showOnRegister) openModal('reg-ad-modal'); else enterApp();
+        showToast('تم إنشاء حسابك بنجاح','success');
+    });
+
+    document.querySelectorAll('#code-inputs input').forEach(function(input,idx,inputs){
+        input.addEventListener('input',function(){this.value=this.value.replace(/\D/g,'');if(this.value&&idx<inputs.length-1)inputs[idx+1].focus()});
+        input.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!this.value&&idx>0)inputs[idx-1].focus()});
+        input.addEventListener('paste',function(e){e.preventDefault();var p=(e.clipboardData.getData('text')||'').replace(/\D/g,'').slice(0,6);p.split('').forEach(function(ch,i){if(inputs[i])inputs[i].value=ch});if(p.length>0)inputs[Math.min(p.length,5)].focus()});
+    });
+
+    function logout() {
+        currentUser=null;conversations=[];activeConvId=null;localStorage.removeItem('rtq_current_user');
+        document.getElementById('app-page').classList.remove('active');document.getElementById('auth-page').style.display='flex';
+        switchAuth('login');document.getElementById('login-form').reset();document.getElementById('register-form').reset();
+        showToast('تم تسجيل الخروج','info');
     }
 
-    /* حقول الكود */
-    (function(){var ins=document.querySelectorAll('.ci');ins.forEach(function(inp,idx){inp.addEventListener('input',function(e){e.target.value=e.target.value.replace(/[^0-9]/g,'');if(e.target.value&&idx<ins.length-1)ins[idx+1].focus()});inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!e.target.value&&idx>0)ins[idx-1].focus();if(e.key==='Enter')hVC()});inp.addEventListener('paste',function(e){e.preventDefault();var p=(e.clipboardData.getData('text')||'').replace(/[^0-9]/g,'').slice(0,6);p.split('').forEach(function(ch,i){if(ins[i])ins[i].value=ch});if(p.length>=6)ins[5].focus()})})})})();
-
-    function hVC(){var ins=document.querySelectorAll('.ci'),en=Array.from(ins).map(function(i){return i.value}).join('');if(en.length!==6){toast('أدخل 6 أرقام','error');return}if(en!==vCode){toast('كود خاطئ','error');ins.forEach(function(i){i.classList.add('esh');setTimeout(function(){i.classList.remove('esh')},500)});return}var us=JSON.parse(localStorage.getItem('rtq_us')||'[]');us.push(pU);localStorage.setItem('rtq_us',JSON.stringify(us));localStorage.setItem('rtq_cu',JSON.stringify(pU));if(rInt)clearInterval(rInt);toast('مرحباً @'+pU.username,'success');pU=null;vCode='';ins.forEach(function(i){i.value=''});document.getElementById('cFb').style.display='none';iCP();navTo('chat')}
-    function stRT(){var s=60,btn=document.getElementById('rBtn'),txt=document.getElementById('tTxt');btn.disabled=true;if(rInt)clearInterval(rInt);rInt=setInterval(function(){s--;txt.textContent='إعادة الإرسال بعد '+s+' ثانية ';if(s<=0){clearInterval(rInt);txt.textContent='';btn.disabled=false}},1000)}
-    async function resend(){if(!pU)return;vCode=String(Math.floor(100000+Math.random()*900000));try{await sCE(pU.email,pU.name,vCode);toast('تم إرسال كود جديد!','success');stRT();document.querySelectorAll('.ci').forEach(function(i){i.value=''});document.querySelector('.ci').focus();document.getElementById('cFb').style.display='none'}catch(err){document.getElementById('cFb').style.display='block';document.getElementById('fCode').textContent=vCode;toast('خطأ — الكود بالأسفل','info')}}
-    function hLO(){localStorage.removeItem('rtq_cu');chts=[];null;cCID=null;toast('تم الخروج','info');navTo('landing')}
-
-    /* المحادثات */
-    function iCP(){var u=gcU();if(!u)return;chts=JSON.parse(localStorage.getItem('rtq_c_'+u.username)||'[]');if(!chts.length){newCht()}else{cCID=chts[0].id;rCL();lCM()}uSI()}
-    function newCht(){var u=gcU();if(!u)return;chts.unshift({id:Date.now().toString(),title:'محادثة جديدة',messages:[],createdAt:new Date().toISOString()});cCID=chts[0].id;sCht();rCL();shW();clSB()}
-    function sCht(){var u=gcU();if(!u)return;localStorage.setItem('rtq_c_'+u.username,JSON.stringify(chts));uSI()}
-    function uSI(){var u=gcU();if(!u)return;var d=localStorage.getItem('rtq_c_'+u.username)||'';var kb=(new Blob([d]).size/1024).toFixed(1);var el=document.getElementById('sInfo');if(el)el.textContent=chts.length+' محادثة — '+kb+' KB'}
-    function rCL(){var l=document.getElementById('cList');if(!chts.length){l.innerHTML='<p style="text-align:center;color:var(--mu);font-size:.8rem;padding:16px">لا توجد</p>';return}var h='';for(var i=0;i<chts.length;i++){var c=chts[i];h+='<div class="cli'+(c.id===cCID?' act':'')+'" onclick="swC(\''+c.id+'\')"><i class="fa-regular fa-comment"></i><span class="ctit">'+esc(c.title)+'</span><button class="dcl" onclick="event.stopPropagation();dC(\''+c.id+'\')"><i class="fa-solid fa-trash"></i></button></div>'}l.innerHTML=h}
-    function swC(id){cCID=id;rCL();lCM();clSB()}
-    function dC(id){chts=chts.filter(function(c){return c.id!==id});sCht();if(cCID===id){chts.length?swC(chts[0].id):newCht()}else rCL();toast('تم الحذف','info')}
-    function gCC(){for(var i=0;i<chts.length;i++){if(chts[i].id===cCID)return chts[i]}return null}
-    function shW(){var u=gcU();document.getElementById('cMsgs').innerHTML='<div class="wm" id="wM"><div class="wi"><i class="fa-solid fa-bolt"></i></div><h2>مرحباً @'+(u?u.username:'')+'</h2><p>اسألني أي سؤال.</p><div class="wmd"><i class="fa-solid fa-microchip"></i> llama-3.3-70b-versatile</div><div class="sugs"><button class="sugb" onclick="sSug(\'اشرح مميزات Llama 3.3 70B\')">مميزات Llama 3.3</button><button class="sugb" onclick="sSug(\'كود Python Flask بسيط\')">كود Python</button><button class="sugb" onclick="sSug(\'خطة تعلم 6 أشهر\')">خطة تعلم</button><button class="sugb onclick="sSug(\'ما هو Groq LPU؟\')">Groq LPU</button></div></div></div>'}
-    function lCM(){var c=gCC(),el=document.getElementById('cMsgs');if(!c||!c.messages.length){shW();return}var h='';for(var i=0;i<c.messages.length;i++){h+=mH(c.messages[i].role,c.messages[i].content,c.messages[i].time)}el.innerHTML=h;scB()}
-    async function sendMsg(){
-        var inp=document.getElementById('cIn'),txt=inp.value.trim();
-        if(!txt||aiRun)return;var c=gCC();if(!c)return;
-        var w=document.getElementById('wM');if(w)w.remove();
-        var time=gT();c.messages.push({role:'user',content:txt,time:time});
-        var uc=0;for(var i=0;i<c.messages.length;i++){if(c.messages[i].role==='user')uc++}
-        if(uc===1){c.title=txt.slice(0,45)+(txt.length>45?'...':'');rCL()}
-        sCht();var con=document.getElementById('cMsgs');
-        con.insertAdjacentHTML('beforeend',mH('user',txt,time));inp.value='';inp.style.height='auto';scB();
-        aiRun=true;document.getElementById('sBtn').disabled=true;
-        var typ=document.createElement('div');typ.className='msg a';typ.id='typI';
-        typ.innerHTML='<div class="mav"><i class="fa-solid fa-bolt"></i></div><div class="mc"><div class="tii"><div class="td"></div><div class="td"></div><div class="td"></div></div></div></div>';
-        con.appendChild(typ);scB();
-        try{
-            var st=gSt();var aM=[{role:'system',content:st.sp}];
-            for(var i=0;i<c.messages.length;i++){var r=c.messages[i].role==='ai'?'assistant':c.messages[i].role:aM.push({role:r,content:c.messages[i].content})}
-            var res=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+GAK,'Content-Type':'application/json'},body:JSON.stringify({model:GM,messages:aM,temperature:st.temp,max_tokens:st.mt})});
-            if(!res.ok){var ed=await res.json().catch(function(){return{}});throw new Error(ed.error&&ed.error.message?ed.error.message:'HTTP '+res.status)}
-            var data=await res.json();
-            var aiT=data.choices[0]&&data.choices[0].message?data.choices[0].message.content:'عذراً، لم أتمكن.';
-            var aiTm=gT();c.messages.push({role:'ai',content:aiT,time:aiTm});sCht();
-            typ.remove();con.insertAdjacentHTML('beforeend',mH('ai',aiT,aiTm));scB();
-        }catch(err){
-            console.error('Groq:',err);typ.remove();
-            var msg='خطأ. ';if(err.message.indexOf('API key')!==-1||err.message.indexOf('401')!==-1)msg+='مفتاح غير صالح.';else if(err.message.indexOf('rate')!==-1||err.message.indexOf('429')!==-1)msg+='تجاوز الحد. انتظر.';else msg+=err.message;
-            con.insertAdjacentHTML('beforeend',mH('ai',msg,gT()));scB();toast('خطأ في الاتصال','error');
-        }finally{aiRun=false;document.getElementById('sBtn').disabled=false;inp.focus()}
-    }
-    function expCht(){if(!chts.length){toast('لا توجد','info');return}var b=new Blob([JSON.stringify({from:'RTQ.AI',chts:chts},null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rtq-chats-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href);toast('تم التصدير','success')}
-    function impCht(ev){var f=ev.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(e){try{var d=JSON.parse(e.target.result);if(d._rtq_admin==='RTQ_SECRET_2025'){localStorage.setItem('rtq_ad','true');toast('تم تفعيل الأدمن!','success');rAD();navTo('admin');ev.target.value=''}
-        catch(err){toast('فشل القراءة','error')}}
-        r.readAsText(f);ev.target.value=''}
+    function enterApp() {
+        document.getElementById('auth-page').style.display='none';document.getElementById('app-page').classList.add('active');
+        document.getElementById('user-display-name').textContent=currentUser.name;
+        document.getElementById('user-display-email').textContent=currentUser.email;
+        document.getElementById('user-avatar').textContent=currentUser.name.charAt(0).toUpperCase();
+        renderModelSelector(); renderConvList(); showWelcomeOrChat();
+        setTimeout(triggerPopunder,2000);
     }
 
-    /* الأدمن */
-    function rAD(){aSec('dash',document.querySelector('.adni'))}
-    function aSec(sec,el){document.querySelectorAll('.adni').forEach(function(n){n.classList.remove('act')});if(el)el.classList.add('act');var m=document.getElementById('aMain');var us=JSON.parse(localStorage.getItem('rtq_us')||'[]');var tC=0,tM=0;for(var i=0;i<us.length;i++){var uc=JSON.parse(localStorage.getItem('rtq_c_'+us[i].username)||'[]');tC+=uc.length;for(var j=0;j<uc.length;j++)tM+=uc[j].messages.length}
-    if(sec==='dash'){m.innerHTML='<h2 class="admt">الإحصائيات</h2><div class="adms"><div class="admst"><div class="sv">'+us.length+'</div><div class="sl">مستخدم</div></div><div class="admst"><div class="sv">'+tC+'</div><div class="sl">محادثة</div></div><div class="admst"><div class="sv" style="color:'+(localStorage.getItem('rtq_ad')==='true'?'var(--ac)':'var(--dn)')+'">'+(localStorage.getItem('rtq_ad')==='true'?'مفعّل':'معطّل')+'</div><div class="sl">وضع الأدمن</div></div></div>'}
-    else if(sec==='users'){var rw='';for(var i=0;i<us.length;i++){var u=us[i];var uc=JSON.parse(localStorage.getItem('rtq_c_'+us[i].username)||'[]');rw+='<tr><td>'+(i+1)+'</td><td style="color:var(--ac);font-weight:600">@'+esc(u.username)+'</td><td>'+esc(u.name)+'</td><td class="ec">'+esc(u.email)+'</td><td class="hm">'+uc.length+'</td><td class="hm" style="font-size:.74rem;color:var(--mu)">'+new Date(u.createdAt).toLocaleDateString('ar-SA')+'</td><td><td><button class="adbtn adbtn-v" onclick="vUC(\''+u.username+'\')"><i class="fa-solid fa-eye"></i></button> <button class="adbtn adbtn-d" onclick="dUsr(\''+u.username+'\')"><i class="fa-solid fa-trash"></i></button></td></tr></table></table></div>'+(us.length?'<div id="ucArea"></div>':'<p style="color:var(--mu);text-align:center;padding:30px">لا يوجد</p>')+'<div id="ucArea"></div>'}
-    else if(sec==='sets'){var s=gSt();m.innerHTML='<h2 class="admt">الإعدادات</h2><div class="adzg"><label>System Prompt</label><textarea class="adta" id="aPr">'+esc(s.sp)+'</textarea></div><div class="adzg"><label>Temperature ('+s.temp+')</label><input type="range" min="0" max="1" step="0.05" value="'+s.temp+'" class="adinp" style="padding:4px" id="aTp" oninput="this.previousElementSibling.textContent=\'Temperature (\'+this.value+\')\'"></div><div class="adzg"><label>Max Tokens</label><input type="number" class="adinp" id="aTk" value="'+s.mt+'" min="256" max="8192"></div><button class="bf" style="max-width:180px" onclick="svAS()">حفظظ</button>'}
-    else if(sec==='dng'){m.innerHTML='<h2 class="admt">منطقة الخطر</h2><div class="adzone"><h3><i class="fa-solid fa-triangle-exclamation"></i> إجراءات نهائية</h3><button class="addbtn" onclick="aClrC()"><i class="fa-solid fa-comments"></i> حذفف كل المحادثات</button><button class="addbtn" onclick="aClrU()"><i class="fa-solid fa-users-slash"></i> حذف كل المستخدمين</button><button class="addbtn" style="background:rgba(255,77,106,.25)" onclick="aRst()"><i class="fa-solid fa-bomb"></i> إعادة تعيين كل شيء</button><button class="addbtn sec" onclick="dAdm()"><i class="fa-solid fa-power-off"></i> تعطيل الأدمن</button></div></div>'}
-    function vUC(un){var uc=JSON.parse(localStorage.getItem('rtq_c_'+un)||'[]');var a=document.getElementById('ucArea');if(!uc.length){a.innerHTML='<div class="aduc" style="margin-top:16px"><h4>@'+un+' — لا توجد</h4></div>';return}var h='<div class="aduc" style="margin-top:16px"><h4>@'+un+' — '+uc.length+' محادثة</h4>';for(var i=0;i<uc.length;i++){h+='<div class="adci"><span>'+esc(uc[i].title)+' ('+uc[i].messages.length+')</span><button class="adbtn adbtn-d" onclick="aDC(\''+un+'\',\''+uc[i].id+'\')"><i class="fa-solid fa-trash"></i></button></div>'}h+='</div>';a.innerHTML=h}
-    function dUsr(un){if(!confirm('حذف @'+un+'؟'))return;var us=JSON.parse(localStorage.getItem('rtq_us')||'[]');us=us.filter(function(u){return u.username!==un});localStorage.setItem('rtq_us',JSON.stringify(us));localStorage.removeItem('rtq_c_'+un);localStorage.removeItem('rtq_cu');var cu=gcU();if(cu&&cu.username===un)localStorage.removeItem('rtq_cu');toast('تم الحذف','success');aSec('users',document.querySelectorAll('.adni')[1])}
-    function aDC(un,cid){var uc=JSON.parse(localStorage.getItem('rtq_c_'+un)||'[]');uc=uc.filter(function(c){return c.id!==cid});localStorage.setItem('rtq_c_'+un,JSON.stringify(uc));toast('تم','success');vUC(un)}
-    function svAS(){sSt({sp:document.getElementById('aPr').value,temp:parseFloat(document.getElementById('aTp').value),mt:parseInt(document.getElementById('aTk').value)});toast('تم الحفظ','success')}
-    function aClrC(){if(!confirm('حذف كل المحادثات؟'))return;var us=JSON.parse(localStorage.getItem('rtq_us')||'[]');us.forEach(function(u){localStorage.removeItem('rtq_c_'+u.username)});toast('تم','success')}
-    function aClrU(){if(!confirm('حذف كل المستخدمين؟'))return;var us=JSON.parse(localStorage.getItem('rtq_us')||'[]');us.forEach(function(u){localStorage.removeItem('rtq_c_'+u.username)});localStorage.removeItem('rtq_us');localStorage.removeItem('rtq_cu');toast('تم','success');aSec('dash',document.querySelector('.adni'))}
-    function aRst(){if(!confirm('إعادة تعيين كل شيء؟'))return;localStorage.clear();toast('تم','success');navTo('landing')}
-    function dAdm(){localStorage.removeItem('rtq_ad');toast('تم تعطيل الأدمن','info');navTo('landing')}
-    function cpB(id){var p=document.getElementById('cb_'+id);if(!p)return;var c=p.querySelector('code');if(!c)return;navigator.clipboard.writeText(c.textContent).then(function(){var b=p.querySelector('.ccb');b.innerHTML='<i class="fa-solid fa-check"></i> تم';b.style.color='var(--ac)';setTimeout(function(){b.innerHTML='<i class="fa-regular fa-copy"></i> نسخ';b.style.color=''},2000)});cpFC()}
-    function iCP(){var u=gcU();if(!u){iCP();navTo('chat')}else if(localStorage.getItem('rtq_ad')==='true'){navTo('admin')}else navTo('landing')}
-    (function(){var u=gcU();if(u){iCP();navTo('chat')}else if(localStorage.getItem('rtq_ad')==='true'){navTo('admin')}else navTo('landing')})();
+    /* ==========================================
+       إدارة المحادثات
+       ========================================== */
+    function newConversation() {
+        if(conversations.length>=config.limits.maxConversations){showToast('الحد الأقصى '+config.limits.maxConversations,'error');return;}
+        var def=config.models.find(function(m){return m.isDefault&&m.enabled})||config.models.find(function(m){return m.enabled});
+        var conv={id:'conv_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),title:'محادثة جديدة',messages:[],model:selectedModel||def.id,createdAt:Date.now(),updatedAt:Date.now()};
+        conversations.unshift(conv); activeConvId=conv.id;
+        saveConversations();renderConvList();showWelcomeOrChat();closeSidebar();
+    }
+    function deleteConversation(id,e) {
+        e.stopPropagation();conversations=conversations.filter(function(c){return c.id!==id});
+        if(activeConvId===id) activeConvId=conversations.length>0?conversations[0].id:null;
+        saveConversations();renderConvList();showWelcomeOrChat();showToast('تم حذف المحادثة','info');
+    }
+    function selectConversation(id) {
+        activeConvId=id; var conv=getActiveConv();
+        if(conv&&conv.model) { selectedModel=conv.model; renderModelSelector(); }
+        renderConvList();showWelcomeOrChat();closeSidebar();
+    }
+    function getActiveConv() { return conversations.find(function(c){return c.id===activeConvId})||null; }
+
+    function renderConvList() {
+        var list=document.getElementById('conv-list'),empty=document.getElementById('empty-conv');
+        if(conversations.length===0){list.innerHTML='';list.appendChild(empty);empty.style.display='block';return;}
+        empty.style.display='none';
+        list.innerHTML=conversations.map(function(c){
+            var mName='';var m=config.models.find(function(x){return x.id===c.model});
+            if(m) mName=' <span style="color:var(--muted);font-size:10px">('+m.name+')</span>';
+            return '<div class="conv-item '+(c.id===activeConvId?'active':'')+'" onclick="selectConversation(\''+c.id+'\')"><div class="conv-icon"><i class="fas fa-comment-dots"></i></div><div class="conv-info"><div class="conv-title">'+escapeHtml(c.title)+mName+'</div><div class="conv-date">'+formatDate(c.updatedAt)+'</div></div><button class="conv-delete" onclick="deleteConversation(\''+c.id+'\',event)" title="حذف"><i class="fas fa-trash"></i></button></div>';
+        }).join('');
+    }
+
+    function buildWelcomeHTML() {
+        var mName='';var m=config.models.find(function(x){return x.id===selectedModel});
+        if(m) mName=m.name; else mName='Llama 3.3 70B';
+        return '<div class="welcome-screen"><div class="welcome-logo">rtq</div><h2>مرحباً بك في rtq<span>.ai</span></h2><p>النموذج الحالي: <strong style="color:var(--accent)">'+mName+'</strong><br>اسألني أي شيء وسأساعدك.</p><div class="welcome-suggestions"><div class="suggestion-card" onclick="useSuggestion(\'اشرح لي مفهوم الذكاء الاصطناعي التوليدي بطريقة مبسطة\')"><div class="sugg-icon"><i class="fas fa-brain"></i></div><div class="sugg-text">اشرح لي مفهوم الذكاء الاصطناعي التوليدي بطريقة مبسطة</div></div><div class="suggestion-card" onclick="useSuggestion(\'اكتب لي كود Python لحاسبة علمية بسيطة\')"><div class="sugg-icon"><i class="fas fa-code"></i></div><div class="sugg-text">اكتب لي كود Python لحاسبة علمية بسيطة</div></div><div class="suggestion-card" onclick="useSuggestion(\'أعطني 5 أفكار مشاريع ابتكارية للمبتدئين\')"><div class="sugg-icon"><i class="fas fa-lightbulb"></i></div><div class="sugg-text">أعطني 5 أفكار مشاريع ابتكارية للمبتدئين في البرمجة</div></div></div></div>';
+    }
+
+    function showWelcomeOrChat() {
+        var conv=getActiveConv(),el=document.getElementById('messages'),titleEl=document.getElementById('chat-title');
+        if(!conv||conv.messages.length===0){titleEl.textContent=conv?conv.title:'محادثة جديدة';el.innerHTML=buildWelcomeHTML();return;}
+        titleEl.textContent=conv.title; renderMessages(conv.messages);
+    }
+
+    function renderMessages(msgs) {
+        var el=document.getElementById('messages');
+        el.innerHTML=msgs.map(function(m){
+            if(m.role==='user') return '<div class="message user"><div class="msg-avatar">'+currentUser.name.charAt(0).toUpperCase()+'</div><div><div class="msg-content">'+escapeHtml(m.content)+'</div><div class="msg-time">'+formatTime(m.timestamp)+'</div></div></div>';
+            return '<div class="message ai"><div class="msg-avatar"><i class="fas fa-robot"></i></div><div><div class="msg-content">'+renderMarkdown(m.content)+'</div><div class="msg-time">'+formatTime(m.timestamp)+'</div></div></div>';
+        }).join('');
+        el.scrollTop=el.scrollHeight;
+    }
+
+    function useSuggestion(text){document.getElementById('chat-input').value=text;handleSend();}
+    function clearChat(){var conv=getActiveConv();if(!conv||conv.messages.length===0)return;conv.messages=[];conv.updatedAt=Date.now();saveConversations();showWelcomeOrChat();showToast('تم مسح المحادثة','info');}
+
+    /* ==========================================
+       الدردشة — Groq API
+       ========================================== */
+    async function handleSend() {
+        var input=document.getElementById('chat-input'),text=input.value.trim();
+        if(!text||isSending)return;
+        if(!config.apiKey){showToast('مفتاح API غير موجود — تواصل مع الإدارة','error');return;}
+        if(!selectedModel){showToast('لا يوجد نموذج مفعّل — تواصل مع الإدارة','error');return;}
+        if(!activeConvId) newConversation();
+        var conv=getActiveConv(); if(!conv)return;
+        conv.model=selectedModel;
+        conv.messages.push({role:'user',content:text,timestamp:Date.now()});
+        if(conv.messages.length===1){conv.title=text.slice(0,50)+(text.length>50?'...':'');document.getElementById('chat-title').textContent=conv.title;renderConvList();}
+        conv.updatedAt=Date.now();saveConversations();input.value='';autoResize(input);renderMessages(conv.messages);
+        isSending=true;document.getElementById('send-btn').disabled=true;
+        var typingEl=document.createElement('div');typingEl.className='typing-indicator show';
+        typingEl.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+        document.getElementById('messages').appendChild(typingEl);
+        document.getElementById('messages').scrollTop=document.getElementById('messages').scrollHeight;
+        try {
+            var apiMessages=[{role:'system',content:config.systemPrompt}];
+            conv.messages.forEach(function(m){apiMessages.push({role:m.role,content:m.content})});
+            var response=await fetch(config.apiUrl,{
+                method:'POST',
+                headers:{'Authorization':'Bearer '+config.apiKey,'Content-Type':'application/json'},
+                body:JSON.stringify({model:selectedModel,messages:apiMessages,temperature:config.temperature,max_tokens:config.maxTokens,stream:false})
+            });
+            typingEl.remove();
+            if(!response.ok){var err=await response.json().catch(function(){return{}});throw new Error((err.error&&err.error.message)?err.error.message:'خطأ HTTP: '+response.status);}
+            var data=await response.json();
+            var ai=(data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content)?data.choices[0].message.content:'لم أتمكن من توليد رد.';
+            conv.messages.push({role:'assistant',content:ai,timestamp:Date.now()});
+            conv.updatedAt=Date.now();saveConversations();renderMessages(conv.messages);renderConvList();
+        } catch(error) {
+            typingEl.remove();var msg=error.message;
+            if(msg.indexOf('401')>-1||msg.indexOf('invalid')>-1)msg='مفتاح API غير صالح — تواصل مع الإدارة';
+            else if(msg.indexOf('429')>-1)msg='تم تجاوز حد الطلبات — انتظر قليلاً';
+            else if(msg.indexOf('fetch')>-1||msg.indexOf('Network')>-1)msg='خطأ في الاتصال بالشبكة';
+            showToast(msg,'error');conv.messages.pop();saveConversations();renderMessages(conv.messages);
+        } finally {isSending=false;document.getElementById('send-btn').disabled=false;input.focus();}
+    }
+
+    /* Markdown */
+    function renderMarkdown(text) {
+        if(!config.features.markdown)return escapeHtml(text);
+        text=text.replace(/```(\w*)\n([\s\S]*?)```/g,function(m,lang,code){var id='code_'+Math.random().toString(36).slice(2,8);return '<pre><div class="code-header"><span>'+(lang||'code')+'</span><button class="copy-btn" onclick="copyCode(\''+id+'\')"><i class="fas fa-copy"></i> نسخ</button></div><code class="block-code" id="'+id+'">'+escapeHtml(code.trim())+'</code></pre>';});
+        text=text.replace(/`([^`]+)`/g,'<code>$1</code>');
+        text=text.replace(/^### (.+)$/gm,'<h3>$1</h3>');text=text.replace(/^## (.+)$/gm,'<h2>$1</h2>');text=text.replace(/^# (.+)$/gm,'<h1>$1</h1>');
+        text=text.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');text=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');text=text.replace(/\*(.+?)\*/g,'<em>$1</em>');
+        text=text.replace(/^[\-\*] (.+)$/gm,'<li>$1</li>');text=text.replace(/(<li>[\s\S]*?<\/li>)/g,function(m){return m.indexOf('<ul>')===-1?'<ul>'+m+'</ul>':m});text=text.replace(/<\/ul>\s*<ul>/g,'');
+        text=text.replace(/^\d+\. (.+)$/gm,'<li>$1</li>');
+        text=text.replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline">$1</a>');
+        text=text.replace(/\n\n/g,'</p><p>');text=text.replace(/\n/g,'<br>');text='<p>'+text+'</p>';
+        text=text.replace(/<p><\/p>/g,'');text=text.replace(/<p>(<h[1-3]>)/g,'$1');text=text.replace(/(<\/h[1-3]>)<\/p>/g,'$1');
+        text=text.replace(/<p>(<pre>)/g,'$1');text=text.replace(/(<\/pre>)<\/p>/g,'$1');text=text.replace(/<p>(<ul>)/g,'$1');text=text.replace(/(<\/ul>)<\/p>/g,'$1');
+        return text;
+    }
+    function copyCode(id){var el=document.getElementById(id);if(!el)return;navigator.clipboard.writeText(el.textContent).then(function(){showToast('تم نسخ الكود','success')}).catch(function(){var r=document.createRange();r.selectNode(el);window.getSelection().removeAllRanges();window.getSelection().addRange(r);document.execCommand('copy');window.getSelection().removeAllRanges();showToast('تم نسخ الكود','success');});}
+
+    /* ==========================================
+       لوحة الإدارة
+       ========================================== */
+    function openAdminLogin() { closeSidebar(); document.getElementById('admin-pass-input').value=''; openModal('admin-login-modal'); setTimeout(function(){document.getElementById('admin-pass-input').focus()},300); }
+
+    function verifyAdmin() {
+        var pass=document.getElementById('admin-pass-input').value;
+        if(pass===config.adminPassword) { closeModal('admin-login-modal'); openAdminPanel(); }
+        else showToast('كلمة مرور الإدارة غير صحيحة','error');
+    }
+
+    function openAdminPanel() {
+        document.getElementById('admin-api-input').value=config.apiKey||'';
+        document.getElementById('admin-new-pass').value='';
+        // إحصائيات
+        document.getElementById('stat-users').textContent=loadUsers().length;
+        document.getElementById('stat-models').textContent=config.models.filter(function(m){return m.enabled}).length;
+        document.getElementById('stat-convs').textContent=conversations.length;
+        // قائمة النماذج
+        var list=document.getElementById('admin-model-list');
+        list.innerHTML=config.models.map(function(m,i){
+            var statusClass=m.enabled?'on':'off';
+            var statusIcon=m.enabled?'<i class="fas fa-check-circle"></i>':'<i class="fas fa-times-circle"></i>';
+            var itemClass=m.enabled?'':'disabled-model';
+            return '<div class="admin-model-item '+itemClass+'" id="admin-model-'+i+'">'+
+                '<input type="radio" name="default-model" class="model-radio" value="'+i+'" '+(m.isDefault?'checked':'')+' title="اجعله الافتراضي">'+
+                '<div class="model-info"><div class="model-name">'+m.name+'</div><div class="model-id">'+m.id+'</div><div class="model-desc">'+m.desc+'</div></div>'+
+                '<span class="model-status '+statusClass+'">'+statusIcon+'</span>'+
+                '<label class="toggle-switch model-toggle"><input type="checkbox" '+(m.enabled?'checked':'')+' onchange="toggleAdminModel('+i+',this.checked)"><span class="slider"></span></label>'+
+                '</div>';
+        }).join('');
+        openModal('admin-modal');
+    }
+
+    function toggleAdminModel(idx, enabled) {
+        var item=document.getElementById('admin-model-'+idx);
+        var status=item.querySelector('.model-status');
+        if(enabled) {
+            item.classList.remove('disabled-model');
+            status.className='model-status on';
+            status.innerHTML='<i class="fas fa-check-circle"></i>';
+        } else {
+            item.classList.add('disabled-model');
+            status.className='model-status off';
+            status.innerHTML='<i class="fas fa-times-circle"></i>';
+        }
+    }
+
+    function saveAdminSettings() {
+        // API
+        var newApi=document.getElementById('admin-api-input').value.trim();
+        if(newApi) config.apiKey=newApi;
+        // كلمة مرور الإدارة
+        var newPass=document.getElementById('admin-new-pass').value.trim();
+        if(newPass) config.adminPassword=newPass;
+        // النماذج
+        var radios=document.querySelectorAll('input[name="default-model"]');
+        config.models.forEach(function(m,i) {
+            m.enabled=document.querySelector('#admin-model-'+i+' .model-toggle input').checked;
+            m.isDefault=radios[i]&&radios[i].checked;
+        });
+        // التأكد من وجود نموذج افتراضي واحد مفعّل
+        var defCount=config.models.filter(function(m){return m.isDefault&&m.enabled}).length;
+        if(defCount===0) {
+            var first=config.models.find(function(m){return m.enabled});
+            if(first) first.isDefault=true;
+        }
+        saveConfig();
+        selectedModel=(config.models.find(function(m){return m.isDefault&&m.enabled})||config.models.find(function(m){return m.enabled})||{}).id||'';
+        renderModelSelector();
+        closeModal('admin-modal');
+        showToast('تم حفظ إعدادات الإدارة — التغييرات فعّالة فوراً','success');
+    }
+
+    function resetModelsToDefault() {
+        config.models=JSON.parse(JSON.stringify(ALL_GROQ_MODELS));
+        openAdminPanel();
+        showToast('تم إعادة تعيين النماذج للوضع الافتراضي','info');
+    }
+
+    /* ==========================================
+       استيراد وتصدير
+       ========================================== */
+    function exportAllData(){downloadJSON({config:config,user:currentUser,conversations:conversations,exportedAt:new Date().toISOString(),type:'full_backup'},'rtq_backup_'+Date.now()+'.json');showToast('تم تصدير جميع البيانات','success');}
+    function exportConfig(){downloadJSON({config:config,exportedAt:new Date().toISOString(),type:'secret_config'},'rtq_config_secret_'+Date.now()+'.json');showToast('تم تصدير الإعدادات السرية','success');}
+    function exportConversation(){var conv=getActiveConv();if(!conv){showToast('لا توجد محادثة','error');return;}downloadJSON(conv,'rtq_chat_'+conv.id.slice(0,12)+'_'+Date.now()+'.json');showToast('تم تصدير المحادثة','success');}
+    function importData(event){
+        var file=event.target.files[0];if(!file)return;var reader=new FileReader();
+        reader.onload=function(e){
+            try{var data=JSON.parse(e.target.result);
+                if(data.type==='secret_config'){config=deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)),data.config||data);saveConfig();applyTheme();applyAdSettings();renderModelSelector();showToast('تم استيراد الإعدادات السرية','success');}
+                else if(data.type==='full_backup'){if(data.config){config=deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)),data.config);saveConfig();applyTheme();applyAdSettings();renderModelSelector();}if(data.conversations&&currentUser){conversations=data.conversations;saveConversations();renderConvList();showWelcomeOrChat();}showToast('تم استيراد النسخة الاحتياطية','success');}
+                else if(data.id&&data.messages){if(!currentUser){showToast('سجل دخول أولاً','error');return;}data.id='conv_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);data.createdAt=Date.now();data.updatedAt=Date.now();conversations.unshift(data);activeConvId=data.id;saveConversations();renderConvList();showWelcomeOrChat();showToast('تم استيراد المحادثة','success');}
+                else showToast('صيغة الملف غير معروفة','error');
+            }catch(err){showToast('فشل في قراءة الملف','error');}
+        };
+        reader.readAsText(file);event.target.value='';
+    }
+    function downloadJSON(data,filename){var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
+
+    /* ==========================================
+       الإعدادات العادية
+       ========================================== */
+    function openSettings(){document.getElementById('temp-input').value=config.temperature;document.getElementById('max-tokens-input').value=config.maxTokens;document.getElementById('ads-enabled-toggle').checked=config.ads.enabled;document.getElementById('ads-interval-input').value=config.ads.popupIntervalHours;openModal('settings-modal');closeSidebar();}
+    function saveSettings(){config.temperature=parseFloat(document.getElementById('temp-input').value)||0.7;config.maxTokens=parseInt(document.getElementById('max-tokens-input').value)||4096;config.ads.enabled=document.getElementById('ads-enabled-toggle').checked;config.ads.popupIntervalHours=parseInt(document.getElementById('ads-interval-input').value)||24;saveConfig();applyAdSettings();closeModal('settings-modal');showToast('تم حفظ الإعدادات','success');}
+    function applyTheme(){if(config.theme&&config.theme.accent)document.documentElement.style.setProperty('--accent',config.theme.accent);}
+    function applyAdSettings(){var a=document.getElementById('chat-ad-space');if(a)a.style.display=config.ads.showInChat?'flex':'none';if(config.ads.enabled)document.body.classList.remove('ads-hidden');else document.body.classList.add('ads-hidden');}
+    function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('show');}
+    function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('show');}
+
+    /* أحداث */
+    document.getElementById('chat-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();handleSend();}});
+    var chatInput=document.getElementById('chat-input');chatInput.addEventListener('input',function(){autoResize(this)});
+    function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
+    document.querySelectorAll('.modal-overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('show')})});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.modal-overlay.show').forEach(function(m){m.classList.remove('show')})});
+
+    /* تهيئة */
+        loadConfig();applyTheme();applyAdSettings();
+        try{var su=localStorage.getItem('rtq_current_user');
+            if(su){currentUser=JSON.parse(su);var users=loadUsers();var ex=users.find(function(u){return u.username===currentUser.username});
+                if(ex){currentUser=ex;loadConversations();enterApp();return;}}
+        }catch(e){}
+        document.getElementById('auth-page').style.display='flex';
     })();
     </script>
 </body>
