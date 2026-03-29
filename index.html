@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rtq.ai - ذكاء اصطناعي متقدم</title>
-    <meta name="description" content="rtq.ai - مساعد ذكاء اصطناعي متقدم مدعوم بنماذج Groq المتعددة">
+    <meta name="description" content="rtq.ai - مساعد ذكاء اصطناعي متقدم مدعوم بنماذج OpenAI و Groq">
     <meta name="theme-color" content="#080c0a">
     <link rel="icon" href="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1890,6 +1890,96 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        /* =============================================
+           نافذة التفعيل
+           ============================================= */
+        .activation-modal {
+            text-align: center;
+            padding: 20px;
+        }
+        .activation-modal h3 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        .activation-modal .activation-desc {
+            color: var(--text-sec);
+            font-size: 13px;
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+        .activation-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .activation-option {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .activation-option:hover {
+            border-color: var(--accent-dim);
+            background: var(--card-hover);
+            transform: translateY(-2px);
+        }
+        .activation-option.selected {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+        .activation-option .opt-info {
+            text-align: right;
+        }
+        .activation-option .opt-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .activation-option .opt-desc {
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .activation-option .opt-badge {
+            background: var(--accent);
+            color: var(--bg);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+        .activation-footer {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .activation-footer p {
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+        .activation-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .activation-timer {
+            font-size: 12px;
+            color: var(--text-sec);
+            margin-top: 12px;
+        }
+        .activation-timer strong {
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
@@ -1907,11 +1997,10 @@
     <div id="auth-page">
         <div class="auth-card">
             <div class="auth-logo">
-                <!-- ===== اللوجو — صفحة المصادقة ===== -->
                 <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="auth-logo-img"
                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div class="auth-logo-img" style="display:none;background:linear-gradient(135deg,var(--accent),var(--accent-dim));align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--bg)">rtq</div>
-                <div class="auth-badge"><i class="fas fa-bolt"></i> مدعوم بنماذج Groq</div>
+                <div class="auth-badge"><i class="fas fa-bolt"></i> مدعوم بـ OpenAI & Groq</div>
                 <h1>rtq<span>.ai</span></h1>
                 <p class="auth-subtitle">ذكاء اصطناعي متقدم تحت أمرك</p>
             </div>
@@ -2003,11 +2092,9 @@
                 </button>
                 <div class="form-footer">لديك حساب بالفعل؟ <a onclick="switchAuth('login')">تسجيل الدخول</a></div>
 
-                <!-- إعلان HilltopAds — صفحة التسجيل -->
+                <!-- إعلان -->
                 <div class="auth-ad" id="auth-ad-zone">
-                    <script type="text/javascript">
-                    (function(xtr){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=xtr||{};s.src="\u002f\u002fsimplisticpride.com\u002fbJXCVas.dWGRlb0-YBWHcZ\u002faeVm\u002f9fupZbUhluksP_TPYt5nMvDKkR1DO\u002fDEEYt\u002fNBjVkEwNOuTaUL4YNAQt";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l)})({})
-                    </script>
+                    <p style="color:var(--muted);font-size:12px">مساحة إعلانية</p>
                 </div>
             </form>
 
@@ -2038,7 +2125,6 @@
     <div id="app-page">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <!-- ===== اللوجو — الشريط الجانبي ===== -->
                 <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="sidebar-logo-img"
                      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div class="sidebar-logo-img" style="display:none;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-dim));align-items:center;justify-content:center;font-weight:900;color:var(--bg);font-size:11px;border:1.5px solid rgba(0,232,143,0.15)">rtq</div>
@@ -2082,11 +2168,9 @@
                 </div>
             </div>
             <div class="messages" id="messages"></div>
-            <!-- إعلان HilltopAds — الدردشة -->
+            <!-- إعلان -->
             <div class="chat-ad-space" id="chat-ad-space">
-                <script type="text/javascript">
-                (function(xs){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=xs||{};s.src="\u002f\u002fsimplisticpride.com\u002fbXXMV.s_dMGslu0rYjW\u002fcQ\u002fleRmv9\u002fuxZyU\u002flCk\u002fPWTxYZ5\u002fMeDmkN2kMjTVMhtZNDjsk\u002fwDOpTSYexLNew_";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l)})({})
-                </script>
+                <p style="color:var(--muted);font-size:12px">مساحة إعلانية</p>
             </div>
             <div class="input-area">
                 <div class="input-wrapper">
@@ -2109,15 +2193,10 @@
                     <div class="setting-row"><div><label>الحد الأقصى للرموز</label><div class="desc">أقصى طول للرد (256 - 32768)</div></div><input type="number" id="max-tokens-input" min="256" max="32768" step="256" value="4096" dir="ltr"></div>
                 </div>
                 <div class="settings-section">
-                    <h4><i class="fas fa-ad" style="margin-left:6px"></i>الإعلانات</h4>
-                    <div class="setting-row"><div><label>تفعيل الإعلانات</label></div><label class="toggle-switch"><input type="checkbox" id="ads-enabled-toggle" checked><span class="slider"></span></label></div>
-                    <div class="setting-row"><div><label>Popunder كل (ساعة)</label><div class="desc">الفترة بين الإعلانات المنبثقة</div></div><input type="number" id="ads-interval-input" min="1" max="168" value="24" dir="ltr"></div>
-                </div>
-                <div class="settings-section">
                     <h4><i class="fas fa-file-code" style="margin-left:6px"></i>استيراد وتصدير</h4>
                     <div style="display:flex;gap:10px;flex-wrap:wrap">
                         <button class="btn btn-secondary btn-sm" onclick="exportAllData()"><i class="fas fa-download"></i> تصدير الكل</button>
-                        <button class="btn btn-secondary btn-sm" onclick="exportConfig()"><i class="fas fa-key"></i> تصدير الإعدادات السرية</button>
+                        <button class="btn btn-secondary btn-sm" onclick="exportConfig()"><i class="fas fa-key"></i> تصدير الإعدادات</button>
                         <label class="btn btn-secondary btn-sm" style="cursor:pointer"><i class="fas fa-upload"></i> استيراد JSON<input type="file" accept=".json" id="import-file" style="display:none" onchange="importData(event)"></label>
                     </div>
                 </div>
@@ -2136,7 +2215,7 @@
                     <input type="password" id="admin-pass-input" placeholder="كلمة مرور الإدارة" onkeydown="if(event.key==='Enter')verifyAdmin()">
                     <button class="btn btn-secondary btn-sm" onclick="verifyAdmin()"><i class="fas fa-unlock"></i> دخول</button>
                 </div>
-                <p style="font-size:11px;color:var(--muted);margin-top:10px">كلمة المرور الافتراضية: <code style="background:var(--surface);padding:2px 8px;border-radius:4px;font-family:var(--font-code);color:var(--warning)">admin</code> — غيّرها من اللوحة بعد الدخول</p>
+                <p style="font-size:11px;color:var(--muted);margin-top:10px">كلمة المرور الافتراضية: <code style="background:var(--surface);padding:2px 8px;border-radius:4px;font-family:var(--font-code);color:var(--warning)">admin</code></p>
             </div>
         </div>
     </div>
@@ -2152,9 +2231,9 @@
                     <div class="admin-stat"><div class="stat-num" id="stat-convs">0</div><div class="stat-label">محادثة حالية</div></div>
                 </div>
                 <div class="settings-section">
-                    <h4><i class="fas fa-key" style="margin-left:6px"></i>مفتاح Groq API</h4>
+                    <h4><i class="fas fa-key" style="margin-left:6px"></i>مفتاح OpenAI API</h4>
                     <div class="input-wrap" style="margin-bottom:10px">
-                        <input type="password" id="admin-api-input" placeholder="gsk_..." dir="ltr" style="text-align:left;width:100%;padding:12px 44px 12px 44px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-code);font-size:12px;outline:none">
+                        <input type="password" id="admin-api-input" placeholder="sk-..." dir="ltr" style="text-align:left;width:100%;padding:12px 44px 12px 44px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-code);font-size:12px;outline:none">
                         <i class="fas fa-key field-icon"></i>
                     </div>
                     <p style="font-size:11px;color:var(--muted)"><i class="fas fa-info-circle" style="margin-left:4px"></i>التغيير يطبق فوراً على جميع المستخدمين</p>
@@ -2167,13 +2246,17 @@
                     </div>
                 </div>
                 <div class="settings-section">
-                    <h4><i class="fas fa-robot" style="margin-left:6px"></i>إدارة النماذج <span style="font-size:11px;color:var(--muted);font-weight:400">(صح = متاح | خطأ = معطّل | دائرة = افتراضي)</span></h4>
+                    <h4><i class="fas fa-ad" style="margin-left:6px"></i>التحكم في الإعلانات</h4>
+                    <div class="setting-row"><div><label>تفعيل الإعلانات عالمياً</label><div class="desc">التحكم في ظهور الإعلانات لجميع المستخدمين</div></div><label class="toggle-switch"><input type="checkbox" id="admin-ads-toggle" checked><span class="slider"></span></label></div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-robot" style="margin-left:6px"></i>إدارة النماذج</h4>
                     <div class="admin-model-list" id="admin-model-list"></div>
                 </div>
             </div>
             <div class="modal-footer" style="gap:10px">
                 <button class="btn btn-primary" onclick="saveAdminSettings()" style="width:auto;padding:11px 30px"><i class="fas fa-save"></i> حفظ وتطبيق</button>
-                <button class="btn btn-danger btn-sm" onclick="resetModelsToDefault()"><i class="fas fa-undo"></i> إعادة تعيين</button>
+                <button class="btn btn-danger btn-sm" onclick="resetSite()"><i class="fas fa-undo"></i> إعادة ضبط الموقع</button>
             </div>
         </div>
     </div>
@@ -2184,55 +2267,81 @@
             <div class="ad-content">
                 <div class="ad-badge"><i class="fas fa-sparkles"></i> مرحباً بك</div>
                 <p style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:10px">أهلاً بك في rtq.ai</p>
-                <p style="line-height:1.9">استمتع بتجربة الذكاء الاصطناعي المتقدم مع 10 نماذج مختلفة. اختر النموذج المناسب من القائمة أعلاه.</p>
+                <p style="line-height:1.9">استمتع بتجربة الذكاء الاصطناعي المتقدم مع نماذج OpenAI و Groq.</p>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="closeModal('reg-ad-modal');enterApp();" style="width:100%;padding:14px">متابعة إلى التطبيق <i class="fas fa-arrow-left" style="margin-right:6px"></i></button>
+            <button class="btn btn-ghost btn-sm" onclick="closeModal('reg-ad-modal');showActivationModal();" style="width:100%;padding:14px">متابعة إلى التطبيق <i class="fas fa-arrow-left" style="margin-right:6px"></i></button>
+        </div>
+    </div>
+
+    <!-- نافذة تفعيل الحساب -->
+    <div class="modal-overlay" id="activation-modal">
+        <div class="modal" role="dialog" aria-label="تفعيل الحساب">
+            <div class="modal-header"><h3><i class="fas fa-bolt" style="color:var(--accent);margin-left:8px"></i>تفعيل الحساب</h3><button class="close-btn" onclick="closeModal('activation-modal')" aria-label="إغلاق"><i class="fas fa-times"></i></button></div>
+            <div class="modal-body">
+                <div class="activation-modal">
+                    <h3>⚡ اختر مدة التفعيل</h3>
+                    <p class="activation-desc">حسابك الجديد مفعل حالياً لمدة 1 ساعة مجاناً. اختر خطة التفعيل المناسبة:</p>
+                    <div class="activation-options">
+                        <div class="activation-option" onclick="selectActivationPlan(1, 3, this)">
+                            <div class="opt-info">
+                                <div class="opt-title">تفعيل 3 ساعات</div>
+                                <div class="opt-desc">مشاهدة إعلان فيديو واحد</div>
+                            </div>
+                            <span class="opt-badge">1 إعلان</span>
+                        </div>
+                        <div class="activation-option" onclick="selectActivationPlan(2, 12, this)">
+                            <div class="opt-info">
+                                <div class="opt-title">تفعيل 12 ساعة</div>
+                                <div class="opt-desc">مشاهدة إعلانين فيديو</div>
+                            </div>
+                            <span class="opt-badge">2 إعلان</span>
+                        </div>
+                        <div class="activation-option" onclick="selectActivationPlan(3, 24, this)">
+                            <div class="opt-info">
+                                <div class="opt-title">تفعيل 24 ساعة ⭐</div>
+                                <div class="opt-desc">مشاهدة 3 إعلانات فيديو</div>
+                            </div>
+                            <span class="opt-badge">3 إعلانات</span>
+                        </div>
+                    </div>
+                    <div class="activation-footer">
+                        <p><i class="fas fa-info-circle" style="margin-left:4px"></i>بعد اختيار الخطة، سيتم عرض الإعلانات المطلوبة لتفعيل الحساب</p>
+                        <button class="btn btn-primary activation-btn" id="activate-btn" onclick="activateAccount()" disabled>تفعيل الحساب الآن</button>
+                        <div class="activation-timer" id="activation-timer">الحالة: <strong>غير مفعل</strong></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- حاوية الإشعارات -->
     <div class="toast-container" id="toast-container"></div>
 
-    <!-- ===== HilltopAds Popunder ===== -->
-    <div id="ht-popunder-slot" style="display:none"></div>
-
     <script>
     /* =============================================
-       جميع نماذج Groq المتاحة
-       ============================================= */
-    var ALL_GROQ_MODELS = [
-        { id: "llama-3.3-70b-versatile", name: "Llama 3.3 70B", desc: "الأقوى والأكثر توازناً — دقيق وسريع", enabled: true, isDefault: true },
-        { id: "llama-3.1-8b-instant", name: "Llama 3.1 8B", desc: "الأسرع — للاستجابات القصيرة والسريعة", enabled: true, isDefault: false },
-        { id: "llama3-70b-8192", name: "Llama 3 70B", desc: "قوي وموثوق — حد 8192 رمز", enabled: true, isDefault: false },
-        { id: "llama3-8b-8192", name: "Llama 3 8B", desc: "خفيف وسريع — حد 8192 رمز", enabled: true, isDefault: false },
-        { id: "mixtral-8x7b-32768", name: "Mixtral 8x7B", desc: "سياق طويل جداً — 32768 رمز", enabled: true, isDefault: false },
-        { id: "gemma2-9b-it", name: "Gemma 2 9B", desc: "من Google — متوازن ودقيق", enabled: true, isDefault: false },
-        { id: "deepseek-r1-distill-llama-70b", name: "DeepSeek R1 70B", desc: "تفكير عميق — رياضيات وبرمجة", enabled: true, isDefault: false },
-        { id: "qwen-qwq-32b", name: "Qwen QwQ 32B", desc: "من Alibaba — تفكير منطقي متقدم", enabled: true, isDefault: false },
-        { id: "meta-llama/llama-4-scout-17b-16e-instruct", name: "Llama 4 Scout", desc: "الأحدث من Meta — مبدع وسريع", enabled: true, isDefault: false },
-        { id: "meta-llama/llama-4-maverick-17b-128e-instruct", name: "Llama 4 Maverick", desc: "الأحدث من Meta — سياق 128K", enabled: true, isDefault: false }
-    ];
-
-    /* =============================================
-       التكوين السري — يتحكم بالموقع بالكامل
-       مفتاح API موضوع مباشرة هنا
+       التكوين - نماذج OpenAI و Groq
        ============================================= */
     var DEFAULT_CONFIG = {
-        _secret: true,
-        _version: "2.1.0",
+        _version: "2.3.0",
         siteName: "rtq.ai",
-        apiKey: "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",
-        apiUrl: "https://api.groq.com/openai/v1/chat/completions",
+        openaiApiKey: "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",
+        groqApiKey: "",
+        openaiApiUrl: "https://api.openai.com/v1/chat/completions",
+        groqApiUrl: "https://api.groq.com/openai/v1/chat/completions",
         temperature: 0.7,
         maxTokens: 4096,
-        systemPrompt: "أنت مساعد ذكي اسمك rtq.ai. تجيب باللغة العربية بشكل أساسي. تكون إجاباتك دقيقة ومنظمة ومفصلة. تستخدم تنسيق Markdown عند الحاجة. لا تذكر أنك نموذج لغوي.",
-        models: JSON.parse(JSON.stringify(ALL_GROQ_MODELS)),
+        systemPrompt: "أنت مساعد ذكي اسمك rtq.ai. تجيب باللغة العربية بشكل أساسي. تكون إجاباتك دقيقة ومنظمة ومفصلة.",
+        models: [
+            { id: "gpt-4o-mini", name: "GPT-4o Mini ⚡", provider: "openai", desc: "نموذج سريع واقتصادي من OpenAI", enabled: true, isDefault: true },
+            { id: "gpt-4o", name: "GPT-4o 🚀", provider: "openai", desc: "الأقوى من OpenAI - دقيق جداً", enabled: true, isDefault: false },
+            { id: "gpt-3.5-turbo", name: "GPT-3.5 Turbo", provider: "openai", desc: "سريع واقتصادي", enabled: true, isDefault: false },
+            { id: "llama-3.3-70b-versatile", name: "Llama 3.3 70B", provider: "groq", desc: "الأقوى على Groq - موصى به", enabled: true, isDefault: false },
+            { id: "llama-3.1-8b-instant", name: "Llama 3.1 8B ⚡", provider: "groq", desc: "الأسرع على الإطلاق", enabled: true, isDefault: false }
+        ],
         adminPassword: "admin",
-        ads: { enabled: true, popupIntervalHours: 24, showOnRegister: true, showInChat: true },
-        popunderUrl: "https://flusteredexam.com/b.3oVC0FPA3/pGvbbsmiVlJGZfD/0/2dOdT/A/5MNjTzQ_1jLITHY/5ZM/DTko1CNYD/kq",
+        ads: { globalEnabled: true, popupIntervalHours: 24 },
         limits: { maxConversations: 100, maxMessagesPerConv: 500 },
-        features: { exportImport: true, markdown: true, codeHighlight: true },
-        theme: { accent: "#00e88f", bg: "#080c0a" }
+        features: { exportImport: true, markdown: true, codeHighlight: true }
     };
 
     /* =============================================
@@ -2246,6 +2355,8 @@
     var pendingVerifyCode = "";
     var isSending = false;
     var selectedModel = "";
+    var selectedActivationPlan = null;
+    var adsWatchedCount = 0;
 
     /* =============================================
        أدوات مساعدة
@@ -2260,14 +2371,9 @@
                 config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
             }
         } catch(e) { config = JSON.parse(JSON.stringify(DEFAULT_CONFIG)); }
-        if (!config.models) config.models = JSON.parse(JSON.stringify(ALL_GROQ_MODELS));
-        ALL_GROQ_MODELS.forEach(function(dm) {
-            if (!config.models.find(function(m) { return m.id === dm.id; })) {
-                config.models.push(JSON.parse(JSON.stringify(dm)));
-            }
-        });
+        if (!config.models) config.models = JSON.parse(JSON.stringify(DEFAULT_CONFIG.models));
         var def = config.models.find(function(m) { return m.isDefault && m.enabled; });
-        selectedModel = def ? def.id : (config.models.find(function(m) { return m.enabled; }) || {}).id || "llama-3.3-70b-versatile";
+        selectedModel = def ? def.id : (config.models.find(function(m) { return m.enabled; }) || {}).id || "gpt-4o-mini";
     }
     function deepMerge(t, s) { for (var k in s) { if (s[k] && typeof s[k] === 'object' && !Array.isArray(s[k])) t[k] = deepMerge(t[k] || {}, s[k]); else t[k] = s[k]; } return t; }
     function saveConfig() { localStorage.setItem('rtq_config', JSON.stringify(config)); }
@@ -2333,28 +2439,6 @@
         }
     }
 
-    /* Popunder */
-    function triggerPopunder() {
-        if (!config.ads.enabled || !config.popunderUrl) return;
-        var last = localStorage.getItem('rtq_last_popunder');
-        var interval = (config.ads.popupIntervalHours || 24) * 3600000;
-        var now = Date.now();
-        if (!last || (now - parseInt(last)) > interval) {
-            try {
-                var slot = document.getElementById('ht-popunder-slot');
-                slot.innerHTML = '';
-                var s = document.createElement('script');
-                s.async = true;
-                s.referrerPolicy = 'no-referrer-when-downgrade';
-                slot.appendChild(s);
-                /* محاولة فتح الرابط مباشرة كبديل */
-                var pw = window.open(config.popunderUrl, '_blank', 'width=1,height=1,left=9999,top=9999');
-                if (pw) { pw.blur(); window.focus(); }
-            } catch(e) {}
-            localStorage.setItem('rtq_last_popunder', now.toString());
-        }
-    }
-
     /* =============================================
        قائمة النماذج
        ============================================= */
@@ -2382,7 +2466,7 @@
     }
 
     /* =============================================
-       نظام المصادقة — التبديل بين النماذج
+       نظام المصادقة
        ============================================= */
     function switchAuth(mode) {
         document.querySelectorAll('.auth-form').forEach(function(f) { f.classList.remove('active'); });
@@ -2414,7 +2498,7 @@
     });
 
     /* =============================================
-       إنشاء حساب — محسّن بالتحقق الميداني
+       إنشاء حساب
        ============================================= */
     document.getElementById('register-form').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -2430,7 +2514,6 @@
         var confirm = document.getElementById('reg-confirm').value;
         var hasError = false;
 
-        /* التحقق من كل حقل */
         if (!username || username.length < 3) {
             showFieldError('err-reg-username', 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
             hasError = true;
@@ -2466,7 +2549,6 @@
 
         if (hasError) return;
 
-        /* التحقق من عدم التكرار */
         var users = loadUsers();
         if (users.find(function(u) { return u.username === username; })) {
             showFieldError('err-reg-username', 'اسم المستخدم مستخدم بالفعل');
@@ -2477,7 +2559,6 @@
             return;
         }
 
-        /* حفظ البيانات والانتقال للتحقق */
         pendingRegData = {
             username: username,
             name: name,
@@ -2517,15 +2598,15 @@
         pendingVerifyCode = "";
         loadConversations();
 
-        if (config.ads.enabled && config.ads.showOnRegister) {
+        if (config.ads.globalEnabled) {
             openModal('reg-ad-modal');
         } else {
             enterApp();
+            showActivationModal();
         }
         showToast('تم إنشاء حسابك بنجاح', 'success');
     });
 
-    /* حقول الكود — تنقل تلقائي */
     document.querySelectorAll('#code-inputs input').forEach(function(input, idx, inputs) {
         input.addEventListener('input', function() {
             this.value = this.value.replace(/\D/g, '');
@@ -2569,7 +2650,66 @@
         renderModelSelector();
         renderConvList();
         showWelcomeOrChat();
-        setTimeout(triggerPopunder, 2500);
+        updateActivationTimer();
+    }
+
+    /* =============================================
+       نظام تفعيل الحساب
+       ============================================= */
+    function showActivationModal() {
+        selectedActivationPlan = null; adsWatchedCount = 0;
+        document.querySelectorAll('.activation-option').forEach(function(opt) { opt.classList.remove('selected'); });
+        document.getElementById('activate-btn').disabled = true;
+        document.getElementById('activation-timer').innerHTML = 'الحالة: <strong>غير مفعل</strong>';
+        updateActivationTimer();
+        openModal('activation-modal');
+    }
+
+    function selectActivationPlan(id, hours, element) {
+        selectedActivationPlan = { id: id, hours: hours, adsRequired: id };
+        document.querySelectorAll('.activation-option').forEach(function(opt) { opt.classList.remove('selected'); });
+        element.classList.add('selected');
+        document.getElementById('activate-btn').disabled = false;
+        document.getElementById('activation-timer').innerHTML = 'المطلوب: <strong>' + id + ' إعلان' + (id > 1 ? 'ات' : '') + '</strong> | تم: <strong>' + adsWatchedCount + '/' + id + '</strong>';
+    }
+
+    function watchAd() {
+        return new Promise(function(resolve) {
+            showToast('جاري عرض الإعلان...', 'info');
+            setTimeout(function() {
+                adsWatchedCount++;
+                showToast('تمت مشاهدة الإعلان ' + adsWatchedCount, 'success');
+                if (selectedActivationPlan && adsWatchedCount >= selectedActivationPlan.adsRequired) {
+                    document.getElementById('activation-timer').innerHTML = 'الحالة: <strong style="color:var(--success)">جاهز للتفعيل!</strong>';
+                } else if (selectedActivationPlan) {
+                    document.getElementById('activation-timer').innerHTML = 'المطلوب: <strong>' + selectedActivationPlan.adsRequired + ' إعلانات</strong> | تم: <strong>' + adsWatchedCount + '/' + selectedActivationPlan.adsRequired + '</strong>';
+                }
+                resolve();
+            }, 2000);
+        });
+    }
+
+    async function activateAccount() {
+        if (!selectedActivationPlan) { showToast('اختر خطة التفعيل أولاً', 'error'); return; }
+        if (adsWatchedCount < selectedActivationPlan.adsRequired) {
+            showToast('يجب مشاهدة ' + selectedActivationPlan.adsRequired + ' إعلانات أولاً', 'warning');
+            await watchAd();
+            return;
+        }
+        var until = Date.now() + (selectedActivationPlan.hours * 60 * 60 * 1000);
+        localStorage.setItem('rtq_activation_until', until);
+        closeModal('activation-modal');
+        enterApp();
+        showToast('تم تفعيل حسابك لـ ' + selectedActivationPlan.hours + ' ساعة', 'success');
+    }
+
+    function updateActivationTimer() {
+        var until = localStorage.getItem('rtq_activation_until');
+        if (until && Date.now() < parseInt(until)) {
+            var remaining = Math.floor((parseInt(until) - Date.now()) / 1000 / 60 / 60);
+            var timerEl = document.getElementById('activation-timer');
+            if (timerEl) timerEl.innerHTML = 'متبقي من التفعيل: <strong>' + remaining + ' ساعة</strong>';
+        }
     }
 
     /* =============================================
@@ -2630,12 +2770,11 @@
             '<img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="welcome-logo-img" onerror="this.outerHTML=\'<div class=welcome-logo-img style=background:linear-gradient(135deg,var(--accent),var(--accent-dim));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--bg)>rtq</div>\'">' +
             '<h2>مرحباً بك في rtq<span>.ai</span></h2>' +
             '<div class="welcome-model"><i class="fas fa-microchip"></i> ' + mName + '</div>' +
-            '<p>مساعدك الذكي المدعوم بنماذج Groq المتقدمة. اسألني أي شيء وسأساعدك.</p>' +
+            '<p>مساعدك الذكي المدعوم بنماذج OpenAI و Groq المتقدمة.</p>' +
             '<div class="welcome-suggestions">' +
             '<div class="suggestion-card" onclick="useSuggestion(\'اشرح لي مفهوم الذكاء الاصطناعي التوليدي بطريقة مبسطة\')"><div class="sugg-icon"><i class="fas fa-brain"></i></div><div class="sugg-text">اشرح لي مفهوم الذكاء الاصطناعي التوليدي بطريقة مبسطة</div></div>' +
             '<div class="suggestion-card" onclick="useSuggestion(\'اكتب لي كود Python لحاسبة علمية بسيطة مع الشرح\')"><div class="sugg-icon"><i class="fas fa-code"></i></div><div class="sugg-text">اكتب لي كود Python لحاسبة علمية بسيطة مع الشرح</div></div>' +
             '<div class="suggestion-card" onclick="useSuggestion(\'أعطني 5 أفكار مشاريع ابتكارية للمبتدئين في البرمجة\')"><div class="sugg-icon"><i class="fas fa-lightbulb"></i></div><div class="sugg-text">أعطني 5 أفكار مشاريع ابتكارية للمبتدئين في البرمجة</div></div>' +
-            '<div class="suggestion-card" onclick="useSuggestion(\'قارن بين نماذج الذكاء الاصطناعي المختلفة من حيث الأداء والاستخدام\')"><div class="sugg-icon"><i class="fas fa-chart-bar"></i></div><div class="sugg-text">قارن بين نماذج الذكاء الاصطناعي المختلفة من حيث الأداء</div></div>' +
             '</div></div>';
     }
 
@@ -2658,18 +2797,40 @@
     function clearChat() { var conv = getActiveConv(); if (!conv || conv.messages.length === 0) return; conv.messages = []; conv.updatedAt = Date.now(); saveConversations(); showWelcomeOrChat(); showToast('تم مسح المحادثة', 'info'); }
 
     /* =============================================
-       الدردشة — Groq API
+       الدردشة - OpenAI & Groq API
        ============================================= */
     async function handleSend() {
         var input = document.getElementById('chat-input'), text = input.value.trim();
         if (!text || isSending) return;
-        if (!config.apiKey) { showToast('مفتاح API غير موجود — تواصل مع الإدارة', 'error'); return; }
-        if (!selectedModel) { showToast('لا يوجد نموذج مفعّل — تواصل مع الإدارة', 'error'); return; }
+        
+        var apiKey = '';
+        var apiUrl = '';
+        var model = config.models.find(function(m) { return m.id === selectedModel; });
+        
+        if (!model) { showToast('النموذج المحدد غير موجود', 'error'); return; }
+        
+        if (model.provider === 'openai') {
+            apiKey = config.openaiApiKey;
+            apiUrl = config.openaiApiUrl;
+        } else if (model.provider === 'groq') {
+            apiKey = config.groqApiKey;
+            apiUrl = config.groqApiUrl;
+        }
+        
+        if (!apiKey) { 
+            showToast('⚠️ مفتاح API غير مُعد - تواصل مع الإدارة', 'warning'); 
+            return; 
+        }
+        
         if (!activeConvId) newConversation();
         var conv = getActiveConv(); if (!conv) return;
         conv.model = selectedModel;
         conv.messages.push({ role: 'user', content: text, timestamp: Date.now() });
-        if (conv.messages.length === 1) { conv.title = text.slice(0, 50) + (text.length > 50 ? '...' : ''); document.getElementById('chat-title').textContent = conv.title; renderConvList(); }
+        if (conv.messages.length === 1) { 
+            conv.title = text.slice(0, 50) + (text.length > 50 ? '...' : ''); 
+            document.getElementById('chat-title').textContent = conv.title; 
+            renderConvList(); 
+        }
         conv.updatedAt = Date.now(); saveConversations(); input.value = ''; autoResize(input); renderMessages(conv.messages);
         isSending = true; document.getElementById('send-btn').disabled = true;
         var typingEl = document.createElement('div'); typingEl.className = 'typing-indicator show';
@@ -2679,20 +2840,32 @@
         try {
             var apiMessages = [{ role: 'system', content: config.systemPrompt }];
             conv.messages.forEach(function(m) { apiMessages.push({ role: m.role, content: m.content }); });
-            var response = await fetch(config.apiUrl, {
+            var response = await fetch(apiUrl, {
                 method: 'POST',
-                headers: { 'Authorization': 'Bearer ' + config.apiKey, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ model: selectedModel, messages: apiMessages, temperature: config.temperature, max_tokens: config.maxTokens, stream: false })
+                headers: { 
+                    'Authorization': 'Bearer ' + apiKey, 
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify({ 
+                    model: selectedModel, 
+                    messages: apiMessages, 
+                    temperature: config.temperature, 
+                    max_tokens: config.maxTokens, 
+                    stream: false 
+                })
             });
             typingEl.remove();
-            if (!response.ok) { var err = await response.json().catch(function() { return {}; }); throw new Error((err.error && err.error.message) ? err.error.message : 'خطأ HTTP: ' + response.status); }
+            if (!response.ok) { 
+                var err = await response.json().catch(function() { return {}; }); 
+                throw new Error((err.error && err.error.message) ? err.error.message : 'خطأ HTTP: ' + response.status); 
+            }
             var data = await response.json();
             var ai = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) ? data.choices[0].message.content : 'لم أتمكن من توليد رد.';
             conv.messages.push({ role: 'assistant', content: ai, timestamp: Date.now() });
             conv.updatedAt = Date.now(); saveConversations(); renderMessages(conv.messages); renderConvList();
         } catch(error) {
             typingEl.remove(); var msg = error.message;
-            if (msg.indexOf('401') > -1 || msg.indexOf('invalid') > -1) msg = 'مفتاح API غير صالح — تواصل مع الإدارة';
+            if (msg.indexOf('401') > -1 || msg.indexOf('invalid') > -1 || msg.indexOf('incorrect') > -1) msg = 'مفتاح API غير صالح — تواصل مع الإدارة';
             else if (msg.indexOf('429') > -1) msg = 'تم تجاوز حد الطلبات — انتظر قليلاً';
             else if (msg.indexOf('fetch') > -1 || msg.indexOf('Network') > -1) msg = 'خطأ في الاتصال بالشبكة';
             showToast(msg, 'error'); conv.messages.pop(); saveConversations(); renderMessages(conv.messages);
@@ -2728,8 +2901,9 @@
         else showToast('كلمة مرور الإدارة غير صحيحة', 'error');
     }
     function openAdminPanel() {
-        document.getElementById('admin-api-input').value = config.apiKey || '';
+        document.getElementById('admin-api-input').value = config.openaiApiKey || '';
         document.getElementById('admin-new-pass').value = '';
+        document.getElementById('admin-ads-toggle').checked = config.ads.globalEnabled;
         document.getElementById('stat-users').textContent = loadUsers().length;
         document.getElementById('stat-models').textContent = config.models.filter(function(m) { return m.enabled; }).length;
         document.getElementById('stat-convs').textContent = conversations.length;
@@ -2754,9 +2928,10 @@
     }
     function saveAdminSettings() {
         var newApi = document.getElementById('admin-api-input').value.trim();
-        if (newApi) config.apiKey = newApi;
+        if (newApi) config.openaiApiKey = newApi;
         var newPass = document.getElementById('admin-new-pass').value.trim();
         if (newPass && newPass.length >= 3) config.adminPassword = newPass;
+        config.ads.globalEnabled = document.getElementById('admin-ads-toggle').checked;
         var radios = document.querySelectorAll('input[name="default-model"]');
         config.models.forEach(function(m, i) {
             m.enabled = document.querySelector('#admin-model-' + i + ' .model-toggle input').checked;
@@ -2769,20 +2944,26 @@
         renderModelSelector(); closeModal('admin-modal');
         showToast('تم حفظ إعدادات الإدارة — التغييرات فعّالة فوراً', 'success');
     }
-    function resetModelsToDefault() { config.models = JSON.parse(JSON.stringify(ALL_GROQ_MODELS)); openAdminPanel(); showToast('تم إعادة تعيين النماذج', 'info'); }
+    function resetSite() {
+        if(confirm('⚠️ هل أنت متأكد من إعادة ضبط الموقع؟\nسيتم حذف جميع البيانات والمحادثات والإعدادات.')) {
+            localStorage.clear();
+            showToast('تم إعادة ضبط الموقع', 'success');
+            setTimeout(function() { location.reload(); }, 1000);
+        }
+    }
 
     /* =============================================
        استيراد وتصدير
        ============================================= */
     function exportAllData() { downloadJSON({ config: config, user: currentUser, conversations: conversations, exportedAt: new Date().toISOString(), type: 'full_backup' }, 'rtq_backup_' + Date.now() + '.json'); showToast('تم تصدير جميع البيانات', 'success'); }
-    function exportConfig() { downloadJSON({ config: config, exportedAt: new Date().toISOString(), type: 'secret_config' }, 'rtq_config_secret_' + Date.now() + '.json'); showToast('تم تصدير الإعدادات السرية', 'success'); }
+    function exportConfig() { downloadJSON({ config: config, exportedAt: new Date().toISOString(), type: 'config' }, 'rtq_config_' + Date.now() + '.json'); showToast('تم تصدير الإعدادات', 'success'); }
     function exportConversation() { var conv = getActiveConv(); if (!conv) { showToast('لا توجد محادثة', 'error'); return; } downloadJSON(conv, 'rtq_chat_' + conv.id.slice(0, 12) + '_' + Date.now() + '.json'); showToast('تم تصدير المحادثة', 'success'); }
     function importData(event) {
         var file = event.target.files[0]; if (!file) return; var reader = new FileReader();
         reader.onload = function(e) {
             try { var data = JSON.parse(e.target.result);
-                if (data.type === 'secret_config') { config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), data.config || data); saveConfig(); applyTheme(); applyAdSettings(); renderModelSelector(); showToast('تم استيراد الإعدادات السرية', 'success'); }
-                else if (data.type === 'full_backup') { if (data.config) { config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), data.config); saveConfig(); applyTheme(); applyAdSettings(); renderModelSelector(); } if (data.conversations && currentUser) { conversations = data.conversations; saveConversations(); renderConvList(); showWelcomeOrChat(); } showToast('تم استيراد النسخة الاحتياطية', 'success'); }
+                if (data.type === 'config') { config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), data.config || data); saveConfig(); renderModelSelector(); showToast('تم استيراد الإعدادات', 'success'); }
+                else if (data.type === 'full_backup') { if (data.config) { config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), data.config); saveConfig(); renderModelSelector(); } if (data.conversations && currentUser) { conversations = data.conversations; saveConversations(); renderConvList(); showWelcomeOrChat(); } showToast('تم استيراد النسخة الاحتياطية', 'success'); }
                 else if (data.id && data.messages) { if (!currentUser) { showToast('سجل دخول أولاً', 'error'); return; } data.id = 'conv_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8); data.createdAt = Date.now(); data.updatedAt = Date.now(); conversations.unshift(data); activeConvId = data.id; saveConversations(); renderConvList(); showWelcomeOrChat(); showToast('تم استيراد المحادثة', 'success'); }
                 else showToast('صيغة الملف غير معروفة', 'error');
             } catch(err) { showToast('فشل في قراءة الملف', 'error'); }
@@ -2794,10 +2975,8 @@
     /* =============================================
        الإعدادات
        ============================================= */
-    function openSettings() { document.getElementById('temp-input').value = config.temperature; document.getElementById('max-tokens-input').value = config.maxTokens; document.getElementById('ads-enabled-toggle').checked = config.ads.enabled; document.getElementById('ads-interval-input').value = config.ads.popupIntervalHours; openModal('settings-modal'); closeSidebar(); }
-    function saveSettings() { config.temperature = parseFloat(document.getElementById('temp-input').value) || 0.7; config.maxTokens = parseInt(document.getElementById('max-tokens-input').value) || 4096; config.ads.enabled = document.getElementById('ads-enabled-toggle').checked; config.ads.popupIntervalHours = parseInt(document.getElementById('ads-interval-input').value) || 24; saveConfig(); applyAdSettings(); closeModal('settings-modal'); showToast('تم حفظ الإعدادات', 'success'); }
-    function applyTheme() { if (config.theme && config.theme.accent) document.documentElement.style.setProperty('--accent', config.theme.accent); }
-    function applyAdSettings() { var a = document.getElementById('chat-ad-space'); if (a) a.style.display = config.ads.showInChat ? 'flex' : 'none'; if (config.ads.enabled) document.body.classList.remove('ads-hidden'); else document.body.classList.add('ads-hidden'); }
+    function openSettings() { document.getElementById('temp-input').value = config.temperature; document.getElementById('max-tokens-input').value = config.maxTokens; openModal('settings-modal'); closeSidebar(); }
+    function saveSettings() { config.temperature = parseFloat(document.getElementById('temp-input').value) || 0.7; config.maxTokens = parseInt(document.getElementById('max-tokens-input').value) || 4096; saveConfig(); closeModal('settings-modal'); showToast('تم حفظ الإعدادات', 'success'); }
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebar-overlay').classList.toggle('show'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.remove('show'); }
 
@@ -2817,8 +2996,6 @@
     (function init() {
         createParticles();
         loadConfig();
-        applyTheme();
-        applyAdSettings();
         try {
             var su = localStorage.getItem('rtq_current_user');
             if (su) {
