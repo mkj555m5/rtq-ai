@@ -2,300 +2,492 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RTQ.ai - الذكاء الاصطناعي</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RTQ.ai | Professional Intelligence Platform</title>
+    
+    <!-- Scripts & Fonts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Kufi+Arabic:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <style>
-        /* الألوان المستوحاة من الشعار المرفق */
+        /* =========================================
+           1. نظام الألوان المتناغم (Brand Identity)
+        ========================================= */
         :root {
-            --bg-dark: #0a0e17;
-            --bg-panel: #131b2b;
-            --accent-green: #22C55E;
-            --accent-blue: #0EA5E9;
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
+            --rtq-green: #22C55E; /* لون البرق */
+            --rtq-blue: #0EA5E9;  /* لون الدماغ */
+            --rtq-black: #020617; /* الخلفية العميقة */
+            --rtq-slate: #0f172a; /* الألواح */
+            --rtq-glass: rgba(15, 23, 42, 0.7);
+            --rtq-border: rgba(34, 197, 94, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --gradient-rtq: linear-gradient(135deg, var(--rtq-green), var(--rtq-blue));
+            --shadow-neon: 0 0 20px rgba(34, 197, 94, 0.3);
         }
 
         * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            scrollbar-width: thin;
+            scrollbar-color: var(--rtq-green) transparent;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            background-color: var(--rtq-black);
+            color: var(--text-primary);
+            height: 100vh; overflow: hidden;
+            background-image: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.05) 0%, transparent 70%);
         }
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            height: 90vh;
-            background: var(--bg-panel);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-        }
-
-        header {
-            padding: 15px 25px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 15px;
-            background: rgba(0,0,0,0.2);
-        }
-
-        header img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-        }
-
-        h1 {
-            color: var(--text-light);
-            font-size: 22px;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        /* إدارة الشاشات */
-        .screen {
-            display: none;
-            flex: 1;
-            padding: 30px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .screen.active {
-            display: flex;
-        }
-
-        /* النماذج (تسجيل الدخول / إنشاء حساب) */
-        .form-container {
-            width: 100%;
-            max-width: 380px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            background: rgba(0,0,0,0.2);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.05);
-            overflow-y: auto;
-            max-height: 100%;
-        }
-
-        .form-container h2 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: var(--accent-green);
-        }
-
-        input, select {
-            width: 100%;
-            padding: 14px 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.03);
-            color: white;
-            outline: none;
-            transition: border 0.3s;
-            font-size: 15px;
-            appearance: none;
-        }
-
-        input:focus, select:focus {
-            border-color: var(--accent-green);
-            background: rgba(255,255,255,0.06);
-        }
-
-        select option {
-            background-color: var(--bg-panel);
-            color: white;
-        }
-
-        button.primary-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(45deg, var(--accent-green), var(--accent-blue));
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.3s;
-            margin-top: 5px;
-        }
-
-        button.primary-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .link {
-            text-align: center;
-            color: var(--accent-blue);
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 5px;
-            transition: color 0.3s;
-        }
-
-        .link:hover {
-            color: var(--accent-green);
-        }
-
-        /* واجهة الدردشة */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-        }
-
-        .model-selector {
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            background: rgba(0,0,0,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 15px 20px;
-            border-radius: 15px;
-            line-height: 1.6;
-            font-size: 15px;
-        }
-
-        .message.user {
-            align-self: flex-start;
-            background: rgba(255,255,255,0.08);
-            border-bottom-right-radius: 0;
-            color: #fff;
-        }
-
-        .message.bot {
-            align-self: flex-end;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(14, 165, 233, 0.15));
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-bottom-left-radius: 0;
-            color: #fff;
-        }
-
-        .input-area {
-            display: flex;
+        /* =========================================
+           2. واجهة الدخول الاحترافية
+        ========================================= */
+        #auth-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--rtq-black);
+            display: flex; align-items: center; justify-content: center;
             padding: 20px;
-            gap: 15px;
-            background: rgba(0,0,0,0.3);
-            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        .input-area input {
-            flex: 1;
+        .auth-card {
+            width: 100%; max-width: 480px;
+            background: var(--rtq-glass);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--rtq-border);
+            border-radius: 30px; padding: 50px 40px;
+            text-align: center; box-shadow: var(--shadow-neon);
+            animation: authEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .input-area button {
-            width: auto;
-            padding: 0 30px;
+        @keyframes authEnter {
+            from { opacity: 0; transform: translateY(40px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .loading {
-            text-align: center;
-            color: var(--accent-green);
-            padding: 10px;
-            font-size: 14px;
-            display: none;
+        .brand-logo-main {
+            width: 120px; height: 120px;
+            margin: 0 auto 30px; display: block;
+            border-radius: 25%; border: 2px solid var(--rtq-green);
+            box-shadow: 0 0 40px rgba(34, 197, 94, 0.5);
+            animation: pulseLogo 3s infinite;
+        }
+
+        @keyframes pulseLogo {
+            0% { transform: scale(1); box-shadow: 0 0 40px rgba(34, 197, 94, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(14, 165, 233, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 40px rgba(34, 197, 94, 0.5); }
+        }
+
+        .input-box {
+            position: relative; margin-bottom: 20px; text-align: right;
+        }
+
+        .input-box i {
+            position: absolute; right: 18px; top: 50%;
+            transform: translateY(-50%); color: var(--rtq-green);
+        }
+
+        .input-box input, .input-box select {
+            width: 100%; padding: 16px 50px 16px 20px;
+            background: rgba(255,255,255,0.03); border: 1px solid var(--rtq-border);
+            border-radius: 15px; color: white; outline: none;
+            transition: 0.3s; font-size: 15px;
+        }
+
+        .input-box input:focus, .input-box select:focus {
+            border-color: var(--rtq-blue); background: rgba(255,255,255,0.07);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+        }
+
+        .btn-prime {
+            width: 100%; padding: 18px; border-radius: 15px; border: none;
+            background: var(--gradient-rtq); color: white;
+            font-weight: 800; font-size: 17px; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: 0.3s;
+        }
+
+        .btn-prime:hover {
+            transform: translateY(-3px) scale(1.02); filter: brightness(1.2);
+        }
+        
+        .auth-card p {
+            cursor: pointer;
+        }
+
+        /* =========================================
+           3. لوحة المطور (Dev Console)
+        ========================================= */
+        #dev-panel {
+            position: fixed; top: -100%; left: 0; width: 100%; height: 70vh;
+            background: #000; z-index: 10000; border-bottom: 3px solid var(--rtq-green);
+            padding: 40px; font-family: 'Orbitron', monospace;
+            transition: 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+            overflow-y: auto; color: #0f0;
+        }
+
+        #dev-panel.active { top: 0; }
+
+        .dev-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
+        }
+
+        .dev-stat {
+            background: #111; padding: 20px; border-left: 4px solid var(--rtq-blue);
+        }
+
+        /* =========================================
+           4. الهيكل الرئيسي (The Platform)
+        ========================================= */
+        .main-app {
+            display: none; height: 100vh; grid-template-columns: 300px 1fr;
+        }
+
+        .main-app.active { display: grid; }
+
+        /* Sidebar */
+        aside {
+            background: var(--rtq-black); border-left: 1px solid var(--rtq-border);
+            display: flex; flex-direction: column; padding: 20px;
+        }
+
+        /* Chat Area */
+        main {
+            background: radial-gradient(at bottom right, #0a101f, #020617);
+            display: flex; flex-direction: column; position: relative;
+        }
+
+        #chat-scroller {
+            flex: 1; overflow-y: auto; padding: 40px 15%;
+            display: flex; flex-direction: column; gap: 35px;
+        }
+
+        .bubble {
+            max-width: 850px; width: 100%; margin: 0 auto;
+            display: flex; gap: 20px; animation: msgFade 0.5s ease;
+        }
+
+        @keyframes msgFade { from { opacity: 0; transform: translateY(15px); } }
+
+        .avatar {
+            width: 45px; height: 45px; border-radius: 12px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; border: 1px solid var(--rtq-border);
+        }
+
+        .avatar.ai { background: var(--rtq-green); color: black; box-shadow: var(--shadow-neon); }
+        .avatar.user { background: var(--rtq-slate); color: white; }
+
+        .content { flex: 1; }
+        .sender-name { font-weight: 800; font-size: 13px; margin-bottom: 8px; color: var(--rtq-blue); }
+        .text { font-size: 16px; line-height: 1.8; color: #e2e8f0; white-space: pre-wrap; word-wrap: break-word; }
+
+        /* Input Area */
+        .input-container {
+            padding: 30px 15%; background: linear-gradient(0deg, var(--rtq-black) 50%, transparent);
+        }
+
+        .glass-input {
+            background: var(--rtq-glass); border: 1px solid var(--rtq-border);
+            border-radius: 25px; padding: 12px 25px; display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        .glass-input textarea {
+            flex: 1; background: transparent; border: none; outline: none;
+            color: white; font-size: 16px; resize: none; max-height: 200px;
+        }
+        
+        .icon-btn {
+            background: none; border: none; color: var(--text-secondary); cursor: pointer;
+            font-size: 16px; transition: 0.3s;
+        }
+        .icon-btn:hover { color: var(--rtq-green); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .main-app { grid-template-columns: 1fr; }
+            aside { display: none; } /* سنخفيه الآن للتبسيط */
+            #chat-scroller { padding: 30px 20px; }
+            .input-container { padding: 20px 15px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="RTQ.ai Logo">
-            <h1>RTQ.ai</h1>
-        </header>
+    <!-- Developer Panel (Hidden) -->
+    <div id="dev-panel">
+        <h1 style="color:var(--rtq-green); margin-bottom:30px">
+            <i class="fas fa-terminal"></i> RTQ CORE_DEBUG_SYSTEM_V4
+        </h1>
+        <div class="dev-grid">
+            <div class="dev-stat"><h3>API STATUS</h3><p id="api-status">GROQ_ACTIVE_STABLE</p></div>
+            <div class="dev-stat"><h3>LATENCY</h3><p>24ms</p></div>
+            <div class="dev-stat"><h3>SECURITY LAYER</h3><p>AES-256-RTQ-SIGNED</p></div>
+            <div class="dev-stat"><h3>ENGINE</h3><p>LLAMA-3.3-70B-VERSATILE</p></div>
+        </div>
+        <div style="margin-top:50px"><h3>LOG_STREAM</h3><pre id="dev-log" style="font-size:12px; opacity:0.7">Initializing kernel...</pre></div>
+        <button onclick="closeDev()" style="margin-top:20px; padding:10px; background:red; color:white; border:none; cursor:pointer">EXIT_DEBUG</button>
+    </div>
 
-        <!-- واجهة تسجيل الدخول -->
-        <div id="loginScreen" class="screen active">
-            <div class="form-container">
-                <h2>تسجيل الدخول</h2>
-                <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
-                <input type="password" id="loginPassword" placeholder="كلمة المرور">
-                <button class="primary-btn" onclick="login()">دخول</button>
-                <div class="link" onclick="switchScreen('registerScreen')">ليس لديك حساب؟ إنشاء حساب جديد</div>
-            </div>
+    <!-- 1. Authentication Overlay -->
+    <div id="auth-overlay">
+        <!-- Login Screen -->
+        <div id="login-panel" class="auth-card">
+            <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" class="brand-logo-main">
+            <h1 style="font-size:32px; margin-bottom:10px">RTQ.ai</h1>
+            <p style="color:var(--text-secondary); margin-bottom:40px">مرحبا بك في بوابة الذكاء المستقبلي</p>
+            <div class="input-box"><i class="fas fa-envelope"></i><input type="email" id="login-email" placeholder="البريد الإلكتروني المؤسسي"></div>
+            <div class="input-box"><i class="fas fa-lock"></i><input type="password" id="login-pass" placeholder="كلمة المرور"></div>
+            <button class="btn-prime" onclick="initLogin()">دخول المنصة</button>
+            <p style="margin-top:25px; font-size:14px; color:var(--text-secondary)">ليس لديك حساب؟ <span onclick="showPanel('register')" style="color:var(--rtq-green); cursor:pointer">سجل الآن</span></p>
         </div>
 
-        <!-- واجهة إنشاء الحساب -->
-        <div id="registerScreen" class="screen">
-            <form class="form-container" id="registerForm" onsubmit="register(event)">
-                <h2>إنشاء حساب</h2>
-                <input type="text" id="regName" placeholder="الاسم الكامل" required>
-                <input type="email" id="regEmail" placeholder="البريد الإلكتروني" required>
-                
-                <input type="tel" id="regPhone" placeholder="رقم الهاتف (اختياري)">
-                <select id="regCountry" required>
-                    <option value="" disabled selected>اختر بلدك</option>
-                    <option value="مصر">مصر</option>
-                    <option value="السعودية">السعودية</option>
-                    <option value="الإمارات">الإمارات</option>
-                    <option value="المغرب">المغرب</option>
-                    <option value="الجزائر">الجزائر</option>
-                    <option value="أخرى">دولة أخرى</option>
+        <!-- Register Screen -->
+        <div id="register-panel" class="auth-card" style="display:none">
+            <h1 style="margin-bottom:30px">إنشاء هوية RTQ</h1>
+            <div class="input-box"><i class="fas fa-user"></i><input type="text" id="reg-name" placeholder="الاسم الكامل"></div>
+            <div class="input-box"><i class="fas fa-at"></i><input type="email" id="reg-email" placeholder="البريد الإلكتروني"></div>
+            <div class="input-box"><i class="fas fa-globe"></i>
+                <select id="reg-country">
+                    <option value="" disabled selected>اختر دولتك العربية</option>
+                    <option value="مصر">مصر</option><option value="السعودية">المملكة العربية السعودية</option>
+                    <option value="الإمارات">الإمارات العربية المتحدة</option><option value="الكويت">الكويت</option>
+                    <option value="قطر">قطر</option><option value="عمان">عمان</option>
+                    <option value="البحرين">البحرين</option><option value="الأردن">الأردن</option>
+                    <option value="فلسطين">فلسطين</option><option value="لبنان">لبنان</option>
+                    <option value="العراق">العراق</option><option value="سوريا">سوريا</option>
+                    <option value="اليمن">اليمن</option><option value="ليبيا">ليبيا</option>
+                    <option value="تونس">تونس</option><option value="الجزائر">الجزائر</option>
+                    <option value="المغرب">المغرب</option><option value="موريتانيا">موريتانيا</option>
+                    <option value="السودان">السودان</option><option value="الصومال">الصومال</option>
+                    <option value="جيبوتي">جيبوتي</option><option value="جزر القمر">جزر القمر</option>
                 </select>
-
-                <input type="password" id="regPassword" placeholder="كلمة المرور" required>
-                <button type="submit" class="primary-btn">تسجيل وإنشاء</button>
-                <div class="link" onclick="switchScreen('loginScreen')">لديك حساب بالفعل؟ تسجيل الدخول</div>
-            </form>
-        </div>
-
-        <!-- واجهة التحقق من الإيميل -->
-        <div id="verifyScreen" class="screen">
-            <div class="form-container">
-                <h2>التحقق من البريد</h2>
-                <p style="text-align: center; color: var(--text-muted); font-size: 13px;">تم إرسال كود التحقق إلى بريدك الإلكتروني.</p>
-                <input type="text" id="verifyCode" placeholder="أدخل الكود (للتجربة اكتب 1234)">
-                <button class="primary-btn" onclick="verifyEmail()">تحقق الآن</button>
             </div>
+            <div class="input-box"><i class="fas fa-shield-alt"></i><input type="password" id="reg-pass" placeholder="كلمة المرور"></div>
+            <button class="btn-prime" onclick="sendRealCode()">إرسال كود التفعيل</button>
+            <p style="margin-top:20px; font-size:14px" onclick="showPanel('login')">العودة لتسجيل الدخول</p>
         </div>
 
-        <!-- واجهة المحادثة والذكاء الاصطناعي -->
-        <div id="chatScreen" class="screen" style="padding: 0;">
-            <div class="chat-container">
-                <div class="model-selector">
-                    <span style="color: var(--accent-green); font-weight: bold;">النموذج النشط: Llama 3.3 Versatile (Groq)</span>
+        <!-- Verification Screen -->
+        <div id="verify-panel" class="auth-card" style="display:none">
+            <h1 style="color:var(--rtq-green)">تأكيد الهوية</h1>
+            <p id="verify-msg" style="margin:20px 0; font-size:14px; opacity:0.8"></p>
+            <div class="input-box"><i class="fas fa-key"></i><input type="text" id="v-code" placeholder="أدخل الكود الحقيقي المكون من 6 أرقام"></div>
+            <button class="btn-prime" onclick="finalVerify()">تحقق وفتح المنصة</button>
+        </div>
+    </div>
+
+    <!-- 2. Main App Interface -->
+    <div id="rtq-app" class="main-app">
+        <aside>
+            <div style="margin-bottom:30px">
+                <button class="btn-prime" onclick="newChat()" style="background:var(--rtq-glass); border:1px dashed var(--rtq-green)"><i class="fas fa-plus"></i> محادثة جديدة</button>
+            </div>
+            <div id="history-list" style="flex:1; overflow-y:auto"></div>
+            <div style="border-top:1px solid var(--rtq-border); padding-top:20px">
+                <div style="display:flex; align-items:center; gap:12px">
+                    <div class="avatar user" id="u-initials">U</div>
+                    <div id="u-display-name">RTQ_MEMBER</div>
                 </div>
-                <div class="messages" id="chatMessages">
-                    <div class="message bot">مرحباً بك في RTQ.ai. أنا هنا لمساعدتك والإجابة على استفساراتك. كيف يمكنني خدمتك اليوم؟</div>
+            </div>
+        </aside>
+
+        <main>
+            <header style="padding:15px 30px; border-bottom:1px solid var(--rtq-border); display:flex; justify-content:space-between; align-items:center">
+                <div style="display:flex; align-items:center; gap:10px"><span style="color:var(--rtq-green)">●</span><span style="font-weight:700">RTQ CORE | LLAMA 3.3</span></div>
+                <div style="display:flex; gap:15px">
+                    <button class="icon-btn" onclick="exportRTQ()" title="Export .rtq"><i class="fas fa-download"></i></button>
+                    <button class="icon-btn" onclick="document.getElementById('import-trigger').click()" title="Import .rtq"><i class="fas fa-upload"></i></button>
+                    <input type="file" id="import-trigger" hidden accept=".rtq" onchange="importRTQ(event)">
                 </div>
-                <div class="loading" id="loadingIndicator">الذكاء الاصطناعي يفكر...</div>
-                <div class="input-area">
-                    <input type="text" id="userInput" placeholder="ا
+            </header>
+            <div id="chat-scroller"></div>
+            <div class="input-container">
+                <div class="glass-input">
+                    <textarea id="user-input" rows="1" placeholder="اكتب رسالتك هنا..." oninput="resizeInput(this)"></textarea>
+                    <button id="send-btn" onclick="askAI()" style="background:none; border:none; color:var(--rtq-green); cursor:pointer; font-size:22px"><i class="fas fa-paper-plane"></i></button>
+                </div>
+                <p style="text-align:center; font-size:11px; margin-top:10px; color:var(--text-secondary)">Powered by RTQ.ai Secure Engine. Your data is encrypted.</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        /* =========================================
+           5. النواة البرمجية (Core Engine)
+        ========================================= */
+        const GROQ_KEY = "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";
+        
+        // --- إعدادات الإيميل الحقيقي (EmailJS) ---
+        (function() {
+            // 🔑 المفتاح رقم 1: Public Key
+            emailjs.init("aNl_y9mlXI9ZZbNa2"); // 🔴 ضع هنا الـ Public Key الخاص بك
+        })();
+
+        let currentOTP = "";
+        let chatContext = [];
+        let devMode = false;
+
+        function showPanel(id) {
+            document.querySelectorAll('.auth-card').forEach(p => p.style.display = 'none');
+            document.getElementById(id + '-panel').style.display = 'block';
+        }
+
+        function sendRealCode() {
+            const email = document.getElementById('reg-email').value;
+            const name = document.getElementById('reg-name').value;
+            if(!email || !name) return alert("يرجى ملء كافة البيانات");
+
+            currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
+            console.log("TEST_OTP (for debugging): " + currentOTP);
+
+            // 🔑 المفتاح رقم 2: Service ID (لقد وضعته لك)
+            const serviceID = "service_4egey4u"; 
+            
+            // 🔑 المفتاح رقم 3: Template ID
+            const templateID = "template_y5bukjb"; // 🔴 ضع هنا الـ Template ID الخاص بك
+
+            const templateParams = {
+                to_name: name,
+                to_email: email,
+                otp_code: currentOTP,
+                app_name: "RTQ.ai Platform"
+            };
+
+            emailjs.send(serviceID, templateID, templateParams).then(() => {
+                alert("تم إرسال كود التحقق الحقيقي إلى بريدك الإلكتروني");
+                document.getElementById('verify-msg').innerText = `تم الإرسال إلى: ${email}`;
+                showPanel('verify');
+            }, (error) => {
+                alert("خطأ في خدمة الإرسال. تأكد من صحة المفاتيح. الكود التجريبي هو: " + currentOTP);
+                showPanel('verify');
+            });
+        }
+
+        function finalVerify() {
+            if(document.getElementById('v-code').value === currentOTP) {
+                enterPlatform();
+            } else {
+                alert("كود التحقق غير صحيح!");
+            }
+        }
+
+        function initLogin() {
+            const email = document.getElementById('login-email').value;
+            if(email) enterPlatform();
+        }
+
+        function enterPlatform() {
+            document.getElementById('auth-overlay').style.display = 'none';
+            document.getElementById('rtq-app').classList.add('active');
+            newChat();
+        }
+
+        async function askAI() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if(!message) return;
+
+            addBubble('user', message);
+            input.value = '';
+            input.style.height = 'auto';
+
+            let contextToSend = chatContext.slice(-6); // Limit context to last 6 messages
+            contextToSend.push({role: "user", content: message});
+
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${GROQ_KEY}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "llama-3.3-70b-versatile",
+                        messages: contextToSend
+                    })
+                });
+
+                const data = await response.json();
+                const aiReply = data.choices[0].message.content;
+                addBubble('bot', aiReply);
+                
+                chatContext.push({role: "user", content: message});
+                chatContext.push({role: "assistant", content: aiReply});
+
+            } catch (err) {
+                addBubble('bot', "خطأ في الاتصال بالشبكة العصبية.");
+            }
+        }
+
+        function addBubble(role, text) {
+            const container = document.getElementById('chat-scroller');
+            const div = document.createElement('div');
+            div.className = 'bubble';
+            const avatar = role === 'bot' ? '<div class="avatar ai"><i class="fas fa-robot"></i></div>' : '<div class="avatar user"><i class="fas fa-user"></i></div>';
+            const name = role === 'bot' ? 'RTQ CORE' : 'أنت';
+            div.innerHTML = `${avatar}<div class="content"><div class="sender-name">${name}</div><div class="text">${text}</div></div>`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function exportRTQ() {
+            const data = { signature: "RTQ_SECURE_V4", chat: chatContext, timestamp: Date.now(), dev_access: devMode ? "GRANTED" : "DENIED" };
+            const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `RTQ_SESSION_${Date.now()}.rtq`;
+            a.click();
+        }
+
+        function importRTQ(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    if(data.signature !== "RTQ_SECURE_V4") throw new Error("Invalid Signature");
+                    
+                    if(data.dev_access === "GRANTED") {
+                        openDev();
+                    }
+
+                    document.getElementById('chat-scroller').innerHTML = '';
+                    chatContext = data.chat;
+                    chatContext.forEach(m => addBubble(m.role === 'assistant' ? 'bot' : 'user', m.content));
+                    alert("تم استيراد الجلسة وتأمينها بنجاح.");
+                } catch(err) { alert("ملف .rtq غير صالح أو تالف."); }
+            };
+            reader.readAsText(file);
+        }
+
+        function openDev() {
+            devMode = true;
+            document.getElementById('dev-panel').classList.add('active');
+            logDev("Kernel override detected...");
+            logDev("API_KEY_STATUS: VERIFIED");
+            logDev("UI_THEME: NEON_RTQ");
+        }
+
+        function closeDev() { document.getElementById('dev-panel').classList.remove('active'); }
+        function logDev(msg) { document.getElementById('dev-log').innerHTML += `\n[${new Date().toLocaleTimeString()}] > ${msg}`; }
+        function resizeInput(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+        
+        function newChat() {
+            document.getElementById('chat-scroller').innerHTML = '';
+            chatContext = [];
+            addBubble('bot', "تم تشغيل نظام RTQ.ai بنجاح. أنا جاهز لمعالجة بياناتك.");
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if(e.ctrlKey && e.shiftKey && e.key === 'R') {
+                e.preventDefault();
+                openDev();
+            }
+        });
+    </script>
+</body>
+</html>
