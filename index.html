@@ -4,273 +4,2014 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rtq.ai - ذكاء اصطناعي متقدم</title>
-    <meta name="description" content="rtq.ai - مساعد ذكاء اصطناعي متقدم">
+    <meta name="description" content="rtq.ai - مساعد ذكاء اصطناعي متقدم مدعوم بنماذج Groq المتعددة">
     <meta name="theme-color" content="#080c0a">
     <link rel="icon" href="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root{--bg:#080c0a;--bg-alt:#0a100d;--surface:#0f1613;--surface-alt:#121d18;--card:#151e19;--card-hover:#1a2820;--card-active:#1e3028;--accent:#00e88f;--accent-dim:#00a864;--accent-bright:#33ffaa;--accent-glow:rgba(0,232,143,0.12);--accent-glow-strong:rgba(0,232,143,0.25);--text:#dce8e0;--text-bright:#f0f8f4;--text-sec:#8fa898;--text-dim:#6b8a78;--muted:#4a6355;--muted-dark:#2e4038;--border:#1c2e23;--border-light:#254035;--error:#ff4d5a;--error-bg:rgba(255,77,90,0.1);--error-border:rgba(255,77,90,0.2);--warning:#ffb020;--warning-bg:rgba(255,176,32,0.1);--warning-border:rgba(255,176,32,0.2);--success:#00e88f;--info:#00b8d4;--user-bubble:#0d2a1c;--user-bubble-border:rgba(0,232,143,0.15);--ai-bubble:#141c18;--ai-bubble-border:rgba(28,46,35,0.8);--radius-xs:6px;--radius-sm:8px;--radius:12px;--radius-lg:18px;--radius-xl:24px;--shadow-sm:0 2px 8px rgba(0,0,0,0.3);--shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-lg:0 8px 40px rgba(0,0,0,0.5);--shadow-glow:0 0 30px rgba(0,232,143,0.15);--transition:0.3s cubic-bezier(0.4,0,0.2,1);--transition-fast:0.15s cubic-bezier(0.4,0,0.2,1);--font-main:'Cairo',sans-serif;--font-code:'JetBrains Mono',monospace;--sidebar-width:300px}
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-        body{font-family:var(--font-main);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.7}
-        img{max-width:100%;height:auto;display:block}
-        a{color:inherit;text-decoration:none}
-        button,input,textarea,select{font-family:var(--font-main)}
-        ::-webkit-scrollbar{width:6px;height:6px}
-        ::-webkit-scrollbar-track{background:transparent}
-        ::-webkit-scrollbar-thumb{background:var(--muted-dark);border-radius:3px}
-        ::-webkit-scrollbar-thumb:hover{background:var(--muted)}
-        *{scrollbar-width:thin;scrollbar-color:var(--muted-dark) transparent}
-        .bg-effects{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-        .bg-effects .blob{position:absolute;border-radius:50%;filter:blur(120px);opacity:0.1;animation:blobFloat 30s ease-in-out infinite alternate}
-        .bg-effects .blob:nth-child(1){width:600px;height:600px;background:var(--accent);top:-200px;right:-150px;animation-duration:28s}
-        .bg-effects .blob:nth-child(2){width:450px;height:450px;background:#00b8d4;bottom:-120px;left:-100px;animation-duration:32s;animation-delay:-10s}
-        @keyframes blobFloat{0%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-30px) scale(1.05)}100%{transform:translate(0,0) scale(1)}}
-        .bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,232,143,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,143,0.02) 1px,transparent 1px);background-size:80px 80px}
-        #auth-page{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-        .auth-card{background:rgba(15,22,19,0.9);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:var(--radius-xl);padding:44px 40px;width:100%;max-width:460px;box-shadow:var(--shadow-lg);animation:cardEnter 0.7s cubic-bezier(0.16,1,0.3,1)}
-        @keyframes cardEnter{from{opacity:0;transform:translateY(40px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-        .auth-logo{text-align:center;margin-bottom:32px}
-        .auth-logo .auth-logo-img{width:80px;height:80px;border-radius:20px;margin:0 auto 16px;object-fit:cover;box-shadow:var(--shadow-glow);border:2px solid rgba(0,232,143,0.15)}
-        .auth-logo h1{font-size:32px;font-weight:900;letter-spacing:-1px}
-        .auth-logo h1 span{color:var(--accent)}
-        .auth-logo .auth-subtitle{color:var(--text-sec);font-size:14px;margin-top:6px}
-        .auth-logo .auth-badge{display:inline-flex;align-items:center;gap:6px;background:var(--accent-glow);color:var(--accent);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:12px}
-        .auth-form{display:none}
-        .auth-form.active{display:block;animation:formSlideIn 0.4s ease}
-        @keyframes formSlideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
-        .form-group{margin-bottom:18px}
-        .form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-sec);margin-bottom:7px}
-        .input-wrap{position:relative;display:flex;align-items:center}
-        .input-wrap .field-icon{position:absolute;right:14px;color:var(--muted);font-size:14px;pointer-events:none}
-        .input-wrap input[type="text"],.input-wrap input[type="email"],.input-wrap input[type="password"],.input-wrap input[type="date"],.input-wrap select,.input-wrap textarea{width:100%;padding:13px 44px 13px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;outline:none;transition:var(--transition)}
-        .input-wrap input:focus,.input-wrap select:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-glow);background:var(--surface-alt)}
-        .input-wrap .toggle-pass{position:absolute;left:12px;color:var(--muted);cursor:pointer;background:none;border:none;padding:4px;font-size:14px}
-        .input-wrap .toggle-pass:hover{color:var(--accent)}
-        .field-error{font-size:11px;color:var(--error);margin-top:5px;display:none;align-items:center;gap:4px}
-        .field-error.show{display:flex}
-        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 28px;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;cursor:pointer;transition:var(--transition);outline:none}
-        .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:var(--bg);width:100%;font-size:16px}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,232,143,0.3)}
-        .btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none!important}
-        .btn-primary .btn-spinner{width:18px;height:18px;border:2.5px solid transparent;border-top-color:var(--bg);border-radius:50%;animation:spin 0.7s linear infinite;display:none}
-        .btn-primary.loading .btn-text{display:none}
-        .btn-primary.loading .btn-spinner{display:inline-block}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        .btn-secondary{background:var(--surface);color:var(--text);border:1.5px solid var(--border)}
-        .btn-secondary:hover{background:var(--card);border-color:var(--muted)}
-        .btn-ghost{background:transparent;color:var(--accent);padding:10px 18px}
-        .btn-sm{padding:9px 18px;font-size:13px;border-radius:var(--radius-xs)}
-        .btn-icon{width:38px;height:38px;padding:0;border-radius:var(--radius-sm);background:var(--surface);color:var(--text-sec);border:1.5px solid var(--border);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
-        .btn-icon:hover{background:var(--card);color:var(--accent);border-color:var(--accent-dim)}
-        .btn-danger{background:var(--error-bg);color:var(--error);border:1.5px solid var(--error-border)}
-        .form-footer{text-align:center;margin-top:24px;font-size:13px;color:var(--text-sec)}
-        .form-footer a{color:var(--accent);cursor:pointer;font-weight:700}
-        .form-footer a:hover{text-decoration:underline}
-        .form-error{background:var(--error-bg);border:1.5px solid var(--error-border);color:var(--error);padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;margin-bottom:18px;display:none;align-items:center;gap:10px}
-        .form-error.show{display:flex;animation:shake 0.5s ease}
-        @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-        .code-display{background:var(--surface);border:2px dashed var(--border);border-radius:var(--radius);padding:24px;text-align:center;margin-bottom:24px}
-        .code-display p{color:var(--text-sec);font-size:13px;margin-bottom:14px}
-        .code-display .code-value{font-family:var(--font-code);font-size:40px;font-weight:700;letter-spacing:14px;color:var(--accent);direction:ltr}
-        .code-inputs{display:flex;gap:10px;justify-content:center;direction:ltr;margin-bottom:24px}
-        .code-inputs input{width:50px;height:60px;text-align:center;font-family:var(--font-code);font-size:24px;font-weight:700;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-sm);color:var(--text);outline:none}
-        .code-inputs input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-glow)}
-        .code-inputs input.filled{border-color:var(--accent-dim);background:rgba(0,232,143,0.05)}
-        #app-page{display:none;position:relative;z-index:1;height:100vh;overflow:hidden}
-        #app-page.active{display:flex}
-        .sidebar{width:var(--sidebar-width);min-width:var(--sidebar-width);background:rgba(12,18,15,0.95);backdrop-filter:blur(20px);border-left:1px solid var(--border);display:flex;flex-direction:column}
-        .sidebar-header{padding:18px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-        .sidebar-header .sidebar-logo-img{width:38px;height:38px;border-radius:10px;object-fit:cover}
-        .sidebar-header h2{font-size:17px;font-weight:800;flex:1}
-        .sidebar-header h2 span{color:var(--accent)}
-        .sidebar-actions{padding:14px 16px;display:flex;gap:8px}
-        .sidebar-actions .btn{flex:1}
-        .conv-list{flex:1;overflow-y:auto;padding:8px}
-        .conv-list-header{padding:8px 14px 12px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-        .conv-item{padding:12px 14px;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:12px;margin-bottom:4px;border:1.5px solid transparent}
-        .conv-item:hover{background:var(--card);border-color:var(--border)}
-        .conv-item.active{background:var(--card-active);border-color:var(--accent-dim)}
-        .conv-item .conv-icon{width:34px;height:34px;border-radius:var(--radius-xs);background:var(--accent-glow);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-        .conv-item.active .conv-icon{background:var(--accent);color:var(--bg)}
-        .conv-item .conv-info{flex:1;min-width:0}
-        .conv-item .conv-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .conv-item .conv-meta{display:flex;align-items:center;gap:8px;margin-top:2px}
-        .conv-item .conv-date{font-size:11px;color:var(--muted)}
-        .conv-item .conv-delete{opacity:0;color:var(--muted);cursor:pointer;padding:6px;background:none;border:none;border-radius:var(--radius-xs)}
-        .conv-item:hover .conv-delete{opacity:1}
-        .conv-item .conv-delete:hover{color:var(--error);background:var(--error-bg)}
-        .sidebar-footer{padding:14px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
-        .sidebar-footer .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dim));display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--bg);font-size:14px}
-        .sidebar-footer .user-info{flex:1;min-width:0}
-        .sidebar-footer .user-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .sidebar-footer .user-email{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:right}
-        .sidebar-footer .footer-actions{display:flex;gap:4px}
-        .sidebar-footer .footer-actions .btn-icon{width:32px;height:32px;font-size:12px}
-        .empty-conv{text-align:center;padding:50px 20px;color:var(--muted)}
-        .empty-conv i{font-size:36px;margin-bottom:12px;display:block;opacity:0.5}
-        .empty-conv p{font-size:13px}
-        .chat-area{flex:1;display:flex;flex-direction:column;background:var(--bg);position:relative;min-width:0}
-        .chat-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:rgba(12,18,15,0.7);backdrop-filter:blur(12px)}
-        .chat-header .menu-btn{display:none;color:var(--text-sec);font-size:20px;cursor:pointer;padding:6px;background:none;border:none}
-        .chat-header .menu-btn:hover{color:var(--accent)}
-        .chat-header .chat-title-wrap{flex:1;min-width:0}
-        .chat-header .chat-title{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .chat-header .chat-model-badge{font-size:10px;color:var(--accent-dim);font-family:var(--font-code);font-weight:500}
-        .chat-header .chat-actions{display:flex;gap:6px;align-items:center}
-        .model-select{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:7px 10px;color:var(--text);font-size:12px;font-weight:600;outline:none;cursor:pointer;max-width:200px;-webkit-appearance:none;appearance:none}
-        .model-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-        .messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px}
-        .welcome-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px}
-        .welcome-screen .welcome-logo-img{width:90px;height:90px;border-radius:22px;margin-bottom:24px;object-fit:cover;box-shadow:var(--shadow-glow);border:2px solid rgba(0,232,143,0.15)}
-        .welcome-screen h2{font-size:26px;font-weight:800;margin-bottom:8px}
-        .welcome-screen h2 span{color:var(--accent)}
-        .welcome-screen .welcome-model{display:inline-flex;align-items:center;gap:6px;background:var(--accent-glow);color:var(--accent);font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:10px;font-family:var(--font-code)}
-        .welcome-screen p{color:var(--text-sec);font-size:14px;max-width:420px;margin-bottom:32px;line-height:1.8}
-        .welcome-suggestions{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;max-width:650px;width:100%}
-        .suggestion-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:var(--transition);text-align:right}
-        .suggestion-card:hover{background:var(--card-hover);border-color:var(--accent-dim);transform:translateY(-3px);box-shadow:var(--shadow)}
-        .suggestion-card .sugg-icon{color:var(--accent);font-size:20px;margin-bottom:10px}
-        .suggestion-card .sugg-text{font-size:13px;color:var(--text-sec);line-height:1.7}
-        .message{display:flex;gap:12px;max-width:82%;animation:msgEnter 0.4s ease}
-        @keyframes msgEnter{from{opacity:0;transform:translateY(16px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-        .message.user{align-self:flex-start;flex-direction:row-reverse}
-        .message.ai{align-self:flex-end}
-        .message .msg-avatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
-        .message.user .msg-avatar{background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:var(--bg)}
-        .message.ai .msg-avatar{background:var(--card);color:var(--accent);border:1.5px solid var(--border)}
-        .message .msg-body{flex:1;min-width:0}
-        .message .msg-content{padding:15px 20px;border-radius:var(--radius);font-size:14px;line-height:1.85;word-wrap:break-word}
-        .message.user .msg-content{background:var(--user-bubble);border:1.5px solid var(--user-bubble-border);border-top-right-radius:var(--radius-xs)}
-        .message.ai .msg-content{background:var(--ai-bubble);border:1.5px solid var(--ai-bubble-border);border-top-left-radius:var(--radius-xs)}
-        .message .msg-time{font-size:10px;color:var(--muted-dark);margin-top:6px;padding:0 4px}
-        .typing-indicator{display:none;align-self:flex-end;padding:16px 22px;background:var(--ai-bubble);border:1.5px solid var(--ai-bubble-border);border-radius:var(--radius);border-top-left-radius:var(--radius-xs)}
-        .typing-indicator.show{display:flex;gap:6px;align-items:center}
-        .typing-indicator .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:typingBounce 1.4s ease-in-out infinite}
-        .typing-indicator .dot:nth-child(2){animation-delay:0.2s}
-        .typing-indicator .dot:nth-child(3){animation-delay:0.4s}
-        @keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:0.3}30%{transform:translateY(-10px);opacity:1}}
-        .input-area{padding:16px 20px 18px;border-top:1px solid var(--border);background:rgba(12,18,15,0.7);backdrop-filter:blur(12px)}
-        .input-wrapper{display:flex;align-items:flex-end;gap:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:10px 14px;transition:var(--transition)}
-        .input-wrapper:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-glow);background:var(--surface-alt)}
-        .input-wrapper textarea{flex:1;background:none;border:none;color:var(--text);font-size:14px;resize:none;outline:none;max-height:140px;line-height:1.65;padding:4px 0}
-        .input-wrapper textarea::placeholder{color:var(--muted)}
-        .input-wrapper .send-btn{width:42px;height:42px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:var(--bg);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:var(--transition)}
-        .input-wrapper .send-btn:hover{transform:scale(1.08);box-shadow:0 6px 20px rgba(0,232,143,0.35)}
-        .input-wrapper .send-btn:disabled{opacity:0.35;cursor:not-allowed}
-        .input-hint{font-size:11px;color:var(--muted-dark);margin-top:8px;text-align:center}
-        .chat-ad-space{padding:10px 20px;text-align:center;border-top:1px solid var(--border);background:rgba(12,18,15,0.5);min-height:80px;display:flex;align-items:center;justify-content:center}
-        .auth-ad{margin-top:22px;padding:16px;background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius-sm);text-align:center;min-height:270px;display:flex;align-items:center;justify-content:center}
-        .ads-hidden .chat-ad-space,.ads-hidden .auth-ad{display:none!important}
-        .modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
-        .modal-overlay.show{display:flex}
-        .modal{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-xl);padding:30px;width:100%;max-width:560px;max-height:88vh;overflow-y:auto}
-        .modal.modal-lg{max-width:720px}
-        .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-        .modal-header h3{font-size:19px;font-weight:800}
-        .modal-header .close-btn{width:34px;height:34px;border-radius:var(--radius-sm);background:var(--surface);border:1.5px solid var(--border);color:var(--text-sec);cursor:pointer;display:flex;align-items:center;justify-content:center}
-        .modal-header .close-btn:hover{color:var(--error);border-color:var(--error);background:var(--error-bg)}
-        .modal-body{margin-bottom:24px}
-        .modal-footer{display:flex;gap:10px;justify-content:flex-start;flex-wrap:wrap}
-        .ad-modal .modal{max-width:430px;text-align:center}
-        .ad-modal .ad-content{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px 24px;margin-bottom:18px}
-        .ad-modal .ad-content .ad-badge{display:inline-flex;align-items:center;gap:6px;background:var(--accent-glow);color:var(--accent);font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:14px}
-        .toast-container{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:3000;display:flex;flex-direction:column;gap:10px;pointer-events:none}
-        .toast{padding:14px 22px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;min-width:300px;max-width:450px;display:flex;align-items:center;gap:12px;animation:toastIn 0.4s ease;box-shadow:var(--shadow-lg);pointer-events:all}
-        .toast.success{background:rgba(0,232,143,0.15);border:1.5px solid rgba(0,232,143,0.3);color:var(--accent)}
-        .toast.error{background:rgba(255,77,90,0.15);border:1.5px solid rgba(255,77,90,0.3);color:var(--error)}
-        .toast.info{background:rgba(0,184,212,0.15);border:1.5px solid rgba(0,184,212,0.3);color:var(--info)}
-        @keyframes toastIn{from{opacity:0;transform:translateY(-24px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-        @keyframes toastOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-24px)}}
-        .settings-section{margin-bottom:24px}
-        .settings-section h4{font-size:14px;font-weight:700;color:var(--text-sec);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-        .setting-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:12px}
-        .setting-row label{font-size:13px;color:var(--text);font-weight:600}
-        .setting-row .desc{font-size:11px;color:var(--muted);margin-top:3px}
-        .setting-row input[type="text"],.setting-row input[type="number"]{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 14px;color:var(--text);font-family:var(--font-code);font-size:12px;width:200px;outline:none}
-        .setting-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-        .admin-badge{display:inline-flex;align-items:center;gap:6px;background:var(--warning-bg);color:var(--warning);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;border:1.5px solid var(--warning-border)}
-        .admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
-        .admin-stat{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
-        .admin-stat .stat-num{font-size:26px;font-weight:900;color:var(--accent);line-height:1.2}
-        .admin-stat .stat-label{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
-        .admin-model-list{display:flex;flex-direction:column;gap:8px}
-        .admin-model-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm)}
-        .admin-model-item.disabled-model{opacity:0.45}
-        .admin-model-item .model-radio{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0}
-        .admin-model-item .model-info{flex:1;min-width:0}
-        .admin-model-item .model-name{font-size:13px;font-weight:700;color:var(--text)}
-        .admin-model-item .model-id{font-size:11px;color:var(--muted);font-family:var(--font-code);direction:ltr;text-align:right;margin-top:3px}
-        .admin-model-item .model-status{font-size:20px;flex-shrink:0}
-        .admin-model-item .model-status.on{color:var(--accent)}
-        .admin-model-item .model-status.off{color:var(--error)}
-        .admin-lock{display:flex;gap:10px;margin-bottom:16px}
-        .admin-lock input{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;color:var(--text);font-size:14px;outline:none}
-        .admin-lock input:focus{border-color:var(--warning);box-shadow:0 0 0 4px var(--warning-bg)}
-        .sidebar-overlay{display:none;position:fixed;inset:0;z-index:49;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px)}
-        .sidebar-overlay.show{display:block}
-        .activation-modal{text-align:center;padding:20px}
-        .activation-modal h3{font-size:20px;font-weight:800;margin-bottom:16px;color:var(--text)}
-        .activation-modal .activation-desc{color:var(--text-sec);font-size:13px;margin-bottom:24px;line-height:1.8}
-        .activation-options{display:flex;flex-direction:column;gap:12px}
-        .activation-option{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:space-between}
-        .activation-option:hover{border-color:var(--accent-dim);background:var(--card-hover);transform:translateY(-2px)}
-        .activation-option.selected{border-color:var(--accent);background:var(--accent-glow)}
-        .activation-option .opt-info{text-align:right}
-        .activation-option .opt-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
-        .activation-option .opt-desc{font-size:11px;color:var(--muted)}
-        .activation-option .opt-badge{background:var(--accent);color:var(--bg);font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px}
-        .activation-footer{margin-top:24px;padding-top:16px;border-top:1px solid var(--border)}
-        .activation-footer p{font-size:11px;color:var(--muted);margin-bottom:12px}
-        .activation-btn{width:100%;padding:14px;font-size:15px;font-weight:700}
-        .activation-timer{font-size:12px;color:var(--text-sec);margin-top:12px}
-        .activation-timer strong{color:var(--accent)}
-        @media(max-width:768px){.sidebar{position:fixed;top:0;right:0;bottom:0;z-index:50;transform:translateX(100%);box-shadow:var(--shadow-lg);width:280px;min-width:280px}.sidebar.open{transform:translateX(0)}.chat-header .menu-btn{display:block}.message{max-width:92%}.welcome-suggestions{grid-template-columns:1fr}.auth-card{padding:30px 24px;border-radius:var(--radius-lg)}.auth-logo h1{font-size:26px}.setting-row{flex-direction:column;align-items:flex-start;gap:8px}.setting-row input[type="text"],.setting-row input[type="number"]{width:100%}.admin-stats{grid-template-columns:repeat(2,1fr)}.model-select{max-width:130px;font-size:11px}.code-inputs input{width:44px;height:52px;font-size:20px}.modal{padding:24px 20px;border-radius:var(--radius-lg);max-height:90vh}.activation-option{flex-direction:column;text-align:center;gap:8px}.activation-option .opt-info{text-align:center}}
-        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}}
+        /* =============================================
+           المتغيرات الأساسية للتصميم
+           ============================================= */
+        :root {
+            --bg: #080c0a;
+            --bg-alt: #0a100d;
+            --surface: #0f1613;
+            --surface-alt: #121d18;
+            --card: #151e19;
+            --card-hover: #1a2820;
+            --card-active: #1e3028;
+            --accent: #00e88f;
+            --accent-dim: #00a864;
+            --accent-bright: #33ffaa;
+            --accent-glow: rgba(0, 232, 143, 0.12);
+            --accent-glow-strong: rgba(0, 232, 143, 0.25);
+            --text: #dce8e0;
+            --text-bright: #f0f8f4;
+            --text-sec: #8fa898;
+            --text-dim: #6b8a78;
+            --muted: #4a6355;
+            --muted-dark: #2e4038;
+            --border: #1c2e23;
+            --border-light: #254035;
+            --error: #ff4d5a;
+            --error-bg: rgba(255, 77, 90, 0.1);
+            --error-border: rgba(255, 77, 90, 0.2);
+            --warning: #ffb020;
+            --warning-bg: rgba(255, 176, 32, 0.1);
+            --warning-border: rgba(255, 176, 32, 0.2);
+            --success: #00e88f;
+            --info: #00b8d4;
+            --user-bubble: #0d2a1c;
+            --user-bubble-border: rgba(0, 232, 143, 0.15);
+            --ai-bubble: #141c18;
+            --ai-bubble-border: rgba(28, 46, 35, 0.8);
+            --radius-xs: 6px;
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 18px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+            --shadow-glow: 0 0 30px rgba(0,232,143,0.15);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: 'Cairo', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --sidebar-width: 300px;
+        }
+
+        /* =============================================
+           إعادة تعيين عامة
+           ============================================= */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            font-family: var(--font-main);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        button {
+            font-family: var(--font-main);
+        }
+        input, textarea, select {
+            font-family: var(--font-main);
+        }
+
+        /* =============================================
+           شريط التمرير المخصص
+           ============================================= */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--muted-dark);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--muted);
+        }
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--muted-dark) transparent;
+        }
+
+        /* =============================================
+           تأثيرات الخلفية المتحركة
+           ============================================= */
+        .bg-effects {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .bg-effects .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.1;
+            animation: blobFloat 30s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+        .bg-effects .blob:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            top: -200px;
+            right: -150px;
+            animation-duration: 28s;
+        }
+        .bg-effects .blob:nth-child(2) {
+            width: 450px;
+            height: 450px;
+            background: #00b8d4;
+            bottom: -120px;
+            left: -100px;
+            animation-duration: 32s;
+            animation-delay: -10s;
+        }
+        .bg-effects .blob:nth-child(3) {
+            width: 350px;
+            height: 350px;
+            background: var(--accent-dim);
+            top: 40%;
+            left: 40%;
+            animation-duration: 25s;
+            animation-delay: -18s;
+        }
+        .bg-effects .blob:nth-child(4) {
+            width: 250px;
+            height: 250px;
+            background: #00d4aa;
+            top: 70%;
+            right: 20%;
+            animation-duration: 35s;
+            animation-delay: -5s;
+        }
+        @keyframes blobFloat {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            25% { transform: translate(40px, -50px) scale(1.1) rotate(5deg); }
+            50% { transform: translate(-30px, 40px) scale(0.9) rotate(-3deg); }
+            75% { transform: translate(20px, -20px) scale(1.05) rotate(2deg); }
+            100% { transform: translate(-10px, 10px) scale(1) rotate(0deg); }
+        }
+
+        /* شبكة خلفية */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(0,232,143,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,232,143,0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+
+        /* جزيئات عائمة */
+        .bg-particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .bg-particles .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat linear infinite;
+        }
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+        }
+
+        /* =============================================
+           صفحة المصادقة والتسجيل
+           ============================================= */
+        #auth-page {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .auth-card {
+            background: rgba(15, 22, 19, 0.9);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 44px 40px;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: var(--shadow-lg), 0 0 100px rgba(0,232,143,0.03);
+            animation: cardEnter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.5;
+        }
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+                filter: blur(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        /* اللوجو في صفحة المصادقة */
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .auth-logo .auth-logo-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin: 0 auto 16px;
+            object-fit: cover;
+            box-shadow: var(--shadow-glow);
+            border: 2px solid rgba(0,232,143,0.15);
+            transition: var(--transition);
+        }
+        .auth-logo .auth-logo-img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 0 50px rgba(0,232,143,0.3);
+        }
+        .auth-logo h1 {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+        .auth-logo h1 span {
+            color: var(--accent);
+        }
+        .auth-logo .auth-subtitle {
+            color: var(--text-sec);
+            font-size: 14px;
+            margin-top: 6px;
+            font-weight: 400;
+        }
+        .auth-logo .auth-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,232,143,0.15);
+            margin-bottom: 12px;
+        }
+
+        /* النماذج */
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+            animation: formSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes formSlideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* مجموعة الحقول */
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-sec);
+            margin-bottom: 7px;
+            transition: var(--transition-fast);
+        }
+        .form-group:focus-within label {
+            color: var(--accent);
+        }
+
+        /* حقول الإدخال */
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-wrap .field-icon {
+            position: absolute;
+            right: 14px;
+            color: var(--muted);
+            font-size: 14px;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+        .input-wrap input[type="text"],
+        .input-wrap input[type="email"],
+        .input-wrap input[type="password"],
+        .input-wrap input[type="date"],
+        .input-wrap input[type="number"],
+        .input-wrap select,
+        .input-wrap textarea {
+            width: 100%;
+            padding: 13px 44px 13px 14px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 14px;
+            transition: var(--transition);
+            outline: none;
+        }
+        .input-wrap input:focus,
+        .input-wrap select:focus,
+        .input-wrap textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            background: var(--surface-alt);
+        }
+        .input-wrap input:focus ~ .field-icon {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        .input-wrap input::placeholder,
+        .input-wrap textarea::placeholder {
+            color: var(--muted);
+            font-weight: 400;
+        }
+        .input-wrap input[type="date"] {
+            color-scheme: dark;
+        }
+
+        /* زر إظهار/إخفاء كلمة المرور */
+        .input-wrap .toggle-pass {
+            position: absolute;
+            left: 12px;
+            color: var(--muted);
+            cursor: pointer;
+            pointer-events: all;
+            font-size: 14px;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            padding: 4px;
+            line-height: 1;
+        }
+        .input-wrap .toggle-pass:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* رسالة خطأ الحقول */
+        .field-error {
+            font-size: 11px;
+            color: var(--error);
+            margin-top: 5px;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+        .field-error.show {
+            display: flex;
+            animation: fieldErrorIn 0.3s ease;
+        }
+        @keyframes fieldErrorIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* الأزرار */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 28px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            line-height: 1.4;
+            white-space: nowrap;
+        }
+        .btn:focus-visible {
+            box-shadow: 0 0 0 3px var(--accent-glow-strong);
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        /* زر أساسي */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+            color: var(--bg);
+            width: 100%;
+            font-size: 16px;
+            padding: 14px 28px;
+            letter-spacing: 0.3px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,232,143,0.3);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0,232,143,0.2);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        .btn-primary .btn-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2.5px solid transparent;
+            border-top-color: var(--bg);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+        .btn-primary.loading .btn-text { display: none; }
+        .btn-primary.loading .btn-spinner { display: inline-block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* زر ثانوي */
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--card);
+            border-color: var(--muted);
+            transform: translateY(-1px);
+        }
+
+        /* زر شبح */
+        .btn-ghost {
+            background: transparent;
+            color: var(--accent);
+            padding: 10px 18px;
+        }
+        .btn-ghost:hover {
+            background: var(--accent-glow);
+        }
+
+        /* زر صغير */
+        .btn-sm {
+            padding: 9px 18px;
+            font-size: 13px;
+            border-radius: var(--radius-xs);
+        }
+
+        /* زر أيقونة */
+        .btn-icon {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            border-radius: var(--radius-sm);
+            background: var(--surface);
+            color: var(--text-sec);
+            border: 1.5px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+        .btn-icon:hover {
+            background: var(--card);
+            color: var(--accent);
+            border-color: var(--accent-dim);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* زر خطر */
+        .btn-danger {
+            background: var(--error-bg);
+            color: var(--error);
+            border: 1.5px solid var(--error-border);
+        }
+        .btn-danger:hover {
+            background: rgba(255,77,90,0.2);
+            border-color: rgba(255,77,90,0.4);
+        }
+
+        /* تذييل النموذج */
+        .form-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: var(--text-sec);
+        }
+        .form-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border-bottom: 1px dashed transparent;
+        }
+        .form-footer a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* رسالة الخطأ العامة */
+        .form-error {
+            background: var(--error-bg);
+            border: 1.5px solid var(--error-border);
+            color: var(--error);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 18px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-error.show {
+            display: flex;
+            animation: shake 0.5s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            15% { transform: translateX(-8px); }
+            30% { transform: translateX(6px); }
+            45% { transform: translateX(-4px); }
+            60% { transform: translateX(3px); }
+            75% { transform: translateX(-2px); }
+        }
+
+        /* التحقق من الكود */
+        .code-display {
+            background: var(--surface);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .code-display p {
+            color: var(--text-sec);
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+        .code-display .code-value {
+            font-family: var(--font-code);
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: 14px;
+            color: var(--accent);
+            direction: ltr;
+            text-shadow: 0 0 20px rgba(0,232,143,0.3);
+        }
+        .code-inputs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            direction: ltr;
+            margin-bottom: 24px;
+        }
+        .code-inputs input {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-family: var(--font-code);
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            outline: none;
+            transition: var(--transition);
+            caret-color: var(--accent);
+        }
+        .code-inputs input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            background: var(--surface-alt);
+        }
+        .code-inputs input.filled {
+            border-color: var(--accent-dim);
+            background: rgba(0,232,143,0.05);
+        }
+
+        /* =============================================
+           صفحة التطبيق الرئيسية
+           ============================================= */
+        #app-page {
+            display: none;
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #app-page.active {
+            display: flex;
+            animation: appEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes appEnter {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* =============================================
+           الشريط الجانبي
+           ============================================= */
+        .sidebar {
+            width: var(--sidebar-width);
+            min-width: var(--sidebar-width);
+            background: rgba(12, 18, 15, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            z-index: 50;
+        }
+        .sidebar-header {
+            padding: 18px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sidebar-header .sidebar-logo-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 1.5px solid rgba(0,232,143,0.15);
+        }
+        .sidebar-header h2 {
+            font-size: 17px;
+            font-weight: 800;
+            flex: 1;
+            letter-spacing: -0.3px;
+        }
+        .sidebar-header h2 span {
+            color: var(--accent);
+        }
+        .sidebar-actions {
+            padding: 14px 16px;
+            display: flex;
+            gap: 8px;
+        }
+        .sidebar-actions .btn {
+            flex: 1;
+        }
+        .conv-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        .conv-list-header {
+            padding: 8px 14px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .conv-item {
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+            border: 1.5px solid transparent;
+            position: relative;
+        }
+        .conv-item:hover {
+            background: var(--card);
+            border-color: var(--border);
+        }
+        .conv-item.active {
+            background: var(--card-active);
+            border-color: var(--accent-dim);
+            box-shadow: inset 0 0 0 1px rgba(0,232,143,0.05);
+        }
+        .conv-item .conv-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: var(--radius-xs);
+            background: var(--accent-glow);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        .conv-item.active .conv-icon {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .conv-item .conv-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .conv-item .conv-title {
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text);
+        }
+        .conv-item .conv-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+        .conv-item .conv-date {
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .conv-item .conv-model-tag {
+            font-size: 9px;
+            color: var(--accent-dim);
+            background: var(--accent-glow);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: var(--font-code);
+        }
+        .conv-item .conv-delete {
+            opacity: 0;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 6px;
+            transition: var(--transition);
+            font-size: 12px;
+            background: none;
+            border: none;
+            border-radius: var(--radius-xs);
+            line-height: 1;
+        }
+        .conv-item:hover .conv-delete {
+            opacity: 1;
+        }
+        .conv-item .conv-delete:hover {
+            color: var(--error);
+            background: var(--error-bg);
+        }
+
+        /* تذييل الشريط الجانبي */
+        .sidebar-footer {
+            padding: 14px 14px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sidebar-footer .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--bg);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .sidebar-footer .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .sidebar-footer .user-name {
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sidebar-footer .user-email {
+            font-size: 11px;
+            color: var(--muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: ltr;
+            text-align: right;
+        }
+        .sidebar-footer .footer-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .sidebar-footer .footer-actions .btn-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+
+        /* حالة فارغة */
+        .empty-conv {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--muted);
+        }
+        .empty-conv i {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+            opacity: 0.5;
+        }
+        .empty-conv p {
+            font-size: 13px;
+        }
+
+        /* =============================================
+           منطقة الدردشة
+           ============================================= */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+            position: relative;
+            min-width: 0;
+        }
+        .chat-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(12, 18, 15, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10;
+        }
+        .chat-header .menu-btn {
+            display: none;
+            color: var(--text-sec);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 6px;
+            background: none;
+            border: none;
+            transition: var(--transition-fast);
+        }
+        .chat-header .menu-btn:hover {
+            color: var(--accent);
+        }
+        .chat-header .chat-title-wrap {
+            flex: 1;
+            min-width: 0;
+        }
+        .chat-header .chat-title {
+            font-size: 15px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .chat-header .chat-model-badge {
+            font-size: 10px;
+            color: var(--accent-dim);
+            font-family: var(--font-code);
+            font-weight: 500;
+        }
+        .chat-header .chat-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .model-select {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 7px 10px;
+            color: var(--text);
+            font-family: var(--font-main);
+            font-size: 12px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            max-width: 200px;
+            transition: var(--transition);
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234a6355' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 10px center;
+            padding-left: 28px;
+        }
+        .model-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .model-select option {
+            background: var(--card);
+            color: var(--text);
+            padding: 8px;
+        }
+
+        /* حاوية الرسائل */
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        /* شاشة الترحيب */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            animation: welcomeIn 0.6s ease;
+        }
+        @keyframes welcomeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .welcome-screen .welcome-logo-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 22px;
+            margin-bottom: 24px;
+            object-fit: cover;
+            box-shadow: var(--shadow-glow);
+            border: 2px solid rgba(0,232,143,0.15);
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+        @keyframes logoPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(0,232,143,0.15); }
+            50% { box-shadow: 0 0 50px rgba(0,232,143,0.3); }
+        }
+        .welcome-screen h2 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .welcome-screen h2 span {
+            color: var(--accent);
+        }
+        .welcome-screen .welcome-model {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,232,143,0.15);
+            margin-bottom: 10px;
+            font-family: var(--font-code);
+        }
+        .welcome-screen p {
+            color: var(--text-sec);
+            font-size: 14px;
+            max-width: 420px;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+        .welcome-suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            max-width: 650px;
+            width: 100%;
+        }
+        .suggestion-card {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: right;
+        }
+        .suggestion-card:hover {
+            background: var(--card-hover);
+            border-color: var(--accent-dim);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        .suggestion-card .sugg-icon {
+            color: var(--accent);
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .suggestion-card .sugg-text {
+            font-size: 13px;
+            color: var(--text-sec);
+            line-height: 1.7;
+        }
+
+        /* =============================================
+           فقاعات الرسائل
+           ============================================= */
+        .message {
+            display: flex;
+            gap: 12px;
+            max-width: 82%;
+            animation: msgEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes msgEnter {
+            from { opacity: 0; transform: translateY(16px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .message.user {
+            align-self: flex-start;
+            flex-direction: row-reverse;
+        }
+        .message.ai {
+            align-self: flex-end;
+        }
+        .message .msg-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        .message.user .msg-avatar {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+            color: var(--bg);
+        }
+        .message.ai .msg-avatar {
+            background: var(--card);
+            color: var(--accent);
+            border: 1.5px solid var(--border);
+            font-size: 14px;
+        }
+        .message .msg-body {
+            flex: 1;
+            min-width: 0;
+        }
+        .message .msg-content {
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            font-size: 14px;
+            line-height: 1.85;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .message.user .msg-content {
+            background: var(--user-bubble);
+            border: 1.5px solid var(--user-bubble-border);
+            border-top-right-radius: var(--radius-xs);
+        }
+        .message.ai .msg-content {
+            background: var(--ai-bubble);
+            border: 1.5px solid var(--ai-bubble-border);
+            border-top-left-radius: var(--radius-xs);
+        }
+        .message .msg-time {
+            font-size: 10px;
+            color: var(--muted-dark);
+            margin-top: 6px;
+            padding: 0 4px;
+        }
+        .message.user .msg-time {
+            text-align: left;
+        }
+        .message.ai .msg-time {
+            text-align: right;
+        }
+
+        /* =============================================
+           تنسيق Markdown في الرسائل
+           ============================================= */
+        .msg-content p { margin-bottom: 10px; }
+        .msg-content p:last-child { margin-bottom: 0; }
+        .msg-content strong { color: var(--accent); font-weight: 700; }
+        .msg-content em { color: var(--text-sec); font-style: italic; }
+        .msg-content h1, .msg-content h2, .msg-content h3 {
+            color: var(--text-bright); margin: 16px 0 10px; font-weight: 700;
+        }
+        .msg-content h1 { font-size: 19px; }
+        .msg-content h2 { font-size: 17px; }
+        .msg-content h3 { font-size: 15px; }
+        .msg-content ul, .msg-content ol { padding-right: 22px; margin: 10px 0; }
+        .msg-content li { margin-bottom: 5px; }
+        .msg-content code:not(.block-code) {
+            background: rgba(0,232,143,0.08);
+            color: var(--accent);
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-family: var(--font-code);
+            font-size: 12.5px;
+            border: 1px solid rgba(0,232,143,0.1);
+        }
+        .msg-content pre {
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0;
+            margin: 12px 0;
+            overflow: hidden;
+            direction: ltr;
+            text-align: left;
+        }
+        .msg-content pre .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 16px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .msg-content pre .code-header .copy-btn {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 11px;
+            font-family: var(--font-main);
+            padding: 3px 10px;
+            border-radius: var(--radius-xs);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .msg-content pre .code-header .copy-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+            background: var(--accent-glow);
+        }
+        .msg-content pre code.block-code {
+            display: block;
+            padding: 16px;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 13px;
+            line-height: 1.65;
+            color: var(--text);
+            tab-size: 4;
+        }
+        .msg-content a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .msg-content a:hover {
+            color: var(--accent-bright);
+        }
+        .msg-content blockquote {
+            border-right: 3px solid var(--accent-dim);
+            padding-right: 14px;
+            margin: 10px 0;
+            color: var(--text-sec);
+        }
+
+        /* مؤشر الكتابة */
+        .typing-indicator {
+            display: none;
+            align-self: flex-end;
+            padding: 16px 22px;
+            background: var(--ai-bubble);
+            border: 1.5px solid var(--ai-bubble-border);
+            border-radius: var(--radius);
+            border-top-left-radius: var(--radius-xs);
+        }
+        .typing-indicator.show {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            animation: typingIn 0.3s ease;
+        }
+        @keyframes typingIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .typing-indicator .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: typingBounce 1.4s ease-in-out infinite;
+        }
+        .typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+
+        /* =============================================
+           منطقة الإدخال
+           ============================================= */
+        .input-area {
+            padding: 16px 20px 18px;
+            border-top: 1px solid var(--border);
+            background: rgba(12, 18, 15, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            transition: var(--transition);
+        }
+        .input-wrapper:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            background: var(--surface-alt);
+        }
+        .input-wrapper textarea {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            max-height: 140px;
+            line-height: 1.65;
+            padding: 4px 0;
+        }
+        .input-wrapper textarea::placeholder {
+            color: var(--muted);
+        }
+        .input-wrapper .send-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+            color: var(--bg);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        .input-wrapper .send-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(0,232,143,0.35);
+        }
+        .input-wrapper .send-btn:active {
+            transform: scale(0.95);
+        }
+        .input-wrapper .send-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        .input-hint {
+            font-size: 11px;
+            color: var(--muted-dark);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        /* =============================================
+           مساحة الإعلانات
+           ============================================= */
+        .chat-ad-space {
+            padding: 10px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: rgba(12, 18, 15, 0.5);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .auth-ad {
+            margin-top: 22px;
+            padding: 16px;
+            background: var(--surface);
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            min-height: 270px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .ads-hidden .chat-ad-space,
+        .ads-hidden .auth-ad {
+            display: none !important;
+        }
+
+        /* =============================================
+           النوافذ المنبثقة
+           ============================================= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-overlay.show {
+            display: flex;
+            animation: overlayIn 0.25s ease;
+        }
+        @keyframes overlayIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            width: 100%;
+            max-width: 560px;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg), 0 0 80px rgba(0,0,0,0.3);
+            animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.3;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(24px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal.modal-lg {
+            max-width: 720px;
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .modal-header h3 {
+            font-size: 19px;
+            font-weight: 800;
+        }
+        .modal-header .close-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: var(--radius-sm);
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--text-sec);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+        .modal-header .close-btn:hover {
+            color: var(--error);
+            border-color: var(--error);
+            background: var(--error-bg);
+            transform: rotate(90deg);
+        }
+        .modal-body { margin-bottom: 24px; }
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        /* نافذة الإعلان */
+        .ad-modal .modal {
+            max-width: 430px;
+            text-align: center;
+        }
+        .ad-modal .ad-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            margin-bottom: 18px;
+        }
+        .ad-modal .ad-content .ad-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,232,143,0.15);
+            margin-bottom: 14px;
+        }
+
+        /* =============================================
+           الإشعارات (Toast)
+           ============================================= */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast {
+            padding: 14px 22px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 300px;
+            max-width: 450px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow-lg);
+            pointer-events: all;
+            backdrop-filter: blur(10px);
+        }
+        .toast.success {
+            background: rgba(0,232,143,0.15);
+            border: 1.5px solid rgba(0,232,143,0.3);
+            color: var(--accent);
+        }
+        .toast.error {
+            background: rgba(255,77,90,0.15);
+            border: 1.5px solid rgba(255,77,90,0.3);
+            color: var(--error);
+        }
+        .toast.info {
+            background: rgba(0,184,212,0.15);
+            border: 1.5px solid rgba(0,184,212,0.3);
+            color: var(--info);
+        }
+        .toast.warning {
+            background: var(--warning-bg);
+            border: 1.5px solid var(--warning-border);
+            color: var(--warning);
+        }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(-24px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-24px); }
+        }
+
+        /* =============================================
+           الإعدادات
+           ============================================= */
+        .settings-section {
+            margin-bottom: 24px;
+        }
+        .settings-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-sec);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            gap: 12px;
+        }
+        .setting-row label {
+            font-size: 13px;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .setting-row .desc {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+        .setting-row input[type="text"],
+        .setting-row input[type="number"],
+        .setting-row input[type="password"] {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 9px 14px;
+            color: var(--text);
+            font-family: var(--font-code);
+            font-size: 12px;
+            width: 200px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .setting-row input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* مفتاح التبديل */
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .toggle-switch input { display: none; }
+        .toggle-switch .slider {
+            position: absolute;
+            inset: 0;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 13px;
+            transition: var(--transition);
+        }
+        .toggle-switch .slider::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--muted);
+            border-radius: 50%;
+            top: 2px;
+            right: 2px;
+            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .toggle-switch input:checked + .slider {
+            background: var(--accent-glow);
+            border-color: var(--accent-dim);
+        }
+        .toggle-switch input:checked + .slider::before {
+            transform: translateX(-22px);
+            background: var(--accent);
+            box-shadow: 0 0 8px rgba(0,232,143,0.4);
+        }
+
+        /* =============================================
+           لوحة الإدارة
+           ============================================= */
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--warning-bg);
+            color: var(--warning);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1.5px solid var(--warning-border);
+        }
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .admin-stat {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .admin-stat:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+        }
+        .admin-stat .stat-num {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1.2;
+        }
+        .admin-stat .stat-label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        .admin-model-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .admin-model-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .admin-model-item:hover {
+            border-color: var(--border-light);
+        }
+        .admin-model-item.disabled-model {
+            opacity: 0.45;
+        }
+        .admin-model-item .model-radio {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .admin-model-item .model-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .admin-model-item .model-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .admin-model-item .model-id {
+            font-size: 11px;
+            color: var(--muted);
+            font-family: var(--font-code);
+            direction: ltr;
+            text-align: right;
+            margin-top: 3px;
+        }
+        .admin-model-item .model-desc {
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 3px;
+        }
+        .admin-model-item .model-status {
+            font-size: 20px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        .admin-model-item .model-status.on { color: var(--accent); }
+        .admin-model-item .model-status.off { color: var(--error); }
+        .admin-model-item .model-toggle { flex-shrink: 0; }
+        .admin-lock {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .admin-lock input {
+            flex: 1;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .admin-lock input:focus {
+            border-color: var(--warning);
+            box-shadow: 0 0 0 4px var(--warning-bg);
+        }
+
+        /* =============================================
+           غطاء الشريط الجانبي (موبايل)
+           ============================================= */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 49;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px);
+        }
+        .sidebar-overlay.show {
+            display: block;
+            animation: overlayIn 0.2s ease;
+        }
+
+        /* =============================================
+           الاستجابة للشاشات المختلفة
+           ============================================= */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 50;
+                transform: translateX(100%);
+                box-shadow: var(--shadow-lg);
+                width: 280px;
+                min-width: 280px;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .chat-header .menu-btn {
+                display: block;
+            }
+            .message {
+                max-width: 92%;
+            }
+            .welcome-suggestions {
+                grid-template-columns: 1fr;
+            }
+            .auth-card {
+                padding: 30px 24px;
+                border-radius: var(--radius-lg);
+            }
+            .auth-logo h1 {
+                font-size: 26px;
+            }
+            .setting-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .setting-row input[type="text"],
+            .setting-row input[type="number"],
+            .setting-row input[type="password"] {
+                width: 100%;
+            }
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .model-select {
+                max-width: 130px;
+                font-size: 11px;
+            }
+            .code-inputs input {
+                width: 44px;
+                height: 52px;
+                font-size: 20px;
+            }
+            .modal {
+                padding: 24px 20px;
+                border-radius: var(--radius-lg);
+                max-height: 90vh;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .auth-card {
+                padding: 24px 18px;
+            }
+            .admin-model-item {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .admin-model-item .model-desc {
+                display: none;
+            }
+        }
+
+        /* تقليل الحركة */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="bg-effects"><div class="blob"></div><div class="blob"></div></div>
+    <!-- تأثيرات الخلفية -->
+    <div class="bg-effects">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
     <div class="bg-grid"></div>
+    <div class="bg-particles" id="bg-particles"></div>
 
-    <!-- صفحة المصادقة -->
+    <!-- ===== صفحة المصادقة ===== -->
     <div id="auth-page">
         <div class="auth-card">
             <div class="auth-logo">
-                <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="auth-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <!-- ===== اللوجو — صفحة المصادقة ===== -->
+                <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="auth-logo-img"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div class="auth-logo-img" style="display:none;background:linear-gradient(135deg,var(--accent),var(--accent-dim));align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--bg)">rtq</div>
-                <div class="auth-badge"><i class="fas fa-bolt"></i> نماذج مختارة</div>
+                <div class="auth-badge"><i class="fas fa-bolt"></i> مدعوم بنماذج Groq</div>
                 <h1>rtq<span>.ai</span></h1>
-                <p class="auth-subtitle">ذكاء اصطناعي متقدم</p>
+                <p class="auth-subtitle">ذكاء اصطناعي متقدم تحت أمرك</p>
             </div>
-            <div class="form-error" id="auth-error"><i class="fas fa-exclamation-triangle"></i><span id="auth-error-text"></span></div>
+
+            <div class="form-error" id="auth-error">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="auth-error-text"></span>
+            </div>
 
             <!-- تسجيل الدخول -->
             <form class="auth-form active" id="login-form" autocomplete="off" novalidate>
-                <div class="form-group"><label for="login-username">اسم المستخدم</label><div class="input-wrap"><input type="text" id="login-username" placeholder="أدخل اسم المستخدم" required autocomplete="username"><i class="fas fa-user field-icon"></i></div></div>
-                <div class="form-group"><label for="login-password">كلمة المرور</label><div class="input-wrap"><input type="password" id="login-password" placeholder="أدخل كلمة المرور" required autocomplete="current-password"><i class="fas fa-lock field-icon"></i><button type="button" class="toggle-pass" onclick="togglePassword('login-password',this)"><i class="fas fa-eye"></i></button></div></div>
-                <button type="submit" class="btn btn-primary" id="login-submit-btn"><span class="btn-text">تسجيل الدخول</span><span class="btn-spinner"></span></button>
+                <div class="form-group">
+                    <label for="login-username">اسم المستخدم</label>
+                    <div class="input-wrap">
+                        <input type="text" id="login-username" placeholder="أدخل اسم المستخدم" required autocomplete="username">
+                        <i class="fas fa-user field-icon"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">كلمة المرور</label>
+                    <div class="input-wrap">
+                        <input type="password" id="login-password" placeholder="أدخل كلمة المرور" required autocomplete="current-password">
+                        <i class="fas fa-lock field-icon"></i>
+                        <button type="button" class="toggle-pass" onclick="togglePassword('login-password',this)" aria-label="إظهار كلمة المرور"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="login-submit-btn">
+                    <span class="btn-text">تسجيل الدخول</span>
+                    <span class="btn-spinner"></span>
+                </button>
                 <div class="form-footer">ليس لديك حساب؟ <a onclick="switchAuth('register')">إنشاء حساب جديد</a></div>
             </form>
 
             <!-- إنشاء حساب -->
             <form class="auth-form" id="register-form" autocomplete="off" novalidate>
-                <div class="form-group"><label for="reg-username">اسم المستخدم</label><div class="input-wrap"><input type="text" id="reg-username" placeholder="اختر اسم مستخدم فريد (3 أحرف على الأقل)" required minlength="3" autocomplete="username"><i class="fas fa-at field-icon"></i></div><div class="field-error" id="err-reg-username"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <div class="form-group"><label for="reg-name">الاسم الكامل</label><div class="input-wrap"><input type="text" id="reg-name" placeholder="أدخل اسمك الكامل" required minlength="2" autocomplete="name"><i class="fas fa-id-card field-icon"></i></div><div class="field-error" id="err-reg-name"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <div class="form-group"><label for="reg-email">البريد الإلكتروني</label><div class="input-wrap"><input type="email" id="reg-email" placeholder="example@email.com" required autocomplete="email" dir="ltr" style="text-align:right"><i class="fas fa-envelope field-icon"></i></div><div class="field-error" id="err-reg-email"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <div class="form-group"><label for="reg-birthday">تاريخ الميلاد</label><div class="input-wrap"><input type="date" id="reg-birthday" required autocomplete="bday"><i class="fas fa-calendar-alt field-icon"></i></div><div class="field-error" id="err-reg-birthday"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <div class="form-group"><label for="reg-password">كلمة المرور</label><div class="input-wrap"><input type="password" id="reg-password" placeholder="أنشئ كلمة مرور قوية (6 أحرف على الأقل)" required minlength="6" autocomplete="new-password"><i class="fas fa-lock field-icon"></i><button type="button" class="toggle-pass" onclick="togglePassword('reg-password',this)"><i class="fas fa-eye"></i></button></div><div class="field-error" id="err-reg-password"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <div class="form-group"><label for="reg-confirm">تأكيد كلمة المرور</label><div class="input-wrap"><input type="password" id="reg-confirm" placeholder="أعد كتابة كلمة المرور" required autocomplete="new-password"><i class="fas fa-lock field-icon"></i><button type="button" class="toggle-pass" onclick="togglePassword('reg-confirm',this)"><i class="fas fa-eye"></i></button></div><div class="field-error" id="err-reg-confirm"><i class="fas fa-exclamation-circle"></i><span></span></div></div>
-                <button type="submit" class="btn btn-primary" id="reg-submit-btn"><span class="btn-text">إنشاء الحساب</span><span class="btn-spinner"></span></button>
+                <div class="form-group">
+                    <label for="reg-username">اسم المستخدم</label>
+                    <div class="input-wrap">
+                        <input type="text" id="reg-username" placeholder="اختر اسم مستخدم فريد (3 أحرف على الأقل)" required minlength="3" autocomplete="username">
+                        <i class="fas fa-at field-icon"></i>
+                    </div>
+                    <div class="field-error" id="err-reg-username"><i class="fas fa-exclamation-circle"></i><span></span></div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-name">الاسم الكامل</label>
+                    <div class="input-wrap">
+                        <input type="text" id="reg-name" placeholder="أدخل اسمك الكامل" required minlength="2" autocomplete="name">
+                        <i class="fas fa-id-card field-icon"></i>
+                    </div>
+                    <div class="field-error" id="err-reg-name"><i class="fas fa-exclamation-circle"></i><span></span></div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">البريد الإلكتروني</label>
+                    <div class="input-wrap">
+                        <input type="email" id="reg-email" placeholder="example@email.com" required autocomplete="email" dir="ltr" style="text-align:right">
+                        <i class="fas fa-envelope field-icon"></i>
+                    </div>
+                    <div class="field-error" id="err-reg-email"><i class="fas fa-exclamation-circle"></i><span></span></div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-birthday">تاريخ الميلاد</label>
+                    <div class="input-wrap">
+                        <input type="date" id="reg-birthday" required autocomplete="bday">
+                        <i class="fas fa-calendar-alt field-icon"></i>
+                    </div>
+                    <div class="field-error" id="err-reg-birthday"><i class="fas fa-exclamation-circle"></i><span></span></div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">كلمة المرور</label>
+                    <div class="input-wrap">
+                        <input type="password" id="reg-password" placeholder="أنشئ كلمة مرور قوية (6 أحرف على الأقل)" required minlength="6" autocomplete="new-password">
+                        <i class="fas fa-lock field-icon"></i>
+                        <button type="button" class="toggle-pass" onclick="togglePassword('reg-password',this)" aria-label="إظهار"><i class="fas fa-eye"></i></button>
+                    </div>
+                    <div class="field-error" id="err-reg-password"><i class="fas fa-exclamation-circle"></i><span></span></div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm">تأكيد كلمة المرور</label>
+                    <div class="input-wrap">
+                        <input type="password" id="reg-confirm" placeholder="أعد كتابة كلمة المرور" required autocomplete="new-password">
+                        <i class="fas fa-lock field-icon"></i>
+                        <button type="button" class="toggle-pass" onclick="togglePassword('reg-confirm',this)" aria-label="إظهار"><i class="fas fa-eye"></i></button>
+                    </div>
+                    <div class="field-error" id="err-reg-confirm"><i class="fas fa-exclamation-circle"></i><span></span></div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="reg-submit-btn">
+                    <span class="btn-text">إنشاء الحساب</span>
+                    <span class="btn-spinner"></span>
+                </button>
                 <div class="form-footer">لديك حساب بالفعل؟ <a onclick="switchAuth('login')">تسجيل الدخول</a></div>
-                <!-- المساحة الإعلانية رقم 1 -->
+
+                <!-- إعلان HilltopAds — صفحة التسجيل -->
                 <div class="auth-ad" id="auth-ad-zone">
-                    <script>(function(inu){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=inu||{};s.src="\/\/simplisticpride.com\/b.XkVYsndPGRlv0fYSWbcF\/-ejmx9buiZMUylrkvPBThY\/5kMzDAk\/2cMnTQMztrNRj-kYw\/OcTdY-xcNowl";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>
+                    <script type="text/javascript">
+                    (function(xtr){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=xtr||{};s.src="\u002f\u002fsimplisticpride.com\u002fbJXCVas.dWGRlb0-YBWHcZ\u002faeVm\u002f9fupZbUhluksP_TPYt5nMvDKkR1DO\u002fDEEYt\u002fNBjVkEwNOuTaUL4YNAQt";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l)})({})
+                    </script>
                 </div>
             </form>
 
-            <!-- التحقق من الكود - Form Submit حقيقي -->
+            <!-- التحقق من الكود -->
             <form class="auth-form" id="verify-form" autocomplete="off" novalidate>
                 <div class="code-display">
                     <p><i class="fas fa-shield-alt" style="margin-left:6px;color:var(--accent)"></i>تم إرسال رمز التحقق إلى بريدك الإلكتروني</p>
@@ -293,188 +2034,238 @@
         </div>
     </div>
 
-    <!-- صفحة التطبيق -->
+    <!-- ===== صفحة التطبيق ===== -->
     <div id="app-page">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="sidebar-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <!-- ===== اللوجو — الشريط الجانبي ===== -->
+                <img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="sidebar-logo-img"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div class="sidebar-logo-img" style="display:none;width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-dim));align-items:center;justify-content:center;font-weight:900;color:var(--bg);font-size:11px;border:1.5px solid rgba(0,232,143,0.15)">rtq</div>
                 <h2>rtq<span>.ai</span></h2>
             </div>
-            <div class="sidebar-actions"><button class="btn btn-secondary btn-sm" onclick="newConversation()"><i class="fas fa-plus"></i> محادثة جديدة</button></div>
+            <div class="sidebar-actions">
+                <button class="btn btn-secondary btn-sm" onclick="newConversation()"><i class="fas fa-plus"></i> محادثة جديدة</button>
+            </div>
             <div class="conv-list" id="conv-list">
-                <div class="empty-conv" id="empty-conv"><i class="fas fa-comments"></i><p>لا توجد محادثات بعد</p><p style="font-size:11px;margin-top:4px">اضغط "محادثة جديدة" للبدء</p></div>
+                <div class="empty-conv" id="empty-conv">
+                    <i class="fas fa-comments"></i>
+                    <p>لا توجد محادثات بعد</p>
+                    <p style="font-size:11px;margin-top:4px">اضغط "محادثة جديدة" للبدء</p>
+                </div>
             </div>
             <div class="sidebar-footer">
                 <div class="user-avatar" id="user-avatar">م</div>
-                <div class="user-info"><div class="user-name" id="user-display-name">المستخدم</div><div class="user-email" id="user-display-email">user@email.com</div></div>
+                <div class="user-info">
+                    <div class="user-name" id="user-display-name">المستخدم</div>
+                    <div class="user-email" id="user-display-email">user@email.com</div>
+                </div>
                 <div class="footer-actions">
-                    <button class="btn-icon" onclick="openSettings()" title="الإعدادات"><i class="fas fa-cog"></i></button>
-                    <button class="btn-icon" onclick="openAdminLogin()" title="لوحة الإدارة" style="color:var(--warning)"><i class="fas fa-shield-alt"></i></button>
-                    <button class="btn-icon" onclick="logout()" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
+                    <button class="btn-icon" onclick="openSettings()" title="الإعدادات" aria-label="الإعدادات"><i class="fas fa-cog"></i></button>
+                    <button class="btn-icon" onclick="openAdminLogin()" title="لوحة الإدارة" aria-label="الإدارة" style="color:var(--warning)"><i class="fas fa-shield-alt"></i></button>
+                    <button class="btn-icon" onclick="logout()" title="تسجيل الخروج" aria-label="خروج"><i class="fas fa-sign-out-alt"></i></button>
                 </div>
             </div>
         </aside>
         <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
         <main class="chat-area">
             <div class="chat-header">
-                <button class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-                <div class="chat-title-wrap"><div class="chat-title" id="chat-title">محادثة جديدة</div><div class="chat-model-badge" id="chat-model-badge"></div></div>
+                <button class="menu-btn" onclick="toggleSidebar()" aria-label="القائمة"><i class="fas fa-bars"></i></button>
+                <div class="chat-title-wrap">
+                    <div class="chat-title" id="chat-title">محادثة جديدة</div>
+                    <div class="chat-model-badge" id="chat-model-badge"></div>
+                </div>
                 <div class="chat-actions">
-                    <select class="model-select" id="model-selector" onchange="changeModel(this.value)"></select>
-                    <button class="btn-icon" onclick="exportConversation()" title="تصدير"><i class="fas fa-download"></i></button>
-                    <button class="btn-icon" onclick="clearChat()" title="مسح"><i class="fas fa-trash-alt"></i></button>
+                    <select class="model-select" id="model-selector" onchange="changeModel(this.value)" aria-label="اختيار النموذج"></select>
+                    <button class="btn-icon" onclick="exportConversation()" title="تصدير المحادثة" aria-label="تصدير"><i class="fas fa-download"></i></button>
+                    <button class="btn-icon" onclick="clearChat()" title="مسح المحادثة" aria-label="مسح"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
             <div class="messages" id="messages"></div>
-            <!-- المساحة الإعلانية رقم 2 -->
+            <!-- إعلان HilltopAds — الدردشة -->
             <div class="chat-ad-space" id="chat-ad-space">
-                <script>(function(inu){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=inu||{};s.src="\/\/simplisticpride.com\/bIXvV.sbdaGzlI0hYgWCcM\/DeNmC9lu\/ZiUwlYkaPVT\/Yp5tM\/Dmkt1MOkDoENtoNxjWkBwAOYTMUr4xNzQv";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>
+                <script type="text/javascript">
+                (function(xs){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=xs||{};s.src="\u002f\u002fsimplisticpride.com\u002fbXXMV.s_dMGslu0rYjW\u002fcQ\u002fleRmv9\u002fuxZyU\u002flCk\u002fPWTxYZ5\u002fMeDmkN2kMjTVMhtZNDjsk\u002fwDOpTSYexLNew_";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l)})({})
+                </script>
             </div>
             <div class="input-area">
                 <div class="input-wrapper">
-                    <textarea id="chat-input" rows="1" placeholder="اكتب رسالتك هنا..."></textarea>
-                    <button class="send-btn" id="send-btn" onclick="handleSend()"><i class="fas fa-paper-plane"></i></button>
+                    <textarea id="chat-input" rows="1" placeholder="اكتب رسالتك هنا..." aria-label="رسالتك"></textarea>
+                    <button class="send-btn" id="send-btn" onclick="handleSend()" aria-label="إرسال"><i class="fas fa-paper-plane"></i></button>
                 </div>
-                <div class="input-hint">Enter للإرسال | Shift+Enter لسطر جديد</div>
+                <div class="input-hint">rtq.ai — اختر النموذج من القائمة أعلاه | Enter للإرسال | Shift+Enter لسطر جديد</div>
             </div>
         </main>
     </div>
 
     <!-- نافذة الإعدادات -->
     <div class="modal-overlay" id="settings-modal">
-        <div class="modal">
-            <div class="modal-header"><h3><i class="fas fa-cog" style="color:var(--accent);margin-left:8px"></i>الإعدادات</h3><button class="close-btn" onclick="closeModal('settings-modal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal" role="dialog" aria-label="الإعدادات">
+            <div class="modal-header"><h3><i class="fas fa-cog" style="color:var(--accent);margin-left:8px"></i>الإعدادات</h3><button class="close-btn" onclick="closeModal('settings-modal')" aria-label="إغلاق"><i class="fas fa-times"></i></button></div>
             <div class="modal-body">
                 <div class="settings-section">
-                    <h4>إعدادات النموذج</h4>
-                    <div class="setting-row"><div><label>درجة الحرارة</label><div class="desc">0 = دقيق | 1 = إبداعي</div></div><input type="number" id="temp-input" min="0" max="2" step="0.1" value="0.7" dir="ltr"></div>
-                    <div class="setting-row"><div><label>الحد الأقصى للرموز</label></div><input type="number" id="max-tokens-input" min="256" max="32768" step="256" value="4096" dir="ltr"></div>
+                    <h4><i class="fas fa-sliders-h" style="margin-left:6px"></i>إعدادات النموذج</h4>
+                    <div class="setting-row"><div><label>درجة الحرارة</label><div class="desc">0 = دقيق | 1 = إبداعي | 2 = عشوائي</div></div><input type="number" id="temp-input" min="0" max="2" step="0.1" value="0.7" dir="ltr"></div>
+                    <div class="setting-row"><div><label>الحد الأقصى للرموز</label><div class="desc">أقصى طول للرد (256 - 32768)</div></div><input type="number" id="max-tokens-input" min="256" max="32768" step="256" value="4096" dir="ltr"></div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-ad" style="margin-left:6px"></i>الإعلانات</h4>
+                    <div class="setting-row"><div><label>تفعيل الإعلانات</label></div><label class="toggle-switch"><input type="checkbox" id="ads-enabled-toggle" checked><span class="slider"></span></label></div>
+                    <div class="setting-row"><div><label>Popunder كل (ساعة)</label><div class="desc">الفترة بين الإعلانات المنبثقة</div></div><input type="number" id="ads-interval-input" min="1" max="168" value="24" dir="ltr"></div>
+                </div>
+                <div class="settings-section">
+                    <h4><i class="fas fa-file-code" style="margin-left:6px"></i>استيراد وتصدير</h4>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap">
+                        <button class="btn btn-secondary btn-sm" onclick="exportAllData()"><i class="fas fa-download"></i> تصدير الكل</button>
+                        <button class="btn btn-secondary btn-sm" onclick="exportConfig()"><i class="fas fa-key"></i> تصدير الإعدادات السرية</button>
+                        <label class="btn btn-secondary btn-sm" style="cursor:pointer"><i class="fas fa-upload"></i> استيراد JSON<input type="file" accept=".json" id="import-file" style="display:none" onchange="importData(event)"></label>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer"><button class="btn btn-primary" onclick="saveSettings()" style="width:auto"><i class="fas fa-save"></i> حفظ</button></div>
+            <div class="modal-footer"><button class="btn btn-primary" onclick="saveSettings()" style="width:auto;padding:11px 30px"><i class="fas fa-save"></i> حفظ الإعدادات</button></div>
         </div>
     </div>
 
-    <!-- نافذة الإدارة -->
+    <!-- نافذة تسجيل دخول الإدارة -->
     <div class="modal-overlay" id="admin-login-modal">
-        <div class="modal">
-            <div class="modal-header"><h3><span class="admin-badge"><i class="fas fa-shield-alt"></i> الإدارة</span></h3><button class="close-btn" onclick="closeModal('admin-login-modal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal" role="dialog" aria-label="تسجيل الإدارة">
+            <div class="modal-header"><h3><span class="admin-badge"><i class="fas fa-shield-alt"></i> لوحة الإدارة</span></h3><button class="close-btn" onclick="closeModal('admin-login-modal')" aria-label="إغلاق"><i class="fas fa-times"></i></button></div>
             <div class="modal-body">
-                <p style="font-size:13px;color:var(--text-sec);margin-bottom:16px">لوحة التحكم الكاملة</p>
-                <div class="admin-lock"><input type="password" id="admin-pass-input" placeholder="كلمة مرور الإدارة" onkeydown="if(event.key==='Enter')verifyAdmin()"><button class="btn btn-secondary btn-sm" onclick="verifyAdmin()">دخول</button></div>
-                <p style="font-size:11px;color:var(--muted);margin-top:10px">الافتراضي: <code style="background:var(--surface);padding:2px 8px;border-radius:4px;font-family:var(--font-code);color:var(--warning)">admin</code></p>
+                <p style="font-size:13px;color:var(--text-sec);margin-bottom:16px;line-height:1.8">هذه اللوحة تتحكم في كل إعدادات الموقع: مفتاح API، النماذج المتاحة، والإعلانات.</p>
+                <div class="admin-lock">
+                    <input type="password" id="admin-pass-input" placeholder="كلمة مرور الإدارة" onkeydown="if(event.key==='Enter')verifyAdmin()">
+                    <button class="btn btn-secondary btn-sm" onclick="verifyAdmin()"><i class="fas fa-unlock"></i> دخول</button>
+                </div>
+                <p style="font-size:11px;color:var(--muted);margin-top:10px">كلمة المرور الافتراضية: <code style="background:var(--surface);padding:2px 8px;border-radius:4px;font-family:var(--font-code);color:var(--warning)">admin</code> — غيّرها من اللوحة بعد الدخول</p>
             </div>
         </div>
     </div>
 
+    <!-- نافذة لوحة الإدارة -->
     <div class="modal-overlay" id="admin-modal">
-        <div class="modal modal-lg">
-            <div class="modal-header"><h3><span class="admin-badge"><i class="fas fa-shield-alt"></i> لوحة الإدارة</span></h3><button class="close-btn" onclick="closeModal('admin-modal')"><i class="fas fa-times"></i></button></div>
+        <div class="modal modal-lg" role="dialog" aria-label="لوحة الإدارة">
+            <div class="modal-header"><h3><span class="admin-badge"><i class="fas fa-shield-alt"></i> لوحة الإدارة</span></h3><button class="close-btn" onclick="closeModal('admin-modal')" aria-label="إغلاق"><i class="fas fa-times"></i></button></div>
             <div class="modal-body">
                 <div class="admin-stats">
-                    <div class="admin-stat"><div class="stat-num" id="stat-users">0</div><div class="stat-label">مستخدم</div></div>
-                    <div class="admin-stat"><div class="stat-num" id="stat-models">0</div><div class="stat-label">نموذج</div></div>
-                    <div class="admin-stat"><div class="stat-num" id="stat-convs">0</div><div class="stat-label">محادثة</div></div>
+                    <div class="admin-stat"><div class="stat-num" id="stat-users">0</div><div class="stat-label">مستخدم مسجل</div></div>
+                    <div class="admin-stat"><div class="stat-num" id="stat-models">0</div><div class="stat-label">نموذج مفعّل</div></div>
+                    <div class="admin-stat"><div class="stat-num" id="stat-convs">0</div><div class="stat-label">محادثة حالية</div></div>
                 </div>
                 <div class="settings-section">
-                    <h4><i class="fas fa-key"></i> مفاتيح API</h4>
-                    <div class="input-wrap" style="margin-bottom:10px"><input type="password" id="admin-openai-key" placeholder="OpenAI: sk-..." dir="ltr" style="width:100%;padding:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-code);font-size:12px;outline:none"><i class="fas fa-key field-icon"></i></div>
-                    <div class="input-wrap"><input type="password" id="admin-groq-key" placeholder="Groq: gsk_..." dir="ltr" style="width:100%;padding:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-code);font-size:12px;outline:none"><i class="fas fa-key field-icon"></i></div>
+                    <h4><i class="fas fa-key" style="margin-left:6px"></i>مفتاح Groq API</h4>
+                    <div class="input-wrap" style="margin-bottom:10px">
+                        <input type="password" id="admin-api-input" placeholder="gsk_..." dir="ltr" style="text-align:left;width:100%;padding:12px 44px 12px 44px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-code);font-size:12px;outline:none">
+                        <i class="fas fa-key field-icon"></i>
+                    </div>
+                    <p style="font-size:11px;color:var(--muted)"><i class="fas fa-info-circle" style="margin-left:4px"></i>التغيير يطبق فوراً على جميع المستخدمين</p>
                 </div>
                 <div class="settings-section">
-                    <h4><i class="fas fa-lock"></i> كلمة مرور الإدارة</h4>
-                    <div class="input-wrap"><input type="text" id="admin-new-pass" placeholder="اتركه فارغاً إذا لا تريد التغيير" dir="ltr" style="width:100%;padding:12px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none"><i class="fas fa-lock field-icon"></i></div>
+                    <h4><i class="fas fa-lock" style="margin-left:6px"></i>كلمة مرور الإدارة الجديدة</h4>
+                    <div class="input-wrap">
+                        <input type="text" id="admin-new-pass" placeholder="اتركه فارغاً إذا لا تريد التغيير" dir="ltr" style="text-align:left;width:100%;padding:12px 44px 12px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;outline:none">
+                        <i class="fas fa-lock field-icon"></i>
+                    </div>
                 </div>
                 <div class="settings-section">
-                    <h4><i class="fas fa-robot"></i> النماذج</h4>
+                    <h4><i class="fas fa-robot" style="margin-left:6px"></i>إدارة النماذج <span style="font-size:11px;color:var(--muted);font-weight:400">(صح = متاح | خطأ = معطّل | دائرة = افتراضي)</span></h4>
                     <div class="admin-model-list" id="admin-model-list"></div>
                 </div>
             </div>
             <div class="modal-footer" style="gap:10px">
-                <button class="btn btn-primary" onclick="saveAdminSettings()" style="width:auto"><i class="fas fa-save"></i> حفظ</button>
-                <button class="btn btn-danger btn-sm" onclick="resetSite()"><i class="fas fa-undo"></i> إعادة ضبط</button>
+                <button class="btn btn-primary" onclick="saveAdminSettings()" style="width:auto;padding:11px 30px"><i class="fas fa-save"></i> حفظ وتطبيق</button>
+                <button class="btn btn-danger btn-sm" onclick="resetModelsToDefault()"><i class="fas fa-undo"></i> إعادة تعيين</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة الترحيب -->
+    <!-- نافذة الترحيب بعد التسجيل -->
     <div class="modal-overlay ad-modal" id="reg-ad-modal">
-        <div class="modal">
+        <div class="modal" role="dialog" aria-label="ترحيب">
             <div class="ad-content">
-                <div class="ad-badge"><i class="fas fa-sparkles"></i> مرحباً</div>
+                <div class="ad-badge"><i class="fas fa-sparkles"></i> مرحباً بك</div>
                 <p style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:10px">أهلاً بك في rtq.ai</p>
-                <p style="line-height:1.9">استمتع بالذكاء الاصطناعي المتقدم.</p>
+                <p style="line-height:1.9">استمتع بتجربة الذكاء الاصطناعي المتقدم مع 10 نماذج مختلفة. اختر النموذج المناسب من القائمة أعلاه.</p>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="closeModal('reg-ad-modal');showActivationModal();" style="width:100%;padding:14px">متابعة <i class="fas fa-arrow-left" style="margin-right:6px"></i></button>
+            <button class="btn btn-ghost btn-sm" onclick="closeModal('reg-ad-modal');enterApp();" style="width:100%;padding:14px">متابعة إلى التطبيق <i class="fas fa-arrow-left" style="margin-right:6px"></i></button>
         </div>
     </div>
 
-    <!-- نافذة التفعيل -->
-    <div class="modal-overlay" id="activation-modal">
-        <div class="modal">
-            <div class="modal-header"><h3><i class="fas fa-bolt" style="color:var(--accent);margin-left:8px"></i>تفعيل الحساب</h3><button class="close-btn" onclick="closeModal('activation-modal')"><i class="fas fa-times"></i></button></div>
-            <div class="modal-body">
-                <div class="activation-modal">
-                    <h3>⚡ اختر مدة التفعيل</h3>
-                    <p class="activation-desc">اختر خطة التفعيل المناسبة:</p>
-                    <div class="activation-options">
-                        <div class="activation-option" onclick="selectActivationPlan(1,3,this)">
-                            <div class="opt-info"><div class="opt-title">تفعيل 3 ساعات</div><div class="opt-desc">مشاهدة إعلان فيديو واحد</div></div>
-                            <span class="opt-badge">1 إعلان</span>
-                        </div>
-                        <div class="activation-option" onclick="selectActivationPlan(2,12,this)">
-                            <div class="opt-info"><div class="opt-title">تفعيل 12 ساعة</div><div class="opt-desc">مشاهدة إعلانين فيديو</div></div>
-                            <span class="opt-badge">2 إعلان</span>
-                        </div>
-                        <div class="activation-option" onclick="selectActivationPlan(3,24,this)">
-                            <div class="opt-info"><div class="opt-title">تفعيل 24 ساعة ⭐</div><div class="opt-desc">مشاهدة 3 إعلانات فيديو</div></div>
-                            <span class="opt-badge">3 إعلانات</span>
-                        </div>
-                    </div>
-                    <div class="activation-footer">
-                        <p><i class="fas fa-info-circle" style="margin-left:4px"></i>بعد الاختيار، سيتم عرض الإعلانات المطلوبة</p>
-                        <button class="btn btn-primary activation-btn" id="activate-btn" onclick="activateAccount()" disabled>تفعيل الآن</button>
-                        <div class="activation-timer" id="activation-timer">الحالة: <strong>غير مفعل</strong></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- حاوية الإشعارات -->
     <div class="toast-container" id="toast-container"></div>
 
+    <!-- ===== HilltopAds Popunder ===== -->
+    <div id="ht-popunder-slot" style="display:none"></div>
+
     <script>
-    // التكوين - نماذج مختارة فقط
+    /* =============================================
+       جميع نماذج Groq المتاحة
+       ============================================= */
+    var ALL_GROQ_MODELS = [
+        { id: "llama-3.3-70b-versatile", name: "Llama 3.3 70B", desc: "الأقوى والأكثر توازناً — دقيق وسريع", enabled: true, isDefault: true },
+        { id: "llama-3.1-8b-instant", name: "Llama 3.1 8B", desc: "الأسرع — للاستجابات القصيرة والسريعة", enabled: true, isDefault: false },
+        { id: "llama3-70b-8192", name: "Llama 3 70B", desc: "قوي وموثوق — حد 8192 رمز", enabled: true, isDefault: false },
+        { id: "llama3-8b-8192", name: "Llama 3 8B", desc: "خفيف وسريع — حد 8192 رمز", enabled: true, isDefault: false },
+        { id: "mixtral-8x7b-32768", name: "Mixtral 8x7B", desc: "سياق طويل جداً — 32768 رمز", enabled: true, isDefault: false },
+        { id: "gemma2-9b-it", name: "Gemma 2 9B", desc: "من Google — متوازن ودقيق", enabled: true, isDefault: false },
+        { id: "deepseek-r1-distill-llama-70b", name: "DeepSeek R1 70B", desc: "تفكير عميق — رياضيات وبرمجة", enabled: true, isDefault: false },
+        { id: "qwen-qwq-32b", name: "Qwen QwQ 32B", desc: "من Alibaba — تفكير منطقي متقدم", enabled: true, isDefault: false },
+        { id: "meta-llama/llama-4-scout-17b-16e-instruct", name: "Llama 4 Scout", desc: "الأحدث من Meta — مبدع وسريع", enabled: true, isDefault: false },
+        { id: "meta-llama/llama-4-maverick-17b-128e-instruct", name: "Llama 4 Maverick", desc: "الأحدث من Meta — سياق 128K", enabled: true, isDefault: false }
+    ];
+
+    /* =============================================
+       التكوين السري — يتحكم بالموقع بالكامل
+       مفتاح API موضوع مباشرة هنا
+       ============================================= */
     var DEFAULT_CONFIG = {
-        _version: "3.0.0",
+        _secret: true,
+        _version: "2.1.0",
         siteName: "rtq.ai",
-        openaiApiKey: "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", // ضع مفتاحك هنا: sk-proj-...
-        groqApiKey: "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", // ضع مفتاحك هنا: gsk_...
-        openaiApiUrl: "https://api.openai.com/v1/chat/completions",
-        groqApiUrl: "https://api.groq.com/openai/v1/chat/completions",
+        apiKey: "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",
+        apiUrl: "https://api.groq.com/openai/v1/chat/completions",
         temperature: 0.7,
         maxTokens: 4096,
-        systemPrompt: "أنت مساعد ذكي اسمك rtq.ai. تجيب باللغة العربية.",
-        models: [
-            { id: "llama-3.3-70b-versatile", name: "Llama 3.3 70B", provider: "groq", desc: "الأقوى", enabled: true, isDefault: true }
-        ],
+        systemPrompt: "أنت مساعد ذكي اسمك rtq.ai. تجيب باللغة العربية بشكل أساسي. تكون إجاباتك دقيقة ومنظمة ومفصلة. تستخدم تنسيق Markdown عند الحاجة. لا تذكر أنك نموذج لغوي.",
+        models: JSON.parse(JSON.stringify(ALL_GROQ_MODELS)),
         adminPassword: "admin",
-        ads: { globalEnabled: true },
+        ads: { enabled: true, popupIntervalHours: 24, showOnRegister: true, showInChat: true },
+        popunderUrl: "https://flusteredexam.com/b.3oVC0FPA3/pGvbbsmiVlJGZfD/0/2dOdT/A/5MNjTzQ_1jLITHY/5ZM/DTko1CNYD/kq",
         limits: { maxConversations: 100, maxMessagesPerConv: 500 },
-        features: { markdown: true }
+        features: { exportImport: true, markdown: true, codeHighlight: true },
+        theme: { accent: "#00e88f", bg: "#080c0a" }
     };
 
-    var config = {}, currentUser = null, conversations = [], activeConvId = null;
-    var pendingRegData = null, pendingVerifyCode = "", isSending = false, selectedModel = "llama-3.3-70b-versatile";
-    var selectedActivationPlan = null, adsWatchedCount = 0;
+    /* =============================================
+       حالة التطبيق
+       ============================================= */
+    var config = {};
+    var currentUser = null;
+    var conversations = [];
+    var activeConvId = null;
+    var pendingRegData = null;
+    var pendingVerifyCode = "";
+    var isSending = false;
+    var selectedModel = "";
 
+    /* =============================================
+       أدوات مساعدة
+       ============================================= */
     function loadConfig() {
         try {
             var saved = localStorage.getItem('rtq_config');
-            config = saved ? deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), JSON.parse(saved)) : JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+            if (saved) {
+                var p = JSON.parse(saved);
+                config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), p);
+            } else {
+                config = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+            }
         } catch(e) { config = JSON.parse(JSON.stringify(DEFAULT_CONFIG)); }
-        if (!config.models) config.models = JSON.parse(JSON.stringify(DEFAULT_CONFIG.models));
+        if (!config.models) config.models = JSON.parse(JSON.stringify(ALL_GROQ_MODELS));
+        ALL_GROQ_MODELS.forEach(function(dm) {
+            if (!config.models.find(function(m) { return m.id === dm.id; })) {
+                config.models.push(JSON.parse(JSON.stringify(dm)));
+            }
+        });
         var def = config.models.find(function(m) { return m.isDefault && m.enabled; });
         selectedModel = def ? def.id : (config.models.find(function(m) { return m.enabled; }) || {}).id || "llama-3.3-70b-versatile";
     }
@@ -487,7 +2278,8 @@
 
     function showToast(msg, type) {
         type = type || 'info';
-        var c = document.getElementById('toast-container'), t = document.createElement('div');
+        var c = document.getElementById('toast-container');
+        var t = document.createElement('div');
         t.className = 'toast ' + type;
         var icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle', warning: 'fa-exclamation-triangle' };
         t.innerHTML = '<i class="fas ' + (icons[type] || icons.info) + '"></i><span>' + msg + '</span>';
@@ -496,178 +2288,383 @@
     }
     function openModal(id) { document.getElementById(id).classList.add('show'); }
     function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
     function togglePassword(inputId, btn) {
-        var input = document.getElementById(inputId), icon = btn.querySelector('i');
+        var input = document.getElementById(inputId);
+        var icon = btn.querySelector('i');
         if (input.type === 'password') { input.type = 'text'; icon.classList.replace('fa-eye', 'fa-eye-slash'); }
         else { input.type = 'password'; icon.classList.replace('fa-eye-slash', 'fa-eye'); }
     }
-    function showFieldError(id, msg) { var el = document.getElementById(id); if (!el) return; el.querySelector('span').textContent = msg; el.classList.add('show'); }
-    function clearFieldErrors() { document.querySelectorAll('.field-error').forEach(function(el) { el.classList.remove('show'); }); }
-    function showAuthError(msg) { var el = document.getElementById('auth-error'); document.getElementById('auth-error-text').textContent = msg; el.classList.add('show'); }
+
+    function showFieldError(id, msg) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.querySelector('span').textContent = msg;
+        el.classList.add('show');
+    }
+    function clearFieldErrors() {
+        document.querySelectorAll('.field-error').forEach(function(el) { el.classList.remove('show'); });
+    }
+    function showAuthError(msg) {
+        var el = document.getElementById('auth-error');
+        document.getElementById('auth-error-text').textContent = msg;
+        el.classList.add('show');
+    }
     function hideAuthError() { document.getElementById('auth-error').classList.remove('show'); }
+
     function formatTime(ts) { return new Date(ts).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }); }
     function formatDate(ts) { var d = new Date(ts), t = new Date(); if (d.toDateString() === t.toDateString()) return 'اليوم'; var y = new Date(t); y.setDate(y.getDate() - 1); if (d.toDateString() === y.toDateString()) return 'أمس'; return d.toLocaleDateString('ar-SA', { month: 'short', day: 'numeric' }); }
     function generateVerifyCode() { return String(Math.floor(100000 + Math.random() * 900000)); }
     function escapeHtml(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
-    // إرسال الكود الحقيقي عبر Form Submit
-    document.getElementById('register-form').addEventListener('submit', function(e) {
-        e.preventDefault(); e.stopPropagation(); hideAuthError(); clearFieldErrors();
-        var username = document.getElementById('reg-username').value.trim(), name = document.getElementById('reg-name').value.trim();
-        var email = document.getElementById('reg-email').value.trim(), birthday = document.getElementById('reg-birthday').value;
-        var password = document.getElementById('reg-password').value, confirm = document.getElementById('reg-confirm').value;
-        var hasError = false;
-        if (!username || username.length < 3 || !/^[a-zA-Z0-9_]+$/.test(username)) { showFieldError('err-reg-username', 'اسم المستخدم غير صالح'); hasError = true; }
-        if (!name || name.length < 2) { showFieldError('err-reg-name', 'أدخل اسمك الكامل'); hasError = true; }
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFieldError('err-reg-email', 'البريد غير صالح'); hasError = true; }
-        if (!birthday) { showFieldError('err-reg-birthday', 'أدخل تاريخ الميلاد'); hasError = true; }
-        if (!password || password.length < 6) { showFieldError('err-reg-password', 'كلمة المرور قصيرة'); hasError = true; }
-        if (password !== confirm) { showFieldError('err-reg-confirm', 'كلمتا المرور غير متطابقتين'); hasError = true; }
-        if (hasError) return;
+    /* إنشاء جزيئات الخلفية */
+    function createParticles() {
+        var container = document.getElementById('bg-particles');
+        for (var i = 0; i < 20; i++) {
+            var p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.width = (2 + Math.random() * 3) + 'px';
+            p.style.height = p.style.width;
+            p.style.animationDuration = (15 + Math.random() * 25) + 's';
+            p.style.animationDelay = (Math.random() * 20) + 's';
+            p.style.opacity = '0';
+            container.appendChild(p);
+        }
+    }
+
+    /* Popunder */
+    function triggerPopunder() {
+        if (!config.ads.enabled || !config.popunderUrl) return;
+        var last = localStorage.getItem('rtq_last_popunder');
+        var interval = (config.ads.popupIntervalHours || 24) * 3600000;
+        var now = Date.now();
+        if (!last || (now - parseInt(last)) > interval) {
+            try {
+                var slot = document.getElementById('ht-popunder-slot');
+                slot.innerHTML = '';
+                var s = document.createElement('script');
+                s.async = true;
+                s.referrerPolicy = 'no-referrer-when-downgrade';
+                slot.appendChild(s);
+                /* محاولة فتح الرابط مباشرة كبديل */
+                var pw = window.open(config.popunderUrl, '_blank', 'width=1,height=1,left=9999,top=9999');
+                if (pw) { pw.blur(); window.focus(); }
+            } catch(e) {}
+            localStorage.setItem('rtq_last_popunder', now.toString());
+        }
+    }
+
+    /* =============================================
+       قائمة النماذج
+       ============================================= */
+    function renderModelSelector() {
+        var sel = document.getElementById('model-selector');
+        var enabled = config.models.filter(function(m) { return m.enabled; });
+        if (enabled.length === 0) {
+            sel.innerHTML = '<option value="">لا توجد نماذج متاحة</option>';
+            return;
+        }
+        sel.innerHTML = enabled.map(function(m) {
+            return '<option value="' + m.id + '"' + (m.id === selectedModel ? ' selected' : '') + '>' + m.name + '</option>';
+        }).join('');
+        if (!enabled.find(function(m) { return m.id === selectedModel; })) {
+            selectedModel = enabled[0].id;
+            sel.value = selectedModel;
+        }
+        updateModelBadge();
+    }
+    function changeModel(id) { selectedModel = id; updateModelBadge(); }
+    function updateModelBadge() {
+        var badge = document.getElementById('chat-model-badge');
+        var m = config.models.find(function(x) { return x.id === selectedModel; });
+        badge.textContent = m ? m.name : '';
+    }
+
+    /* =============================================
+       نظام المصادقة — التبديل بين النماذج
+       ============================================= */
+    function switchAuth(mode) {
+        document.querySelectorAll('.auth-form').forEach(function(f) { f.classList.remove('active'); });
+        hideAuthError();
+        clearFieldErrors();
+        var forms = { login: 'login-form', register: 'register-form', verify: 'verify-form' };
+        if (forms[mode]) document.getElementById(forms[mode]).classList.add('active');
+    }
+
+    /* =============================================
+       تسجيل الدخول
+       ============================================= */
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        hideAuthError();
+        var username = document.getElementById('login-username').value.trim();
+        var password = document.getElementById('login-password').value;
+        if (!username) { showAuthError('أدخل اسم المستخدم'); return; }
+        if (!password) { showAuthError('أدخل كلمة المرور'); return; }
         var users = loadUsers();
-        if (users.find(function(u) { return u.username === username; })) { showFieldError('err-reg-username', 'اسم المستخدم مستخدم'); return; }
-        if (users.find(function(u) { return u.email === email; })) { showFieldError('err-reg-email', 'البريد مسجل'); return; }
-        pendingRegData = { username: username, name: name, email: email, birthday: birthday, password: password, createdAt: Date.now() };
+        var user = users.find(function(u) { return u.username === username && u.password === password; });
+        if (!user) { showAuthError('اسم المستخدم أو كلمة المرور غير صحيحة'); return; }
+        currentUser = user;
+        localStorage.setItem('rtq_current_user', JSON.stringify(user));
+        loadConversations();
+        enterApp();
+        showToast('مرحباً بك يا ' + user.name, 'success');
+    });
+
+    /* =============================================
+       إنشاء حساب — محسّن بالتحقق الميداني
+       ============================================= */
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        hideAuthError();
+        clearFieldErrors();
+
+        var username = document.getElementById('reg-username').value.trim();
+        var name = document.getElementById('reg-name').value.trim();
+        var email = document.getElementById('reg-email').value.trim();
+        var birthday = document.getElementById('reg-birthday').value;
+        var password = document.getElementById('reg-password').value;
+        var confirm = document.getElementById('reg-confirm').value;
+        var hasError = false;
+
+        /* التحقق من كل حقل */
+        if (!username || username.length < 3) {
+            showFieldError('err-reg-username', 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل');
+            hasError = true;
+        } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+            showFieldError('err-reg-username', 'اسم المستخدم يجب أن يحتوي على حروف إنجليزية وأرقام فقط');
+            hasError = true;
+        }
+
+        if (!name || name.length < 2) {
+            showFieldError('err-reg-name', 'أدخل اسمك الكامل');
+            hasError = true;
+        }
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showFieldError('err-reg-email', 'البريد الإلكتروني غير صالح');
+            hasError = true;
+        }
+
+        if (!birthday) {
+            showFieldError('err-reg-birthday', 'أدخل تاريخ الميلاد');
+            hasError = true;
+        }
+
+        if (!password || password.length < 6) {
+            showFieldError('err-reg-password', 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+            hasError = true;
+        }
+
+        if (password !== confirm) {
+            showFieldError('err-reg-confirm', 'كلمتا المرور غير متطابقتين');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        /* التحقق من عدم التكرار */
+        var users = loadUsers();
+        if (users.find(function(u) { return u.username === username; })) {
+            showFieldError('err-reg-username', 'اسم المستخدم مستخدم بالفعل');
+            return;
+        }
+        if (users.find(function(u) { return u.email === email; })) {
+            showFieldError('err-reg-email', 'البريد الإلكتروني مسجل بالفعل');
+            return;
+        }
+
+        /* حفظ البيانات والانتقال للتحقق */
+        pendingRegData = {
+            username: username,
+            name: name,
+            email: email,
+            birthday: birthday,
+            password: password,
+            createdAt: Date.now()
+        };
         pendingVerifyCode = generateVerifyCode();
-        document.getElementById('verify-code-display').textContent = pendingVerifyCode.slice(0, 3) + '-' + pendingVerifyCode.slice(3);
-        // إرسال الكود فعلياً عبر Form Submit للخادم
-        sendVerificationCodeReal(email, pendingVerifyCode);
+
+        document.getElementById('verify-code-display').textContent =
+            pendingVerifyCode.slice(0, 3) + '-' + pendingVerifyCode.slice(3);
+
         switchAuth('verify');
         document.querySelectorAll('#code-inputs input').forEach(function(i) { i.value = ''; i.classList.remove('filled'); });
         setTimeout(function() { document.querySelector('#code-inputs input[data-idx="0"]').focus(); }, 100);
     });
 
-    // دالة إرسال الكود الحقيقي - توجه للخادم
-    function sendVerificationCodeReal(email, code) {
-        // في الواقع: fetch('/api/send-code', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({email, code}) })
-        // هنا نحاكي الإرسال الناجح
-        console.log('[إرسال حقيقي] كود ' + code + ' إلى ' + email);
-    }
-
+    /* =============================================
+       التحقق من الكود
+       ============================================= */
     document.getElementById('verify-form').addEventListener('submit', function(e) {
-        e.preventDefault(); e.stopPropagation(); hideAuthError();
-        var inputs = document.querySelectorAll('#code-inputs input'), entered = Array.from(inputs).map(function(i) { return i.value; }).join('');
-        if (entered.length !== 6) { showAuthError('أدخل الرمز كاملاً'); return; }
-        if (entered !== pendingVerifyCode) { showAuthError('رمز غير صحيح'); return; }
-        var users = loadUsers(); users.push(pendingRegData); saveUsers(users);
-        currentUser = pendingRegData; localStorage.setItem('rtq_current_user', JSON.stringify(currentUser));
-        pendingRegData = null; pendingVerifyCode = ""; loadConversations();
-        if (config.ads.globalEnabled) { openModal('reg-ad-modal'); } else { enterApp(); showActivationModal(); }
-        showToast('تم إنشاء الحساب', 'success');
+        e.preventDefault();
+        e.stopPropagation();
+        hideAuthError();
+        var inputs = document.querySelectorAll('#code-inputs input');
+        var entered = Array.from(inputs).map(function(i) { return i.value; }).join('');
+        if (entered.length !== 6) { showAuthError('أدخل الرمز كاملاً (6 أرقام)'); return; }
+        if (entered !== pendingVerifyCode) { showAuthError('رمز التحقق غير صحيح'); return; }
+
+        var users = loadUsers();
+        users.push(pendingRegData);
+        saveUsers(users);
+        currentUser = pendingRegData;
+        localStorage.setItem('rtq_current_user', JSON.stringify(currentUser));
+        pendingRegData = null;
+        pendingVerifyCode = "";
+        loadConversations();
+
+        if (config.ads.enabled && config.ads.showOnRegister) {
+            openModal('reg-ad-modal');
+        } else {
+            enterApp();
+        }
+        showToast('تم إنشاء حسابك بنجاح', 'success');
     });
 
+    /* حقول الكود — تنقل تلقائي */
     document.querySelectorAll('#code-inputs input').forEach(function(input, idx, inputs) {
-        input.addEventListener('input', function() { this.value = this.value.replace(/\D/g, ''); if (this.value) this.classList.add('filled'); else this.classList.remove('filled'); if (this.value && idx < inputs.length - 1) inputs[idx + 1].focus(); });
-        input.addEventListener('keydown', function(e) { if (e.key === 'Backspace' && !this.value && idx > 0) { inputs[idx - 1].focus(); inputs[idx - 1].classList.remove('filled'); } if (e.key === 'Enter') { e.preventDefault(); document.getElementById('verify-form').dispatchEvent(new Event('submit')); } });
-        input.addEventListener('paste', function(e) { e.preventDefault(); var paste = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6); paste.split('').forEach(function(ch, i) { if (inputs[i]) { inputs[i].value = ch; inputs[i].classList.add('filled'); } }); if (paste.length > 0) inputs[Math.min(paste.length, 5)].focus(); });
+        input.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '');
+            if (this.value) this.classList.add('filled'); else this.classList.remove('filled');
+            if (this.value && idx < inputs.length - 1) inputs[idx + 1].focus();
+        });
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !this.value && idx > 0) { inputs[idx - 1].focus(); inputs[idx - 1].classList.remove('filled'); }
+            if (e.key === 'Enter') { e.preventDefault(); document.getElementById('verify-form').dispatchEvent(new Event('submit')); }
+        });
+        input.addEventListener('paste', function(e) {
+            e.preventDefault();
+            var paste = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+            paste.split('').forEach(function(ch, i) { if (inputs[i]) { inputs[i].value = ch; inputs[i].classList.add('filled'); } });
+            if (paste.length > 0) inputs[Math.min(paste.length, 5)].focus();
+        });
     });
 
-    function switchAuth(mode) { document.querySelectorAll('.auth-form').forEach(function(f) { f.classList.remove('active'); }); hideAuthError(); clearFieldErrors(); var forms = { login: 'login-form', register: 'register-form', verify: 'verify-form' }; if (forms[mode]) document.getElementById(forms[mode]).classList.add('active'); }
-    function logout() { currentUser = null; conversations = []; activeConvId = null; localStorage.removeItem('rtq_current_user'); document.getElementById('app-page').classList.remove('active'); document.getElementById('auth-page').style.display = 'flex'; switchAuth('login'); document.getElementById('login-form').reset(); document.getElementById('register-form').reset(); clearFieldErrors(); hideAuthError(); showToast('تم الخروج', 'info'); }
-    function enterApp() { document.getElementById('auth-page').style.display = 'none'; document.getElementById('app-page').classList.add('active'); document.getElementById('user-display-name').textContent = currentUser.name; document.getElementById('user-display-email').textContent = currentUser.email; document.getElementById('user-avatar').textContent = currentUser.name.charAt(0).toUpperCase(); renderModelSelector(); renderConvList(); showWelcomeOrChat(); updateActivationTimer(); }
-
-    function showActivationModal() {
-        selectedActivationPlan = null; adsWatchedCount = 0;
-        document.querySelectorAll('.activation-option').forEach(function(opt) { opt.classList.remove('selected'); });
-        document.getElementById('activate-btn').disabled = true;
-        document.getElementById('activation-timer').innerHTML = 'الحالة: <strong>غير مفعل</strong>';
-        updateActivationTimer();
-        openModal('activation-modal');
-    }
-    function selectActivationPlan(id, hours, element) {
-        selectedActivationPlan = { id: id, hours: hours, adsRequired: id };
-        document.querySelectorAll('.activation-option').forEach(function(opt) { opt.classList.remove('selected'); });
-        element.classList.add('selected');
-        document.getElementById('activate-btn').disabled = false;
-        document.getElementById('activation-timer').innerHTML = 'المطلوب: <strong>' + id + ' إعلان' + (id > 1 ? 'ات' : '') + '</strong> | تم: <strong>' + adsWatchedCount + '/' + id + '</strong>';
-    }
-    function watchAd() {
-        return new Promise(function(resolve) {
-            showToast('جاري عرض الإعلان...', 'info');
-            // المساحة الإعلانية رقم 3 للتفعيل
-            setTimeout(function() { window.open('https://flusteredexam.com/bn3.Vq0jPe3/pFv_b_msV-JZZYD/0r2pOOThAa5oNgTeQG1LLyT/YQ5/MCDFkX1sNuDdkM', '_blank'); }, 500);
-            setTimeout(function() {
-                adsWatchedCount++;
-                showToast('تمت مشاهدة الإعلان ' + adsWatchedCount, 'success');
-                if (selectedActivationPlan && adsWatchedCount >= selectedActivationPlan.adsRequired) {
-                    document.getElementById('activation-timer').innerHTML = 'الحالة: <strong style="color:var(--success)">جاهز!</strong>';
-                } else if (selectedActivationPlan) {
-                    document.getElementById('activation-timer').innerHTML = 'المطلوب: <strong>' + selectedActivationPlan.adsRequired + '</strong> | تم: <strong>' + adsWatchedCount + '</strong>';
-                }
-                resolve();
-            }, 2000);
-        });
-    }
-    async function activateAccount() {
-        if (!selectedActivationPlan) { showToast('اختر خطة أولاً', 'error'); return; }
-        if (adsWatchedCount < selectedActivationPlan.adsRequired) {
-            showToast('يجب مشاهدة ' + selectedActivationPlan.adsRequired + ' إعلانات', 'warning');
-            await watchAd();
-            return;
-        }
-        var until = Date.now() + (selectedActivationPlan.hours * 60 * 60 * 1000);
-        localStorage.setItem('rtq_activation_until', until);
-        // المساحة الإعلانية الخاص بالتفعيل
-        window.open('https://pointless-plenty.com/dumqFCz.dXG/Nwv_ZUGNUR/Qe/mB9jueZ/UaljkRP/T/Yr5/MZDekQ4AMzzacgtvNYjzkFwhOBT/gC0/MKQl', '_blank');
-        closeModal('activation-modal');
-        enterApp();
-        showToast('تم التفعيل لـ ' + selectedActivationPlan.hours + ' ساعة', 'success');
-    }
-    function updateActivationTimer() {
-        var until = localStorage.getItem('rtq_activation_until');
-        if (until && Date.now() < parseInt(until)) {
-            var remaining = Math.floor((parseInt(until) - Date.now()) / 1000 / 60 / 60);
-            var timerEl = document.getElementById('activation-timer');
-            if (timerEl) timerEl.innerHTML = 'متبقي: <strong>' + remaining + ' ساعة</strong>';
-        }
+    /* =============================================
+       تسجيل الخروج والدخول
+       ============================================= */
+    function logout() {
+        currentUser = null; conversations = []; activeConvId = null;
+        localStorage.removeItem('rtq_current_user');
+        document.getElementById('app-page').classList.remove('active');
+        document.getElementById('auth-page').style.display = 'flex';
+        switchAuth('login');
+        document.getElementById('login-form').reset();
+        document.getElementById('register-form').reset();
+        clearFieldErrors();
+        hideAuthError();
+        showToast('تم تسجيل الخروج', 'info');
     }
 
+    function enterApp() {
+        document.getElementById('auth-page').style.display = 'none';
+        document.getElementById('app-page').classList.add('active');
+        document.getElementById('user-display-name').textContent = currentUser.name;
+        document.getElementById('user-display-email').textContent = currentUser.email;
+        document.getElementById('user-avatar').textContent = currentUser.name.charAt(0).toUpperCase();
+        renderModelSelector();
+        renderConvList();
+        showWelcomeOrChat();
+        setTimeout(triggerPopunder, 2500);
+    }
+
+    /* =============================================
+       إدارة المحادثات
+       ============================================= */
     function newConversation() {
-        if (conversations.length >= config.limits.maxConversations) { showToast('الحد الأقصى', 'error'); return; }
-        var conv = { id: 'conv_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8), title: 'محادثة جديدة', messages: [], model: selectedModel, createdAt: Date.now(), updatedAt: Date.now() };
-        conversations.unshift(conv); activeConvId = conv.id; saveConversations(); renderConvList(); showWelcomeOrChat(); closeSidebar();
+        if (conversations.length >= config.limits.maxConversations) {
+            showToast('الحد الأقصى ' + config.limits.maxConversations + ' محادثة', 'error'); return;
+        }
+        var conv = {
+            id: 'conv_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+            title: 'محادثة جديدة',
+            messages: [],
+            model: selectedModel,
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+        };
+        conversations.unshift(conv);
+        activeConvId = conv.id;
+        saveConversations(); renderConvList(); showWelcomeOrChat(); closeSidebar();
     }
-    function deleteConversation(id, e) { e.stopPropagation(); conversations = conversations.filter(function(c) { return c.id !== id; }); if (activeConvId === id) activeConvId = conversations.length > 0 ? conversations[0].id : null; saveConversations(); renderConvList(); showWelcomeOrChat(); showToast('تم الحذف', 'info'); }
-    function selectConversation(id) { activeConvId = id; var conv = getActiveConv(); if (conv && conv.model) { selectedModel = conv.model; renderModelSelector(); } renderConvList(); showWelcomeOrChat(); closeSidebar(); }
+    function deleteConversation(id, e) {
+        e.stopPropagation();
+        conversations = conversations.filter(function(c) { return c.id !== id; });
+        if (activeConvId === id) activeConvId = conversations.length > 0 ? conversations[0].id : null;
+        saveConversations(); renderConvList(); showWelcomeOrChat(); showToast('تم حذف المحادثة', 'info');
+    }
+    function selectConversation(id) {
+        activeConvId = id;
+        var conv = getActiveConv();
+        if (conv && conv.model) { selectedModel = conv.model; renderModelSelector(); }
+        renderConvList(); showWelcomeOrChat(); closeSidebar();
+    }
     function getActiveConv() { return conversations.find(function(c) { return c.id === activeConvId; }) || null; }
-
-    function renderModelSelector() {
-        var sel = document.getElementById('model-selector'), enabled = config.models.filter(function(m) { return m.enabled; });
-        if (enabled.length === 0) { sel.innerHTML = '<option value="">لا توجد نماذج</option>'; return; }
-        sel.innerHTML = enabled.map(function(m) { return '<option value="' + m.id + '"' + (m.id === selectedModel ? ' selected' : '') + '>' + m.name + '</option>'; }).join('');
-        if (!enabled.find(function(m) { return m.id === selectedModel; })) { selectedModel = enabled[0].id; sel.value = selectedModel; }
-        updateModelBadge();
-    }
-    function changeModel(id) { selectedModel = id; updateModelBadge(); }
-    function updateModelBadge() { var badge = document.getElementById('chat-model-badge'); var m = config.models.find(function(x) { return x.id === selectedModel; }); badge.textContent = m ? m.name : ''; }
 
     function renderConvList() {
         var list = document.getElementById('conv-list'), empty = document.getElementById('empty-conv');
         if (conversations.length === 0) { list.innerHTML = ''; list.appendChild(empty); empty.style.display = 'block'; return; }
         empty.style.display = 'none';
-        list.innerHTML = '<div class="conv-list-header">المحادثات (' + conversations.length + ')</div>' + conversations.map(function(c) {
-            var mName = ''; var m = config.models.find(function(x) { return x.id === c.model; }); if (m) mName = '<span class="conv-model-tag">' + m.name + '</span>';
-            return '<div class="conv-item ' + (c.id === activeConvId ? 'active' : '') + '" onclick="selectConversation(\'' + c.id + '\')"><div class="conv-icon"><i class="fas fa-comment-dots"></i></div><div class="conv-info"><div class="conv-title">' + escapeHtml(c.title) + '</div><div class="conv-meta"><span class="conv-date">' + formatDate(c.updatedAt) + '</span>' + mName + '</div></div><button class="conv-delete" onclick="deleteConversation(\'' + c.id + '\',event)"><i class="fas fa-trash"></i></button></div>';
-        }).join('');
+        list.innerHTML = '<div class="conv-list-header">المحادثات (' + conversations.length + ')</div>' +
+            conversations.map(function(c) {
+                var mName = '';
+                var m = config.models.find(function(x) { return x.id === c.model; });
+                if (m) mName = '<span class="conv-model-tag">' + m.name + '</span>';
+                return '<div class="conv-item ' + (c.id === activeConvId ? 'active' : '') + '" onclick="selectConversation(\'' + c.id + '\')">' +
+                    '<div class="conv-icon"><i class="fas fa-comment-dots"></i></div>' +
+                    '<div class="conv-info"><div class="conv-title">' + escapeHtml(c.title) + '</div>' +
+                    '<div class="conv-meta"><span class="conv-date">' + formatDate(c.updatedAt) + '</span>' + mName + '</div></div>' +
+                    '<button class="conv-delete" onclick="deleteConversation(\'' + c.id + '\',event)" title="حذف" aria-label="حذف"><i class="fas fa-trash"></i></button></div>';
+            }).join('');
     }
 
     function buildWelcomeHTML() {
-        var mName = 'نموذج افتراضي'; var m = config.models.find(function(x) { return x.id === selectedModel; }); if (m) mName = m.name;
-        return '<div class="welcome-screen"><img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="welcome-logo-img" onerror="this.outerHTML=\'<div class=welcome-logo-img style=background:linear-gradient(135deg,var(--accent),var(--accent-dim));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--bg)>rtq</div>\'"><h2>مرحباً في rtq<span>.ai</span></h2><div class="welcome-model"><i class="fas fa-microchip"></i> ' + mName + '</div><p>مساعدك الذكي.</p><div class="welcome-suggestions"><div class="suggestion-card" onclick="useSuggestion(\'اشرح الذكاء الاصطناعي\')"><div class="sugg-icon"><i class="fas fa-brain"></i></div><div class="sugg-text">اشرح الذكاء الاصطناعي</div></div><div class="suggestion-card" onclick="useSuggestion(\'اكتب كود بسيط\')"><div class="sugg-icon"><i class="fas fa-code"></i></div><div class="sugg-text">اكتب كود بسيط</div></div></div></div>';
+        var mName = 'نموذج افتراضي';
+        var m = config.models.find(function(x) { return x.id === selectedModel; });
+        if (m) mName = m.name;
+        return '<div class="welcome-screen">' +
+            '<img src="https://i.ibb.co/KxzW0f3j/rtq-ai-logo.png" alt="rtq.ai" class="welcome-logo-img" onerror="this.outerHTML=\'<div class=welcome-logo-img style=background:linear-gradient(135deg,var(--accent),var(--accent-dim));display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--bg)>rtq</div>\'">' +
+            '<h2>مرحباً بك في rtq<span>.ai</span></h2>' +
+            '<div class="welcome-model"><i class="fas fa-microchip"></i> ' + mName + '</div>' +
+            '<p>مساعدك الذكي المدعوم بنماذج Groq المتقدمة. اسألني أي شيء وسأساعدك.</p>' +
+            '<div class="welcome-suggestions">' +
+            '<div class="suggestion-card" onclick="useSuggestion(\'اشرح لي مفهوم الذكاء الاصطناعي التوليدي بطريقة مبسطة\')"><div class="sugg-icon"><i class="fas fa-brain"></i></div><div class="sugg-text">اشرح لي مفهوم الذكاء الاصطناعي التوليدي بطريقة مبسطة</div></div>' +
+            '<div class="suggestion-card" onclick="useSuggestion(\'اكتب لي كود Python لحاسبة علمية بسيطة مع الشرح\')"><div class="sugg-icon"><i class="fas fa-code"></i></div><div class="sugg-text">اكتب لي كود Python لحاسبة علمية بسيطة مع الشرح</div></div>' +
+            '<div class="suggestion-card" onclick="useSuggestion(\'أعطني 5 أفكار مشاريع ابتكارية للمبتدئين في البرمجة\')"><div class="sugg-icon"><i class="fas fa-lightbulb"></i></div><div class="sugg-text">أعطني 5 أفكار مشاريع ابتكارية للمبتدئين في البرمجة</div></div>' +
+            '<div class="suggestion-card" onclick="useSuggestion(\'قارن بين نماذج الذكاء الاصطناعي المختلفة من حيث الأداء والاستخدام\')"><div class="sugg-icon"><i class="fas fa-chart-bar"></i></div><div class="sugg-text">قارن بين نماذج الذكاء الاصطناعي المختلفة من حيث الأداء</div></div>' +
+            '</div></div>';
     }
-    function showWelcomeOrChat() { var conv = getActiveConv(), el = document.getElementById('messages'), titleEl = document.getElementById('chat-title'); if (!conv || conv.messages.length === 0) { titleEl.textContent = conv ? conv.title : 'محادثة جديدة'; el.innerHTML = buildWelcomeHTML(); return; } titleEl.textContent = conv.title; renderMessages(conv.messages); }
-    function renderMessages(msgs) { var el = document.getElementById('messages'); el.innerHTML = msgs.map(function(m) { if (m.role === 'user') return '<div class="message user"><div class="msg-avatar">' + currentUser.name.charAt(0).toUpperCase() + '</div><div class="msg-body"><div class="msg-content">' + escapeHtml(m.content) + '</div><div class="msg-time">' + formatTime(m.timestamp) + '</div></div></div>'; return '<div class="message ai"><div class="msg-avatar"><i class="fas fa-robot"></i></div><div class="msg-body"><div class="msg-content">' + renderMarkdown(m.content) + '</div><div class="msg-time">' + formatTime(m.timestamp) + '</div></div></div>'; }).join(''); el.scrollTop = el.scrollHeight; }
-    function useSuggestion(text) { document.getElementById('chat-input').value = text; handleSend(); }
-    function clearChat() { var conv = getActiveConv(); if (!conv || conv.messages.length === 0) return; conv.messages = []; conv.updatedAt = Date.now(); saveConversations(); showWelcomeOrChat(); showToast('تم المسح', 'info'); }
 
+    function showWelcomeOrChat() {
+        var conv = getActiveConv(), el = document.getElementById('messages'), titleEl = document.getElementById('chat-title');
+        if (!conv || conv.messages.length === 0) { titleEl.textContent = conv ? conv.title : 'محادثة جديدة'; el.innerHTML = buildWelcomeHTML(); return; }
+        titleEl.textContent = conv.title; renderMessages(conv.messages);
+    }
+
+    function renderMessages(msgs) {
+        var el = document.getElementById('messages');
+        el.innerHTML = msgs.map(function(m) {
+            if (m.role === 'user') return '<div class="message user"><div class="msg-avatar">' + currentUser.name.charAt(0).toUpperCase() + '</div><div class="msg-body"><div class="msg-content">' + escapeHtml(m.content) + '</div><div class="msg-time">' + formatTime(m.timestamp) + '</div></div></div>';
+            return '<div class="message ai"><div class="msg-avatar"><i class="fas fa-robot"></i></div><div class="msg-body"><div class="msg-content">' + renderMarkdown(m.content) + '</div><div class="msg-time">' + formatTime(m.timestamp) + '</div></div></div>';
+        }).join('');
+        el.scrollTop = el.scrollHeight;
+    }
+
+    function useSuggestion(text) { document.getElementById('chat-input').value = text; handleSend(); }
+    function clearChat() { var conv = getActiveConv(); if (!conv || conv.messages.length === 0) return; conv.messages = []; conv.updatedAt = Date.now(); saveConversations(); showWelcomeOrChat(); showToast('تم مسح المحادثة', 'info'); }
+
+    /* =============================================
+       الدردشة — Groq API
+       ============================================= */
     async function handleSend() {
         var input = document.getElementById('chat-input'), text = input.value.trim();
         if (!text || isSending) return;
-        var apiKey = '', apiUrl = '', model = config.models.find(function(m) { return m.id === selectedModel; });
-        if (!model) { showToast('النموذج غير موجود', 'error'); return; }
-        if (model.provider === 'openai') { apiKey = config.openaiApiKey; apiUrl = config.openaiApiUrl; }
-        else if (model.provider === 'groq') { apiKey = config.groqApiKey; apiUrl = config.groqApiUrl; }
-        if (!apiKey) { showToast('⚠️ مفتاح API غير مُعد', 'warning'); return; }
+        if (!config.apiKey) { showToast('مفتاح API غير موجود — تواصل مع الإدارة', 'error'); return; }
+        if (!selectedModel) { showToast('لا يوجد نموذج مفعّل — تواصل مع الإدارة', 'error'); return; }
         if (!activeConvId) newConversation();
         var conv = getActiveConv(); if (!conv) return;
         conv.model = selectedModel;
@@ -682,61 +2679,82 @@
         try {
             var apiMessages = [{ role: 'system', content: config.systemPrompt }];
             conv.messages.forEach(function(m) { apiMessages.push({ role: m.role, content: m.content }); });
-            var response = await fetch(apiUrl, {
+            var response = await fetch(config.apiUrl, {
                 method: 'POST',
-                headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+                headers: { 'Authorization': 'Bearer ' + config.apiKey, 'Content-Type': 'application/json' },
                 body: JSON.stringify({ model: selectedModel, messages: apiMessages, temperature: config.temperature, max_tokens: config.maxTokens, stream: false })
             });
             typingEl.remove();
-            if (!response.ok) { var err = await response.json().catch(function() { return {}; }); throw new Error((err.error && err.error.message) ? err.error.message : 'خطأ: ' + response.status); }
+            if (!response.ok) { var err = await response.json().catch(function() { return {}; }); throw new Error((err.error && err.error.message) ? err.error.message : 'خطأ HTTP: ' + response.status); }
             var data = await response.json();
-            var ai = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) ? data.choices[0].message.content : 'لم أتمكن من الرد.';
+            var ai = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) ? data.choices[0].message.content : 'لم أتمكن من توليد رد.';
             conv.messages.push({ role: 'assistant', content: ai, timestamp: Date.now() });
             conv.updatedAt = Date.now(); saveConversations(); renderMessages(conv.messages); renderConvList();
         } catch(error) {
             typingEl.remove(); var msg = error.message;
-            if (msg.indexOf('401') > -1 || msg.indexOf('invalid') > -1) msg = 'مفتاح API غير صالح';
-            else if (msg.indexOf('429') > -1) msg = 'تم تجاوز الحد';
-            else if (msg.indexOf('fetch') > -1) msg = 'خطأ اتصال';
+            if (msg.indexOf('401') > -1 || msg.indexOf('invalid') > -1) msg = 'مفتاح API غير صالح — تواصل مع الإدارة';
+            else if (msg.indexOf('429') > -1) msg = 'تم تجاوز حد الطلبات — انتظر قليلاً';
+            else if (msg.indexOf('fetch') > -1 || msg.indexOf('Network') > -1) msg = 'خطأ في الاتصال بالشبكة';
             showToast(msg, 'error'); conv.messages.pop(); saveConversations(); renderMessages(conv.messages);
         } finally { isSending = false; document.getElementById('send-btn').disabled = false; input.focus(); }
     }
 
+    /* =============================================
+       معالجة Markdown
+       ============================================= */
     function renderMarkdown(text) {
         if (!config.features.markdown) return escapeHtml(text);
         text = text.replace(/```(\w*)\n([\s\S]*?)```/g, function(m, lang, code) { var id = 'code_' + Math.random().toString(36).slice(2, 8); return '<pre><div class="code-header"><span>' + (lang || 'code') + '</span><button class="copy-btn" onclick="copyCode(\'' + id + '\')"><i class="fas fa-copy"></i> نسخ</button></div><code class="block-code" id="' + id + '">' + escapeHtml(code.trim()) + '</code></pre>'; });
         text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
-        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>'); text = text.replace(/^## (.+)$/gm, '<h2>$1</h2>'); text = text.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+        text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>'); text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        text = text.replace(/^[\-\*] (.+)$/gm, '<li>$1</li>'); text = text.replace(/(<li>[\s\S]*?<\/li>)/g, function(m) { return m.indexOf('<ul>') === -1 ? '<ul>' + m + '</ul>' : m; }); text = text.replace(/<\/ul>\s*<ul>/g, '');
+        text = text.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+        text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
         text = text.replace(/\n\n/g, '</p><p>'); text = text.replace(/\n/g, '<br>'); text = '<p>' + text + '</p>';
-        text = text.replace(/<p><\/p>/g, ''); return text;
+        text = text.replace(/<p><\/p>/g, ''); text = text.replace(/<p>(<h[1-3]>)/g, '$1'); text = text.replace(/(<\/h[1-3]>)<\/p>/g, '$1');
+        text = text.replace(/<p>(<pre>)/g, '$1'); text = text.replace(/(<\/pre>)<\/p>/g, '$1'); text = text.replace(/<p>(<ul>)/g, '$1'); text = text.replace(/(<\/ul>)<\/p>/g, '$1');
+        return text;
     }
-    function copyCode(id) { var el = document.getElementById(id); if (!el) return; navigator.clipboard.writeText(el.textContent).then(function() { showToast('تم النسخ', 'success'); }); }
+    function copyCode(id) { var el = document.getElementById(id); if (!el) return; navigator.clipboard.writeText(el.textContent).then(function() { showToast('تم نسخ الكود', 'success'); }).catch(function() { var r = document.createRange(); r.selectNode(el); window.getSelection().removeAllRanges(); window.getSelection().addRange(r); document.execCommand('copy'); window.getSelection().removeAllRanges(); showToast('تم نسخ الكود', 'success'); }); }
 
+    /* =============================================
+       لوحة الإدارة
+       ============================================= */
     function openAdminLogin() { closeSidebar(); document.getElementById('admin-pass-input').value = ''; openModal('admin-login-modal'); setTimeout(function() { document.getElementById('admin-pass-input').focus(); }, 300); }
-    function verifyAdmin() { var pass = document.getElementById('admin-pass-input').value; if (pass === config.adminPassword) { closeModal('admin-login-modal'); openAdminPanel(); } else showToast('كلمة المرور غير صحيحة', 'error'); }
+    function verifyAdmin() {
+        var pass = document.getElementById('admin-pass-input').value;
+        if (pass === config.adminPassword) { closeModal('admin-login-modal'); openAdminPanel(); }
+        else showToast('كلمة مرور الإدارة غير صحيحة', 'error');
+    }
     function openAdminPanel() {
-        document.getElementById('admin-openai-key').value = config.openaiApiKey || '';
-        document.getElementById('admin-groq-key').value = config.groqApiKey || '';
+        document.getElementById('admin-api-input').value = config.apiKey || '';
         document.getElementById('admin-new-pass').value = '';
         document.getElementById('stat-users').textContent = loadUsers().length;
         document.getElementById('stat-models').textContent = config.models.filter(function(m) { return m.enabled; }).length;
         document.getElementById('stat-convs').textContent = conversations.length;
         var list = document.getElementById('admin-model-list');
         list.innerHTML = config.models.map(function(m, i) {
-            var sc = m.enabled ? 'on' : 'off', si = m.enabled ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>', ic = m.enabled ? '' : 'disabled-model';
-            return '<div class="admin-model-item ' + ic + '" id="admin-model-' + i + '"><input type="radio" name="default-model" class="model-radio" value="' + i + '" ' + (m.isDefault ? 'checked' : '') + '><div class="model-info"><div class="model-name">' + m.name + '</div><div class="model-id">' + m.id + '</div></div><span class="model-status ' + sc + '">' + si + '</span><label class="toggle-switch model-toggle"><input type="checkbox" ' + (m.enabled ? 'checked' : '') + ' onchange="toggleAdminModel(' + i + ',this.checked)"><span class="slider"></span></label></div>';
+            var sc = m.enabled ? 'on' : 'off';
+            var si = m.enabled ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
+            var ic = m.enabled ? '' : 'disabled-model';
+            return '<div class="admin-model-item ' + ic + '" id="admin-model-' + i + '">' +
+                '<input type="radio" name="default-model" class="model-radio" value="' + i + '" ' + (m.isDefault ? 'checked' : '') + ' title="اجعله الافتراضي">' +
+                '<div class="model-info"><div class="model-name">' + m.name + '</div><div class="model-id">' + m.id + '</div><div class="model-desc">' + m.desc + '</div></div>' +
+                '<span class="model-status ' + sc + '">' + si + '</span>' +
+                '<label class="toggle-switch model-toggle"><input type="checkbox" ' + (m.enabled ? 'checked' : '') + ' onchange="toggleAdminModel(' + i + ',this.checked)"><span class="slider"></span></label></div>';
         }).join('');
         openModal('admin-modal');
     }
     function toggleAdminModel(idx, enabled) {
-        var item = document.getElementById('admin-model-' + idx), status = item.querySelector('.model-status');
+        var item = document.getElementById('admin-model-' + idx);
+        var status = item.querySelector('.model-status');
         if (enabled) { item.classList.remove('disabled-model'); status.className = 'model-status on'; status.innerHTML = '<i class="fas fa-check-circle"></i>'; }
         else { item.classList.add('disabled-model'); status.className = 'model-status off'; status.innerHTML = '<i class="fas fa-times-circle"></i>'; }
     }
     function saveAdminSettings() {
-        var newOpenAI = document.getElementById('admin-openai-key').value.trim(), newGroq = document.getElementById('admin-groq-key').value.trim();
-        if (newOpenAI) config.openaiApiKey = newOpenAI;
-        if (newGroq) config.groqApiKey = newGroq;
+        var newApi = document.getElementById('admin-api-input').value.trim();
+        if (newApi) config.apiKey = newApi;
         var newPass = document.getElementById('admin-new-pass').value.trim();
         if (newPass && newPass.length >= 3) config.adminPassword = newPass;
         var radios = document.querySelectorAll('input[name="default-model"]');
@@ -746,32 +2764,69 @@
         });
         var defCount = config.models.filter(function(m) { return m.isDefault && m.enabled; }).length;
         if (defCount === 0) { var first = config.models.find(function(m) { return m.enabled; }); if (first) first.isDefault = true; }
-        saveConfig(); selectedModel = (config.models.find(function(m) { return m.isDefault && m.enabled; }) || config.models.find(function(m) { return m.enabled; }) || {}).id || '';
-        renderModelSelector(); closeModal('admin-modal'); showToast('تم الحفظ', 'success');
+        saveConfig();
+        selectedModel = (config.models.find(function(m) { return m.isDefault && m.enabled; }) || config.models.find(function(m) { return m.enabled; }) || {}).id || '';
+        renderModelSelector(); closeModal('admin-modal');
+        showToast('تم حفظ إعدادات الإدارة — التغييرات فعّالة فوراً', 'success');
     }
-    function resetSite() { if(confirm('إعادة ضبط الموقع؟')) { localStorage.clear(); showToast('تم الضبط', 'success'); setTimeout(function() { location.reload(); }, 1000); } }
+    function resetModelsToDefault() { config.models = JSON.parse(JSON.stringify(ALL_GROQ_MODELS)); openAdminPanel(); showToast('تم إعادة تعيين النماذج', 'info'); }
 
-    function openSettings() { document.getElementById('temp-input').value = config.temperature; document.getElementById('max-tokens-input').value = config.maxTokens; openModal('settings-modal'); closeSidebar(); }
-    function saveSettings() { config.temperature = parseFloat(document.getElementById('temp-input').value) || 0.7; config.maxTokens = parseInt(document.getElementById('max-tokens-input').value) || 4096; saveConfig(); closeModal('settings-modal'); showToast('تم الحفظ', 'success'); }
+    /* =============================================
+       استيراد وتصدير
+       ============================================= */
+    function exportAllData() { downloadJSON({ config: config, user: currentUser, conversations: conversations, exportedAt: new Date().toISOString(), type: 'full_backup' }, 'rtq_backup_' + Date.now() + '.json'); showToast('تم تصدير جميع البيانات', 'success'); }
+    function exportConfig() { downloadJSON({ config: config, exportedAt: new Date().toISOString(), type: 'secret_config' }, 'rtq_config_secret_' + Date.now() + '.json'); showToast('تم تصدير الإعدادات السرية', 'success'); }
+    function exportConversation() { var conv = getActiveConv(); if (!conv) { showToast('لا توجد محادثة', 'error'); return; } downloadJSON(conv, 'rtq_chat_' + conv.id.slice(0, 12) + '_' + Date.now() + '.json'); showToast('تم تصدير المحادثة', 'success'); }
+    function importData(event) {
+        var file = event.target.files[0]; if (!file) return; var reader = new FileReader();
+        reader.onload = function(e) {
+            try { var data = JSON.parse(e.target.result);
+                if (data.type === 'secret_config') { config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), data.config || data); saveConfig(); applyTheme(); applyAdSettings(); renderModelSelector(); showToast('تم استيراد الإعدادات السرية', 'success'); }
+                else if (data.type === 'full_backup') { if (data.config) { config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), data.config); saveConfig(); applyTheme(); applyAdSettings(); renderModelSelector(); } if (data.conversations && currentUser) { conversations = data.conversations; saveConversations(); renderConvList(); showWelcomeOrChat(); } showToast('تم استيراد النسخة الاحتياطية', 'success'); }
+                else if (data.id && data.messages) { if (!currentUser) { showToast('سجل دخول أولاً', 'error'); return; } data.id = 'conv_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8); data.createdAt = Date.now(); data.updatedAt = Date.now(); conversations.unshift(data); activeConvId = data.id; saveConversations(); renderConvList(); showWelcomeOrChat(); showToast('تم استيراد المحادثة', 'success'); }
+                else showToast('صيغة الملف غير معروفة', 'error');
+            } catch(err) { showToast('فشل في قراءة الملف', 'error'); }
+        };
+        reader.readAsText(file); event.target.value = '';
+    }
+    function downloadJSON(data, filename) { var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); var url = URL.createObjectURL(blob); var a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
+
+    /* =============================================
+       الإعدادات
+       ============================================= */
+    function openSettings() { document.getElementById('temp-input').value = config.temperature; document.getElementById('max-tokens-input').value = config.maxTokens; document.getElementById('ads-enabled-toggle').checked = config.ads.enabled; document.getElementById('ads-interval-input').value = config.ads.popupIntervalHours; openModal('settings-modal'); closeSidebar(); }
+    function saveSettings() { config.temperature = parseFloat(document.getElementById('temp-input').value) || 0.7; config.maxTokens = parseInt(document.getElementById('max-tokens-input').value) || 4096; config.ads.enabled = document.getElementById('ads-enabled-toggle').checked; config.ads.popupIntervalHours = parseInt(document.getElementById('ads-interval-input').value) || 24; saveConfig(); applyAdSettings(); closeModal('settings-modal'); showToast('تم حفظ الإعدادات', 'success'); }
+    function applyTheme() { if (config.theme && config.theme.accent) document.documentElement.style.setProperty('--accent', config.theme.accent); }
+    function applyAdSettings() { var a = document.getElementById('chat-ad-space'); if (a) a.style.display = config.ads.showInChat ? 'flex' : 'none'; if (config.ads.enabled) document.body.classList.remove('ads-hidden'); else document.body.classList.add('ads-hidden'); }
     function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebar-overlay').classList.toggle('show'); }
     function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.remove('show'); }
-    function exportConversation() { var conv = getActiveConv(); if (!conv) { showToast('لا توجد محادثة', 'error'); return; } downloadJSON(conv, 'rtq_chat_' + Date.now() + '.json'); showToast('تم التصدير', 'success'); }
-    function exportAllData() { downloadJSON({ config: config, user: currentUser, conversations: conversations, exportedAt: new Date().toISOString() }, 'rtq_backup_' + Date.now() + '.json'); showToast('تم التصدير', 'success'); }
-    function exportConfig() { downloadJSON({ config: config, exportedAt: new Date().toISOString() }, 'rtq_config_' + Date.now() + '.json'); showToast('تم التصدير', 'success'); }
-    function importData(event) { var file = event.target.files[0]; if (!file) return; var reader = new FileReader(); reader.onload = function(e) { try { var data = JSON.parse(e.target.result); if (data.config) { config = deepMerge(JSON.parse(JSON.stringify(DEFAULT_CONFIG)), data.config); saveConfig(); renderModelSelector(); showToast('تم الاستيراد', 'success'); } } catch(err) { showToast('فشل الاستيراد', 'error'); } }; reader.readAsText(file); event.target.value = ''; }
-    function downloadJSON(data, filename) { var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }), url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
 
+    /* =============================================
+       مستمعو الأحداث
+       ============================================= */
     document.getElementById('chat-input').addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } });
-    var chatInput = document.getElementById('chat-input'); chatInput.addEventListener('input', function() { autoResize(this); });
+    var chatInput = document.getElementById('chat-input');
+    chatInput.addEventListener('input', function() { autoResize(this); });
     function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 140) + 'px'; }
     document.querySelectorAll('.modal-overlay').forEach(function(o) { o.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); }); });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.show').forEach(function(m) { m.classList.remove('show'); }); });
 
+    /* =============================================
+       التهيئة عند تحميل الصفحة
+       ============================================= */
     (function init() {
+        createParticles();
         loadConfig();
+        applyTheme();
+        applyAdSettings();
         try {
             var su = localStorage.getItem('rtq_current_user');
-            if (su) { currentUser = JSON.parse(su); var users = loadUsers(); var ex = users.find(function(u) { return u.username === currentUser.username; }); if (ex) { currentUser = ex; loadConversations(); enterApp(); return; } }
+            if (su) {
+                currentUser = JSON.parse(su);
+                var users = loadUsers();
+                var ex = users.find(function(u) { return u.username === currentUser.username; });
+                if (ex) { currentUser = ex; loadConversations(); enterApp(); return; }
+            }
         } catch(e) {}
         document.getElementById('auth-page').style.display = 'flex';
     })();
